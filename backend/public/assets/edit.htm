@@ -1,0 +1,276 @@
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-154947124-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'UA-154947124-1');
+    </script>
+    
+
+    <meta charset="UTF-8">
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="copyright" content="© 2023 Subtitles Translator" />
+    <meta name="robots" content="index, follow">
+    <meta name="rating" content="general" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:locale" content="en_US"/>
+    <meta property="og:url" content="https://www.subtitlestranslator.com/en/edit.php">
+    <meta property="og:title" content="Free online subtitle editor.">
+    <meta property="og:site_name" content="Subtitles Editor">
+    <meta property="og:description" content="Free online subtitles editor. Make any edition on subtitle file you want.">
+    <meta property="og:type" content="website"/>
+
+    <!-- SEO -->
+    <link rel="canonical" href="https://subtitlestranslator.com/en/edit.php"/>
+    
+<link rel="alternate" href="https://subtitlestranslator.com/en/edit.php" hreflang="en">
+<link rel="alternate" href="https://subtitlestranslator.com/pt/edit.php" hreflang="pt">
+<link rel="alternate" href="https://subtitlestranslator.com/es/edit.php" hreflang="es">
+<link rel="alternate" href="https://subtitlestranslator.com/en/edit.php" hreflang="x-default">    <meta name="description" content="Free online subtitles editor. Make any edition on subtitle file you want.">
+    <meta name="keywords" content="subtitles editor, edit, subtitles, edit subtitles, how to edit subtitles, srt, free, online, ass, stl, sbv, sub">
+
+    <!-- Links -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap" as="style">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500&display=swap">
+<link rel="stylesheet" href="../styles/reset.css"/>
+<link rel="stylesheet" href="../styles/style.css">
+<link rel="icon" href="../resources/images/icon.png"/>
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@beta/dist/js.cookie.min.js"></script>
+<script type="application/javascript" src="../resources/scripts/subtitle.bundle.js"></script>
+<script type="application/javascript" src="../scripts/jquery.js"></script>
+<script type="application/javascript" src="../resources/strings/strings.js"></script>
+<script type="application/javascript" src="../scripts/main.js"></script>
+    <title>Subtitles Translator - Editor</title>
+</head>
+
+
+<body>
+
+<!--onclick-->
+
+<div id="fb-root"></div>
+<script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v5.0"></script>
+
+<div id="text-to-translate"></div>
+
+<div id="pop-up-background" class="pop-up-background">
+</div>
+<div class="pop-up-loading" id="pop-up-loading">
+    <p class="pop-up-loading-title skiptranslate">Loading...</p>
+    <div class="sk-chase">
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+        <div class="sk-chase-dot"></div>
+    </div>
+    <p class="pop-up-loading-description skiptranslate">It may take a while. Please wait.</p>
+</div>
+<div class="pop-up-download skiptranslate">
+    <div class="pop-up-download-container">
+        <button id="pop-up-download-btn-close">X</button>
+        <p class="pop-up-download-title">Download</p>
+        <p class="pop-up-download-description">Did you like the tool? We'd like to ask you to support us by sharing the tool with your friends or making a donation.</p>
+        <div class="pop-up-download-share-container">
+            <p class="pop-up-download-title subtitle" style="margin-top: 10px; font-size: 16px;">Share</p>
+            <div class="pop-up-download-share-buttons-container">
+                <div class="fb-button" style="margin-bottom: 5px; width: 100%">
+                    <a target="_blank" style="margin:0 auto; width: 81px" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsubtitlestranslator.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore fb-custom-button">
+                    </a>
+                </div>
+                <div style="margin-top: 4px">
+                    <a class="tweet-custom-button" target="_blank" href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%2Fsubtitlestranslator%2Fpublic%2F&ref_src=twsrc%5Etfw&text=Subtitles%20Translator%20-%20Free%20online%20subtitles%20translator%20tool!&tw_p=tweetbutton&url=https%3A%2F%2Fsubtitlestranslator.com">
+                    </a>
+                </div>
+            </div>
+        </div>
+        <div class="pop-up-download-donate-container">
+            <p class="pop-up-download-title subtitle" style="margin-top: 10px; font-size: 16px;">Make a Donation</p>
+            <p class="pop-up-download-description" style="margin-top: 10px">Make a donation of any amount through PayPal. It is fast and safe!</p>
+            <div style="margin-top: 15px">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+                    <input type="hidden" name="cmd" value="_s-xclick" />
+                    <input type="hidden" name="hosted_button_id" value="TN79V7QKF8RMU" />
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+                    <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+                </form>
+            </div>
+        </div>
+        <button id="download-btn">No thank's, I don't want to support. Just take me to download</button>
+    </div>
+</div>
+<!-- Header -->
+<header>
+    <div class="header-content">    <a href="/en">        <div class="logo"></div>    </a>    <div class="hamburger-container">        <button class="hamburger"></button>    </div>    <nav class="menu">        <ul>            <li><a href="/en">Home</a></li>            <li><a href="/en/multiple-language-subtitles-translator.php"><span>new </span>Multiple Language Translator</a></li>            <li><a href="/en/edit.php">Subtitles Editor</a></li>            <li><a href="/en/converter.php">Subtitles Converter</a></li>        </ul>    </nav></div></header>
+
+<!-- Main -->
+<main class="main-content">
+
+    <div class="site-lang-select-container">
+    <button class="site-lang-select-btn" id="site-lang-select-btn" >
+        English        <span class="arrow-down"></span>
+    </button>
+
+    <div class="site-lang-select-content">
+        <ul>
+            <li><a href=" /en/edit.php ">English</a></li>
+            <li><a href=" /pt/edit.php ">Português</a></li>
+            <li><a href=" /es/edit.php ">Español</a></li>
+        </ul>
+    </div>
+
+</div>
+
+    <h1 class="page-title">Subtitles Editor</h1>
+    <h2 class="page-description">With our subtitle editor you can easily make modifications to your subtitle files.
+        You have the option of using the editor after performing a translation, allowing you to preview the translation result and
+        make some corrections if you wish. You can also use the subtitle editor at any time, even if you don't do a translation.
+    </h2>
+    
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- Quadrado -->
+<ins class="adsbygoogle"
+     style="display:block; text-align: center;"
+     data-ad-client="ca-pub-4157470772429270"
+     data-ad-slot="5771126571"
+     data-ad-format="auto"
+     data-full-width-responsive="true"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    
+    <div class="tool-content edit-content">
+        <h3 class="tool-content-title">Upload</h3>
+        <div class="page-description" style="width: 90%; margin-left: 5%">Click the button below to upload the files you want to edit</div>
+        <div id="div-ad" style="width:100%; text-align:center; margin-top:40px">
+
+<!-- Translate -->
+<ins class="adsbygoogle"
+     style="display:inline-block;text-align:center;width:300px;height:250px"
+     data-ad-client="ca-pub-4157470772429270"
+     data-ad-slot="3752495568"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+        </div>
+        <div style="width: 100%; text-align: center; margin-top: 20px">
+            <div class="table-container">
+                <label for="edit-file-select" id="edit-file-select-label">Select File:</label><br>
+                <select id="edit-file-select">
+                    <option value="">Select Subtitle</option>
+                </select>
+                <button class="red-button" id="save-button">
+                    <img src="../resources/images/save.svg" width="18" height="18" style="vertical-align: bottom">
+                    SAVE
+                </button>
+                 <div style="width=100%;text-align:center">
+
+<!-- Translate Resposive -->
+<ins class="adsbygoogle"
+     id="ad-translate"
+     style="display:inline-block;"
+     data-full-width-responsive="true"
+     data-ad-client="ca-pub-4157470772429270"
+     data-ad-slot="8388704569"></ins>
+<script>
+     (adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+    </div>
+                <div class="table-overflow">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Start</th>
+                            <th>End</th>
+                            <th>Text</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tool-nav-container">
+                    <button class="return-button" id="return-button-edit">
+                        <img src="../resources/images/left_arrow.svg" width="10" height="10">
+                        <span style="margin-left: 2px">
+                        RETURN
+                        </span>
+                    </button>
+                    <button class="red-button" id="next-button-edit">
+                        NEXT
+                        <img src="../resources/images/right_arrow.svg" width="10" height="10">
+                    </button>
+                </div>
+            </div>
+
+            <form target="_blank" id="upload-form" enctype="multipart/form-data" method="post" action="../src/services/download_file.php">
+                <label for="file-upload-edit" class="red-button" id="upload-btn">
+                    <img src="../resources/images/upload_cloud.svg" width="18" height="13"/>
+                    <span style="margin-left: 4px;">UPLOAD</span>
+                </label>
+                <input type="file" name="files[]" id="file-upload-edit" class="file-input" accept=".srt, .vtt, .stl, .sbv, .sub, .ass" multiple/>
+                <input type="hidden" name="subtitles" value=""/>
+            </form>
+        </div>
+    </div>
+
+    <div class="fb-button" style="margin-bottom: 5px; width: 100%">
+    <a target="_blank" style="margin:0; width: 81px" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsubtitlestranslator.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore fb-custom-button">
+    </a>
+</div>
+<div style="margin-top: 4px">
+    <a style="margin-left: 0" target="_blank" class="tweet-custom-button" href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%2Fsubtitlestranslator%2Fpublic%2F&ref_src=twsrc%5Etfw&text=Subtitles%20Translator%20-%20Free%20online%20subtitles%20translator%20tool!&tw_p=tweetbutton&url=https%3A%2F%2Fsubtitlestranslator.com">
+    </a>
+</div>
+
+<div class="donation-section">
+    <span>Did you like the tool? Support by making a donation.</span>
+    <div style="margin-top: 15px">
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+            <input type="hidden" name="cmd" value="_s-xclick" />
+            <input type="hidden" name="hosted_button_id" value="TN79V7QKF8RMU" />
+            <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif" border="0" name="submit" title="PayPal - The safer, easier way to pay online!" alt="Donate with PayPal button" />
+            <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1" />
+        </form>
+    </div>
+</div>
+    <div id="text-to-edit" style="display: none">
+            </div>
+
+    <script>
+    $("document").ready(function () {
+        if (Cookies.get('subtitles_translator_show_cookie_consent') != '1') {
+            $("#cookieConsent").fadeIn(200);
+            Cookies.set('subtitles_translator_show_cookie_consent', '1', { expires: 7});
+        }
+        $("#closeCookieConsent, .cookieConsentOK").click(function() {
+            $("#cookieConsent").fadeOut(200);
+        });
+    });
+</script>
+
+
+<div id="cookieConsent">
+    <div id="closeCookieConsent">x</div>
+    <p>Cookies help us deliver our services. By using our services, you agree to our use of cookies. <a href="/en/policy.php" target="_blank">More info</a>.</p>
+    <a class="cookieConsentOK">That's Fine</a>
+</div></main>
+
+<!-- Footer -->
+<footer>
+    <div class="footer-content">    <div class="footer-links-container">        <div class="footer-links-title">            Important Links        </div>        <ul>            <li><a href="/en/support.php">Support</a> </li>            <li><a href="/en/policy.php">Privacy Policy</a> </li>        </ul>    </div>    <div class="footer-social-container">        <div class="footer-social-title">            Share        </div>        <ul>            <li><a target="_blank" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fsubtitlestranslator.com%2F&amp;src=sdkpreparse" class="fb-xfbml-parse-ignore">                    <div class="facebook-logo"></div>  Facebook                </a>            </li>            <li><a href="https://twitter.com/intent/tweet?original_referer=http%3A%2F%2Flocalhost%2Fsubtitlestranslator%2Fpublic%2F&ref_src=twsrc%5Etfw&text=Subtitles%20Translator%20-%20Free%20online%20subtitles%20translator%20tool!&tw_p=tweetbutton&url=https%3A%2F%2Fsubtitlestranslator.com">                    <div class="twitter-logo"></div>Twitter                </a>            </li>        </ul>    </div>    <div class="footer-email">        support@subtitlestranslator.com    </div></div><div class="copyright">    <span>© Copyright 2023 subtitlestranslator.com</span></div></footer>
+
+</body>
+</html>
