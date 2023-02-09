@@ -39,6 +39,12 @@ const Form: React.FC<FormProps> = ({ onAcitve, onData, data }): JSX.Element => {
     onData(cpData);
   };
 
+  const handleChangeLocation = (event: React.ChangeEvent<HTMLInputElement>): void => {
+    const cpData = { ...data };
+    cpData.Location = event.target.value;
+    onData(cpData);
+  };
+
   const handleSendRequest = async () => {
     const valid: any = await validationPost(data, toast);
     if (valid) {
@@ -52,7 +58,7 @@ const Form: React.FC<FormProps> = ({ onAcitve, onData, data }): JSX.Element => {
         <Description toggle={handleToggleEmojiPicker} value={descriptionValue} onChange={handleChangeDescription} />
         <FormControl my={5}>
           <FormLabel>Location</FormLabel>
-          <Input type="Text" placeholder="Write your location" name="Location" />
+          <Input type="Text" placeholder="Write your location" name="Location" onChange={handleChangeLocation} />
         </FormControl>
         <Button colorScheme="blue" w="100%" my="5" onClick={handleSendRequest}>
           Share

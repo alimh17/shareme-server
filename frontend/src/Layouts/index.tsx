@@ -6,7 +6,7 @@ import Navbar from 'components/Navbar';
 import Header from 'components/Header';
 import BottomBar from 'components/BottomBar';
 
-const Layouts = () => {
+const Layouts: React.FC = (): JSX.Element => {
   return (
     <Box
       w="100%"

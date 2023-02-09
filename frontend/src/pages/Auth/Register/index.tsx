@@ -65,7 +65,7 @@ const Register: React.FC<RegisterProps> = (): JSX.Element => {
     validationSchema: RegisterSchema,
     onSubmit: async (values: any) => {
       const data = await registerRequest(values, acceptedFiles[0], toast);
-      if (data) navigate('/login');
+      if (data) navigate('/code');
     },
   });
 

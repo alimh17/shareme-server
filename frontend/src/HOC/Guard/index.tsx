@@ -2,28 +2,28 @@ import React, { useEffect } from 'react';
 import { useJwt } from 'react-jwt';
 import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { initUser } from 'store/UserSlice';
 import config from 'config/index.json';
-
-const { SECRET_KEY } = config;
+import { userRequest } from 'server/userRequest';
+import { initUser } from 'store/UserSlice';
 
 interface Props {
   children: React.ReactNode;
 }
 
 const Gourd: React.FC<Props> = ({ children }) => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const shareme = JSON.parse(localStorage.getItem('shareme') || '');
-  const { isExpired } = useJwt(shareme?.access);
+  const shareme = localStorage.getItem('shareme');
+  const token = shareme ? JSON.parse(shareme) : {};
+
+  const { isExpired } = useJwt(token?.access);
 
   useEffect(() => {
     if (isExpired) {
       navigate('/login');
     } else {
-      const { user } = shareme;
-      dispatch(initUser(user));
+      dispatch(initUser(token.user));
     }
   }, []);
 

@@ -13,7 +13,7 @@ const postSchema = new mongoose_1.Schema({
         default: "",
     },
     owner: {
-        type: String,
+        type: {},
         default: "",
         required: true,
     },

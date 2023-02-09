@@ -9,7 +9,7 @@ const Authorization = (req: Request, res: Response, next: NextFunction) => {
   }
 
   try {
-    jwt.verify(token, process.env.SECRET_KEY || "");
+    jwt.verify(token.slice(7, token.length), process.env.SECRET_KEY || "");
     next();
   } catch (err) {
     return res.status(401).send("Access token is invalid or has expired.");

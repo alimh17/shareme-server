@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Avatar,
-  Button,
   Center,
   Divider,
   Flex,
@@ -13,12 +12,32 @@ import {
   VStack,
 } from '@chakra-ui/react';
 import { faker } from '@faker-js/faker';
+import { useSelector } from 'react-redux';
+import { ProfileCondition } from 'utils/ProfileCondition';
+import config from 'config/index.json';
+import FollowBTN from './FollowBTN';
+import Followers from './Followers';
 
 interface Props {}
 
+const { IMAGES_URL } = config;
+
 const Head: React.FC<Props> = () => {
+  const [followers, setFollowers] = React.useState<number>(0);
   const { colorMode } = useColorMode();
   const [isMinThan768] = useMediaQuery('(max-width : 768px)');
+
+  const me = useSelector((state: any) => state.User.user);
+  const profile = useSelector((state: any) => state.Profile.profile);
+
+  const handleUpdateFollowers = (params: string) => {
+    if (params === 'plus') setFollowers(followers + 1);
+    if (params === 'min') setFollowers(followers - 1);
+  };
+
+  useEffect(() => {
+    setFollowers(profile?.followers?.length);
+  }, [profile]);
 
   return (
     <Flex
@@ -32,15 +51,19 @@ const Head: React.FC<Props> = () => {
       flexFlow={isMinThan768 ? 'column' : 'row'}
     >
       <Center flex={4}>
-        <Avatar src={faker.image.avatar()} w="150" h="150" />
+        <Avatar
+          src={ProfileCondition(me.username, profile.username) ? IMAGES_URL + me.profile : IMAGES_URL + profile.profile}
+          size="2xl"
+        />
       </Center>
       <VStack flex={8}>
         <Heading as="h3" fontSize="lg">
-          {faker.name.fullName()}
+          {profile.name ? profile.name : profile.username}
         </Heading>
-        <Text px="3">{faker.lorem.paragraph()}</Text>
+        <Text px="3">{profile.bio}</Text>
         <Divider />
         <HStack gap="4" p="3">
+          <Followers followers={followers} />
           <Text
             sx={{
               textAlign: 'center',
@@ -49,7 +72,7 @@ const Head: React.FC<Props> = () => {
               _hover: { bg: colorMode ? 'dark500' : '#cccccc', cursor: 'pointer' },
             }}
           >
-            Followers 220k
+            Followings {profile.followings?.length}
           </Text>
           <Text
             sx={{
@@ -59,24 +82,10 @@ const Head: React.FC<Props> = () => {
               _hover: { bg: colorMode ? 'dark500' : '#cccccc', cursor: 'pointer' },
             }}
           >
-            Followings 120k
-          </Text>
-          <Text
-            sx={{
-              textAlign: 'center',
-              p: '3',
-              borderRadius: '8px',
-              _hover: { bg: colorMode ? 'dark500' : '#cccccc', cursor: 'pointer' },
-            }}
-          >
-            Posts 20
+            Posts {profile.posts?.length}
           </Text>
         </HStack>
-        <HStack justifyContent="flex-end" p="3" w="74%">
-          <Button colorScheme="blue" w="100%">
-            Follow
-          </Button>
-        </HStack>
+        <FollowBTN onClick={handleUpdateFollowers} />
       </VStack>
     </Flex>
   );

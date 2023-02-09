@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export const postSchema = Yup.object().shape({
   Description: Yup.string()
     .required('Description field required')
-    .min(32, 'Capton Must contain at least 32 characters'),
+    .min(12, 'Capton Must contain at least 12 characters'),
 });
 
 export const validationPost = async (data: any, toast: any) => {

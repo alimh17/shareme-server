@@ -6,6 +6,7 @@
   "scripts": {
     "start:tsc": "tsc -w",
     "dev": "nodemon dist/index.js",
+    "start": "npm start dist/index.js",
     "lint": "eslint .",
     "lint:fix": "eslint --fix ."
   },

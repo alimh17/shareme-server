@@ -10,7 +10,7 @@ export interface IUser {
   bio: string;
   posts: Array<object>;
   followers: Array<object>;
-  following: Array<object>;
+  followings: Array<object>;
   createdAt: Date;
   breathday: Date;
 }
@@ -54,7 +54,7 @@ const userSchema = new Schema<IUser>({
     type: [{}],
     default: [],
   },
-  following: {
+  followings: {
     type: [{}],
     default: [],
   },

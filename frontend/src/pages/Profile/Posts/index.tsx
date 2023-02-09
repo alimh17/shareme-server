@@ -3,11 +3,13 @@ import { Grid, GridItem, Tab, TabList, TabPanel, TabPanels, Tabs, useMediaQuery,
 import { BsFillGridFill } from 'react-icons/bs';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import Post from 'components/Post';
+import { useSelector } from 'react-redux';
 
 interface Props {}
 
 const Posts: React.FC<Props> = () => {
   const [isMaxThan1200] = useMediaQuery('(min-width : 1200px)');
+  const user = useSelector((state: any) => state.Profile.profile);
 
   return (
     <Tabs
@@ -29,13 +31,13 @@ const Posts: React.FC<Props> = () => {
       <TabPanels>
         <TabPanel>
           <VStack mb="20">
-            <Post />
-            <Post />
-            <Post />
+            {user?.posts?.map((post: any) => (
+              <Post key={post._id} post={post} />
+            ))}
           </VStack>
         </TabPanel>
         <TabPanel>
-          <Grid templateColumns={isMaxThan1200 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)'} gap={6}>
+          {/* <Grid templateColumns={isMaxThan1200 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)'} gap={6}>
             <GridItem h="md">
               <Post height="35rem" />
             </GridItem>
@@ -51,7 +53,7 @@ const Posts: React.FC<Props> = () => {
             <GridItem>
               <Post height="35rem" />
             </GridItem>
-          </Grid>
+          </Grid> */}
         </TabPanel>
       </TabPanels>
     </Tabs>

@@ -15,7 +15,7 @@ export const registerRequest = async (values: any, file: any, toast: any) => {
       formData.append(value, values[value]);
     }
     formData.append('file', file);
-    const { data } = await axios.post(`${BASE_URL}auth/v1/register`, formData);
+    const { data } = await axios.post(`${BASE_URL}auth/register`, formData);
     if (data) {
       toast({
         ...toastOption,
@@ -36,7 +36,7 @@ export const registerRequest = async (values: any, file: any, toast: any) => {
     if (err.response.status === 409) {
       toast({
         ...toastOption,
-        description: 'Please select a image for profile.',
+        description: 'Please select a profile picture',
         status: 'error',
       });
     }

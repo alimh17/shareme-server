@@ -27,9 +27,10 @@ import Footer from './Footer';
 
 interface PostProps {
   height?: string;
+  post: any;
 }
 
-const Post: React.FC<PostProps> = ({ height }): JSX.Element => {
+const Post: React.FC<PostProps> = ({ height, post }): JSX.Element => {
   const { colorMode, toggleColorMode } = useColorMode();
   const theme = useTheme();
 
@@ -43,8 +44,8 @@ const Post: React.FC<PostProps> = ({ height }): JSX.Element => {
       maxW="md"
       height={height ? height : 'auto'}
     >
-      <Head />
-      <Body />
+      <Head post={post} />
+      <Body post={post} />
       <Footer />
     </Card>
   );

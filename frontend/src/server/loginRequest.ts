@@ -5,7 +5,7 @@ const { BASE_URL } = config;
 
 export const loginRequest = async (values: any, toast: any) => {
   try {
-    const res = await axios.post(`${BASE_URL}auth/v1/login`, values);
+    const res = await axios.post(`${BASE_URL}auth/login`, values);
     if (res.data) {
       const cpData = { ...res.data };
       delete cpData.password;

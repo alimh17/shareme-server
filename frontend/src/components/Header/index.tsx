@@ -11,14 +11,13 @@ import {
   useColorMode,
   useMediaQuery,
 } from '@chakra-ui/react';
-import { faker } from '@faker-js/faker';
-import { useEffect } from 'react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
 import config from 'config/index.json';
+import { PathCondition } from 'utils/PathCondition';
 
-const { BASE_URL } = config;
+const { IMAGES_URL } = config;
 
 const Header: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -42,17 +41,16 @@ const Header: React.FC = () => {
     >
       <Flex
         sx={{
-          display:
-            (isMinThan768 && 'none') || (pathname === '/login' && 'none') || (pathname === '/register' && 'none'),
+          display: !isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
         }}
       >
-        <Link to="/profile">
+        <Link to={`/${user?.username}`}>
           <Center gap={2}>
-            <Avatar name={user.username} src={BASE_URL + user.profile} sx={{ cursor: 'pointer' }}>
+            <Avatar name={user?.username} src={IMAGES_URL + user?.profile} sx={{ cursor: 'pointer' }}>
               <AvatarBadge boxSize="1.25em" bg="green.500" />
             </Avatar>
             <Text fontSize="md" as="b" display={isMinThan600 ? 'none' : 'block'}>
-              {user.username}
+              {user?.username}
             </Text>
           </Center>
         </Link>
@@ -64,13 +62,7 @@ const Header: React.FC = () => {
         <Link
           to="/add-post"
           style={{
-            display: isMinThan768
-              ? 'none'
-              : pathname === '/login'
-              ? 'none'
-              : pathname === '/register'
-              ? 'none'
-              : 'flex',
+            display: !isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
           }}
         >
           <IconButton

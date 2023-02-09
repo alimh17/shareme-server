@@ -4,9 +4,11 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = require("express");
-const Post_1 = require("../../controllers/Post");
 const Authorization_1 = __importDefault(require("../../middlewares/Authorization"));
 const postMulter_1 = __importDefault(require("../../middlewares/postMulter"));
+const DeletePost_1 = __importDefault(require("../../controllers/Post/DeletePost"));
+const index_1 = __importDefault(require("../../controllers/Post/CreatePost/index"));
 const router = (0, express_1.Router)();
-router.post("/", Authorization_1.default, postMulter_1.default.any(), Post_1.PostController);
+router.post("/", Authorization_1.default, postMulter_1.default.any(), index_1.default);
+router.put("/", Authorization_1.default, DeletePost_1.default);
 exports.default = router;

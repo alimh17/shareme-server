@@ -12,7 +12,7 @@ import {
   useColorMode,
   useMediaQuery,
 } from '@chakra-ui/react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { faker } from '@faker-js/faker';
 import { BiDotsVerticalRounded, BiMessageRounded } from 'react-icons/bi';
 import { FiHome } from 'react-icons/fi';
@@ -24,14 +24,17 @@ import { useSelector } from 'react-redux';
 import Logout from 'components/Logout';
 
 import config from 'config/index.json';
+import { PathCondition } from 'utils/PathCondition';
+import { AiOutlinePlusCircle } from 'react-icons/ai';
 
-const { BASE_URL } = config;
+const { IMAGES_URL } = config;
 
 const BottomBar: React.FC = (): JSX.Element => {
   const { colorMode, toggleColorMode } = useColorMode();
   const [isMinThan768] = useMediaQuery('(max-width : 768px)');
 
   const user = useSelector((state: any) => state.User.user);
+  const { pathname } = useLocation();
 
   return (
     <HStack
@@ -40,13 +43,13 @@ const BottomBar: React.FC = (): JSX.Element => {
         bottom: '0',
         w: '100%',
         padding: '12px',
-        display: isMinThan768 ? 'flex' : 'none',
+        display: isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
         bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
         justifyContent: 'space-around',
       }}
     >
-      <Link to="/profile">
-        <Avatar name={user.username} src={BASE_URL + user.profile} sx={{ cursor: 'pointer' }}>
+      <Link to={`${user?.username}`}>
+        <Avatar name={user?.username} src={IMAGES_URL + user?.profile} sx={{ cursor: 'pointer' }}>
           <AvatarBadge boxSize="1.25em" bg="green.500" />
         </Avatar>
       </Link>
@@ -67,6 +70,9 @@ const BottomBar: React.FC = (): JSX.Element => {
           colorScheme="dark800"
         />
         <MenuList>
+          <Link to="/add-post">
+            <MenuItem icon={<AiOutlinePlusCircle fontSize="20" />}>Add Post</MenuItem>
+          </Link>
           <MenuItem icon={<HiOutlineVideoCamera fontSize="20" />}>Video Call</MenuItem>
           <MenuItem icon={<ImPhone fontSize="20" />}>Voice Call</MenuItem>
           <Box pl="3">

@@ -1,29 +1,31 @@
 import { Request, Response } from "express";
 import { decode } from "jsonwebtoken";
-import Post from "../../models/Post/Post";
-import User from "../../models/User/User";
 
-const getMediaPost = (files: any) => {
-  const media = [];
-  for (const file of files) {
-    media.push({ source: file.path, title: file.filename });
-  }
-  return media;
-};
+import Post from "../../../models/Post/Post";
+import User from "../../../models/User/User";
 
-export const PostController = async (req: Request, res: Response) => {
+import getMediaPost from "./getMediaPost";
+import updateFollowingList from "./updateFollowingList";
+
+const createPost = async (req: Request, res: Response) => {
   try {
     //! files is Requred for create post --- image or video
     if (!req.files) {
       return res.status(409).json({ message: "Please send a image or video" });
     }
+
     //! Here decoded access token and get user data
-    const decoded = await decode(req.headers.authorization || "");
+    const token = req.headers.authorization?.slice(
+      7,
+      req.headers.authorization.length
+    );
+    const decoded = await decode(token || "");
 
     //! If  decoded didn't exist , return...
     if (!decoded) {
       return res.status(409).json({ message: "can not decode" });
     }
+
     //! Here get decoded data
     const data: any = decoded;
 
@@ -36,8 +38,8 @@ export const PostController = async (req: Request, res: Response) => {
     const post = new Post({
       media,
       description: Description,
-      locaion: Location,
-      owner: data.user.username,
+      location: Location,
+      owner: { name: data.user.username, profile: data.user.profile },
     });
 
     //! Here add post to user data and update user information
@@ -47,12 +49,19 @@ export const PostController = async (req: Request, res: Response) => {
       { new: true }
     );
 
+    //! Updating the following list of users who have followed this user
+    updateFollowingList(data.user.username);
+
     //! save changes
     await post.save();
     await user?.save();
 
-    res.status(200).json({ message: "success" });
+    return res.status(200).json({ message: "success" });
   } catch (err) {
     console.log(err);
+    res.status(500).json({ message: "Failed , please try again" });
+    process.exit(1);
   }
 };
+
+export default createPost;

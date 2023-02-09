@@ -4,9 +4,27 @@ import { Container, useMediaQuery } from '@chakra-ui/react';
 import Gourd from 'HOC/Guard';
 import Head from './Head';
 import Posts from './Posts';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { profileRequest } from 'server/profileRequest';
+import { useDispatch } from 'react-redux';
+import { initProfile } from 'store/ProfileSlice';
 
 const Profile: React.FC = (): JSX.Element => {
   const [isMaxThan1200] = useMediaQuery('(min-width : 1200px)');
+
+  const { pathname } = useLocation();
+  const navigate = useNavigate();
+
+  const dispatch = useDispatch();
+
+  React.useLayoutEffect(() => {
+    profileRequest(pathname).then((res: any) => {
+      if (res?.status === undefined) {
+        navigate('/404');
+      }
+      dispatch(initProfile(res.data?.user));
+    });
+  }, [navigate]);
 
   return (
     <Gourd>

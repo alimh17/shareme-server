@@ -2,7 +2,6 @@ import axios from 'axios';
 import config from 'config/index.json';
 
 const { BASE_URL } = config;
-const shareme = JSON.parse(localStorage.getItem('shareme') || '');
 
 const toastOption = {
   duration: 3000,
@@ -12,6 +11,8 @@ const toastOption = {
 
 export const postRequest = async (values: any, toast: Function, navigate: Function) => {
   try {
+    const shareme = localStorage.getItem('shareme');
+    const token = shareme ? JSON.parse(shareme) : {};
     const formData = new FormData();
     for (const value of values.Files) {
       formData.append(value.name, value);
@@ -20,9 +21,9 @@ export const postRequest = async (values: any, toast: Function, navigate: Functi
     formData.append('Description', values.Description);
     formData.append('Location', values.Location);
 
-    const res = await axios.post(`${BASE_URL}post/v1/`, formData, {
+    const res = await axios.post(`${BASE_URL}post`, formData, {
       headers: {
-        Authorization: shareme.access,
+        Authorization: `Bearer ${token?.access}`,
       },
     });
 

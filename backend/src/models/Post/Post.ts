@@ -7,7 +7,7 @@ export interface IPost {
   like: Array<IUser>;
   comment: Array<object>;
   location: string;
-  owner: string;
+  owner: object;
 }
 
 const postSchema = new Schema<IPost>({
@@ -22,7 +22,7 @@ const postSchema = new Schema<IPost>({
     default: "",
   },
   owner: {
-    type: String,
+    type: {},
     default: "",
     required: true,
   },

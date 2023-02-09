@@ -10,7 +10,7 @@ const Authorization = (req, res, next) => {
         return res.status(401).send("Access token is required.");
     }
     try {
-        jsonwebtoken_1.default.verify(token, process.env.SECRET_KEY || "");
+        jsonwebtoken_1.default.verify(token.slice(7, token.length), process.env.SECRET_KEY || "");
         next();
     }
     catch (err) {

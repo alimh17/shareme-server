@@ -12,7 +12,6 @@ const registerController = async (req, res) => {
         const data = req.body;
         const { error, value } = Auth_Validation_1.registerSchema.validate(data);
         console.log(error);
-        console.log(value);
         if (error) {
             return res.status(409).json({ error: error.details });
         }
@@ -33,7 +32,7 @@ const registerController = async (req, res) => {
             username: value.username,
             email: value.email,
             password: hashPassword,
-            profile: req.file ? `public/profile/${req.file.filename}` : "",
+            profile: req.file ? `profile/${req.file.filename}` : "",
         });
         await user.save();
         res.status(200).json({ success: "success" });

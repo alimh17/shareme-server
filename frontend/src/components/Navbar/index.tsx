@@ -9,6 +9,7 @@ import { IoSettingsOutline } from 'react-icons/io5';
 
 import { Link, useLocation } from 'react-router-dom';
 import Logout from '../Logout';
+import { PathCondition } from 'utils/PathCondition';
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
@@ -26,7 +27,7 @@ const Navbar = () => {
         p: '3',
         bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
         gap: '5',
-        display: isMinThan768 || pathname === '/login' || pathname === '/register' ? 'none' : 'flex',
+        display: !isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
       }}
     >
       <Tooltip label="Home">

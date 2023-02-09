@@ -3,7 +3,7 @@ import * as Yup from 'yup';
 export const RegisterSchema = Yup.object().shape({
   username: Yup.string()
     .required('Username is required')
-    .min(3, 'Username should not be less than 3 characters')
+    .min(4, 'Username should not be less than 3 characters')
     .max(64, 'Username should not be more than 3 characters'),
   email: Yup.string().required('Email is required').email('Email is not valid'),
   password: Yup.string()
