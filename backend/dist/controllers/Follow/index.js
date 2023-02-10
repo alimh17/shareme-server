@@ -14,7 +14,7 @@ const Follow = async (req, res) => {
             return res.status(409).json({ message: "Token is not valid" });
         }
         //! update user followers list
-        const user = await User_1.default.findOneAndUpdate({ username: req?.body?.username }, { $push: { followers: decoded.user } }, { new: true });
+        const user = await User_1.default.findOneAndUpdate({ username: decoded?.cpUser?.username }, { $push: { followers: decoded.user } }, { new: true });
         //! update my followings list
         const me = await User_1.default.findOneAndUpdate({ username: decoded.user.username }, { $push: { followings: req?.body } }, { new: true });
         if (!user) {

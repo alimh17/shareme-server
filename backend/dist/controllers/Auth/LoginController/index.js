@@ -7,7 +7,6 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const User_1 = __importDefault(require("../../../models/User/User"));
 const Auth_Validation_1 = require("../../../utils/Vlidation/Auth-Validation");
-const refreshToken_1 = __importDefault(require("../../../middlewares/refreshToken"));
 const bcrypt_1 = require("../../../utils/bcrypt");
 const loginController = async (req, res) => {
     try {
@@ -16,29 +15,37 @@ const loginController = async (req, res) => {
         if (error) {
             return res.status(409).json({ message: error.details });
         }
-        const user = await User_1.default.findOne({ email: value?.email });
-        if (!user) {
+        const findUser = await User_1.default.findOne({ email: value?.email });
+        if (!findUser) {
             return res
                 .status(404)
                 .json({ message: "کاربری با این مشخصات ثبت نشده است" });
         }
-        const pass = await (0, bcrypt_1.Compare)(user.password, req.body.password);
+        const pass = await (0, bcrypt_1.Compare)(findUser.password, req.body.password);
         if (!pass) {
             return res
                 .status(404)
                 .json({ message: "کاربری با این مشخصات ثبت نشده است" });
         }
         const secret = process.env.SECRET_KEY;
+        const user = {
+            username: findUser.username,
+            name: findUser.name,
+            bio: findUser.bio,
+            profile: findUser.profile,
+        };
         const access = jsonwebtoken_1.default.sign({ user }, secret, {
             expiresIn: "14d",
         });
-        const refresh = (0, refreshToken_1.default)(user);
+        const refresh = jsonwebtoken_1.default.sign({ user }, secret, {
+            expiresIn: "365d",
+        });
         const options = {
-            maxAge: 1000 * 60 * 60 * 24 * 7,
+            maxAge: 1000 * 60 * 60 * 24 * 14,
             httpOnly: true,
             signed: true, // Indicates if the cookie should be signed
         };
-        res.cookie("user-shareme", { email: user.email }, options);
+        res.cookie("user-shareme", { email: findUser.email }, options);
         res.status(200).json({ access, refresh, user });
     }
     catch (err) {

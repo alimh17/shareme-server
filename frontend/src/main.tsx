@@ -8,7 +8,7 @@ import router from 'routes';
 import theme from 'theme';
 import { Provider } from 'react-redux';
 import store from 'store';
-import Gourd from 'HOC/Guard';
+import Refresh from 'HOC/Refresh';
 
 const queryClient = new QueryClient();
 
@@ -32,7 +32,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
       <QueryClientProvider client={queryClient}>
         <ChakraProvider resetCSS theme={theme}>
           <ColorModeScript initialColorMode={mode.config?.initialColorMode} />
-          <RouterProvider router={router} />
+          <Refresh>
+            <RouterProvider router={router} />
+          </Refresh>
         </ChakraProvider>
       </QueryClientProvider>
     </Provider>

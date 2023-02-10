@@ -16,7 +16,7 @@ export const Follow = async (req: Request, res: Response) => {
 
     //! update user followers list
     const user = await User.findOneAndUpdate(
-      { username: req?.body?.username },
+      { username: decoded?.cpUser?.username },
       { $push: { followers: decoded.user } },
       { new: true }
     );

@@ -4,7 +4,6 @@ import jwt from "jsonwebtoken";
 
 import User from "../../../models/User/User";
 import { loginSchema } from "../../../utils/Vlidation/Auth-Validation";
-import refreshTokenGenerator from "../../../middlewares/refreshToken";
 import { Compare } from "../../../utils/bcrypt";
 
 const loginController = async (req: Request, res: Response) => {
@@ -15,15 +14,15 @@ const loginController = async (req: Request, res: Response) => {
       return res.status(409).json({ message: error.details });
     }
 
-    const user = await User.findOne({ email: value?.email });
+    const findUser = await User.findOne({ email: value?.email });
 
-    if (!user) {
+    if (!findUser) {
       return res
         .status(404)
         .json({ message: "کاربری با این مشخصات ثبت نشده است" });
     }
 
-    const pass = await Compare(user.password, req.body.password);
+    const pass = await Compare(findUser.password, req.body.password);
 
     if (!pass) {
       return res
@@ -32,18 +31,28 @@ const loginController = async (req: Request, res: Response) => {
     }
 
     const secret: string | undefined = process.env.SECRET_KEY;
+
+    const user = {
+      username: findUser.username,
+      name: findUser.name,
+      bio: findUser.bio,
+      profile: findUser.profile,
+    };
+
     const access = jwt.sign({ user }, secret as string, {
       expiresIn: "14d",
     });
+    const refresh = jwt.sign({ user }, secret as string, {
+      expiresIn: "365d",
+    });
 
-    const refresh = refreshTokenGenerator(user);
     const options = {
-      maxAge: 1000 * 60 * 60 * 24 * 7, // would expire after 7 days
+      maxAge: 1000 * 60 * 60 * 24 * 14, // would expire after 14 days
       httpOnly: true,
       signed: true, // Indicates if the cookie should be signed
     };
 
-    res.cookie("user-shareme", { email: user.email }, options);
+    res.cookie("user-shareme", { email: findUser.email }, options);
     res.status(200).json({ access, refresh, user });
   } catch (err) {
     console.log(err);

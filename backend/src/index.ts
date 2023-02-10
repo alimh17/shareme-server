@@ -14,6 +14,7 @@ import Follow from "./routes/Follow";
 import Unfollow from "./routes/Unfollow";
 import IsFollow from "./routes/IsFollow";
 import maybeYouKnow from "./routes/MYK";
+import Refresh from "./routes/Refresh";
 
 import path from "path";
 import connectDB from "./DB";
@@ -40,6 +41,7 @@ app.use("/v1/follow", Follow);
 app.use("/v1/unfollow", Unfollow);
 app.use("/v1/isfollow", IsFollow);
 app.use("/v1/myk", maybeYouKnow);
+app.use("/v1/refresh", Refresh);
 
 //? --------------------- Connect To DataBase ---------------------------
 connectDB(server);

@@ -8,13 +8,13 @@ const UserController = async (req: Request, res: Response) => {
       7,
       req.headers.authorization.length
     );
-    const decoded: any = decode(token || "");
+    const decoded: any = await decode(token || "");
 
     if (!decode) {
       return res.status(409).json({ message: "Access token is required" });
     }
 
-    const user = await User.findOne({ username: decoded.user.username });
+    const user = await User.findOne({ username: decoded?.user?.username });
 
     if (!user) {
       return res.status(404).json({ message: "User is not defined" });
