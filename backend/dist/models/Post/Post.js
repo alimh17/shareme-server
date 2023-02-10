@@ -29,6 +29,10 @@ const postSchema = new mongoose_1.Schema({
         type: [{}],
         default: [],
     },
+    createdAt: {
+        type: Date,
+        default: Date.now,
+    },
 });
 const Post = (0, mongoose_1.model)("Post", postSchema);
 exports.default = Post;

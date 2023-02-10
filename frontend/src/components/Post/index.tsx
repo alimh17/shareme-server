@@ -15,6 +15,7 @@ import {
   Heading,
   VStack,
   HStack,
+  useMediaQuery,
 } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import { HiHeart } from 'react-icons/hi';
@@ -32,6 +33,8 @@ interface PostProps {
 
 const Post: React.FC<PostProps> = ({ height, post }): JSX.Element => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const [isMinThan768] = useMediaQuery('(max-width : 768px)');
+
   const theme = useTheme();
 
   return (
@@ -41,7 +44,7 @@ const Post: React.FC<PostProps> = ({ height, post }): JSX.Element => {
         boxShadow: colorMode === 'dark' ? 'sm' : 'lg',
         border: colorMode === 'dark' ? 'none' : '1px solid gray.600',
       }}
-      maxW="md"
+      maxW={isMinThan768 ? 'sm' : 'md'}
       height={height ? height : 'auto'}
     >
       <Head post={post} />

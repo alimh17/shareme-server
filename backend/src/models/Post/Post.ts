@@ -8,6 +8,7 @@ export interface IPost {
   comment: Array<object>;
   location: string;
   owner: object;
+  createdAt: object;
 }
 
 const postSchema = new Schema<IPost>({
@@ -37,6 +38,10 @@ const postSchema = new Schema<IPost>({
   comment: {
     type: [{}],
     default: [],
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
   },
 });
 

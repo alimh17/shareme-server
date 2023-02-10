@@ -33,8 +33,8 @@ const Head: React.FC<Props> = ({ post }): JSX.Element => {
     <CardHeader>
       <Flex>
         <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-          <Avatar name={post?.owner.name} src={IMAGES_URL + post?.owner.profile} loading="lazy" />
-          <Box sx={{ display: isMinThan768 ? 'none' : 'flex', flexFlow: 'column' }}>
+          <Avatar name={post?.owner?.name} src={IMAGES_URL + post?.owner.profile} loading="lazy" />
+          <Box>
             <Text fontSize="md" size="md" fontWeight="bold">
               {post?.owner.name}
             </Text>

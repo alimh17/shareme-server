@@ -8,6 +8,7 @@ const jsonwebtoken_1 = require("jsonwebtoken");
 const updatePostsList_1 = __importDefault(require("./updatePostsList"));
 const User_1 = __importDefault(require("../../../models/User/User"));
 const deleteFile_1 = require("../../../utils/deleteFile");
+const Post_1 = __importDefault(require("../../../models/Post/Post"));
 const deletePost = async (req, res) => {
     try {
         //! Here decoded access token and get user data
@@ -26,9 +27,11 @@ const deletePost = async (req, res) => {
         const user = await User_1.default.findOneAndUpdate({ username: decoded.user.username }, {
             $pull: { posts: { _id: objectId } },
         }, { new: true });
+        //! Delete post of Post schema
+        await Post_1.default.findOneAndDelete({ "owner.name": decoded.user.username });
         //! Updating the Posts list of users who have followed this user
         (0, updatePostsList_1.default)(decoded.user.username, user.posts);
-        res.status(200).json({ message: "success" });
+        return res.status(200).json({ message: "success" });
     }
     catch (err) {
         console.log(err);

@@ -5,6 +5,7 @@ import { decode } from "jsonwebtoken";
 import updatePostList from "./updatePostsList";
 import User from "../../../models/User/User";
 import { deletePostFiles } from "../../../utils/deleteFile";
+import Post from "../../../models/Post/Post";
 
 const deletePost = async (req: Request, res: Response) => {
   try {
@@ -37,10 +38,13 @@ const deletePost = async (req: Request, res: Response) => {
       { new: true }
     );
 
+    //! Delete post of Post schema
+    await Post.findOneAndDelete({ "owner.name": decoded.user.username });
+
     //! Updating the Posts list of users who have followed this user
     updatePostList(decoded.user.username, user.posts);
 
-    res.status(200).json({ message: "success" });
+    return res.status(200).json({ message: "success" });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: "Failed , please try again" });
