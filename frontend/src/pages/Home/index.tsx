@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import Gourd from 'HOC/Guard';
 
 import Sidebar from './Sidebar';
@@ -9,10 +9,11 @@ import Main from './Main';
 const Home: React.FC = (): JSX.Element => {
   return (
     <Gourd>
-      <Box>
+      <Flex>
+        <Box flex={{ lg: '3' }} />
         <Main />
-      </Box>
-      <Sidebar />
+        <Sidebar />
+      </Flex>
       <Navbar />
     </Gourd>
   );

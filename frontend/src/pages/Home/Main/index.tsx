@@ -32,12 +32,14 @@ const Main: React.FC = (): JSX.Element => {
 
   return (
     <Container
-      maxWidth="600"
       sx={{
         marginTop: '12px',
         gap: '5',
         mb: '24',
+        justifyContent: 'center',
       }}
+      maxW={{ base: '100%', md: '600' }}
+      flex={{ base: '6', md: '6', lg: '4' }}
       centerContent
     >
       <InfiniteScroll
