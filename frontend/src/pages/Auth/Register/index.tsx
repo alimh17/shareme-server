@@ -74,7 +74,8 @@ const Register: React.FC<RegisterProps> = (): JSX.Element => {
       sx={{
         maxWidth: 900,
         mt: 2,
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
+        border: colorMode === 'dark' ? 'none' : '1px solid #eaeaea',
         padding: 5,
         borderRadius: 8,
         boxShadow: colorMode === 'light' && 'lg',

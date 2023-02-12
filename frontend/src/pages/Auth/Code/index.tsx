@@ -11,7 +11,7 @@ const Code: React.FC<Props> = (): JSX.Element => {
       sx={{
         maxWidth: 900,
         mt: 5,
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
         padding: 5,
         borderRadius: 8,
         h: '80vh',

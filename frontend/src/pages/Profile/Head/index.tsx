@@ -36,7 +36,7 @@ const Head: React.FC<Props> = () => {
   };
 
   useEffect(() => {
-    setFollowers(profile?.followers?.length);
+    setFollowers(profile?.followers);
   }, [profile]);
 
   return (
@@ -44,15 +44,18 @@ const Head: React.FC<Props> = () => {
       justifyContent="space-between"
       w="100%"
       sx={{
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
         borderRadius: '8',
+        border: colorMode === 'light' && '1px solid #eaeaea',
         py: '5',
       }}
       flexFlow={isMinThan768 ? 'column' : 'row'}
     >
       <Center flex={4}>
         <Avatar
-          src={ProfileCondition(me.username, profile.username) ? IMAGES_URL + me.profile : IMAGES_URL + profile.profile}
+          src={
+            ProfileCondition(me?.username, profile?.username) ? IMAGES_URL + me?.profile : IMAGES_URL + profile?.profile
+          }
           size="2xl"
         />
       </Center>
@@ -69,20 +72,20 @@ const Head: React.FC<Props> = () => {
               textAlign: 'center',
               p: '3',
               borderRadius: '8px',
-              _hover: { bg: colorMode ? 'dark500' : '#cccccc', cursor: 'pointer' },
+              _hover: { bg: colorMode ? 'dark500' : 'white', cursor: 'pointer' },
             }}
           >
-            Followings {profile.followings?.length}
+            Followings {profile.followings}
           </Text>
           <Text
             sx={{
               textAlign: 'center',
               p: '3',
               borderRadius: '8px',
-              _hover: { bg: colorMode ? 'dark500' : '#cccccc', cursor: 'pointer' },
+              _hover: { bg: colorMode ? 'dark500' : 'white', cursor: 'pointer' },
             }}
           >
-            Posts {profile.posts?.length}
+            Posts {profile.posts}
           </Text>
         </HStack>
         <FollowBTN onClick={handleUpdateFollowers} />

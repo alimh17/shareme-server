@@ -9,12 +9,9 @@ const ProfileSlice = createSlice({
     initProfile: (state, action) => {
       state.profile = action.payload;
     },
-    deletePost: (state: any, { payload }) => {
+    deletePost: (state: any) => {
       const cpProfile = { ...state.profile };
-
-      const filter = cpProfile.posts.filter((post: any) => post._id !== payload);
-      cpProfile.posts = filter;
-
+      cpProfile.posts -= 1;
       state.profile = cpProfile;
     },
   },

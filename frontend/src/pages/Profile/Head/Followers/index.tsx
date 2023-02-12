@@ -16,7 +16,7 @@ const Followrs: React.FC<Props> = ({ followers }): JSX.Element => {
         textAlign: 'center',
         p: '3',
         borderRadius: '8px',
-        _hover: { bg: colorMode ? 'dark500' : '#cccccc', cursor: 'pointer' },
+        _hover: { bg: colorMode ? 'dark500' : 'white', cursor: 'pointer' },
       }}
     >
       Followers {followers}

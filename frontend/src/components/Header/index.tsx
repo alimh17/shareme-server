@@ -36,7 +36,8 @@ const Header: React.FC = () => {
       top="0"
       zIndex="10"
       px={10}
-      bg={colorMode === 'dark' ? 'dark800' : '#eeeeee'}
+      bg={colorMode === 'dark' ? 'dark800' : 'white'}
+      borderBottom={colorMode === 'light' ? '1px solid #eaeaea' : ''}
       as="nav"
     >
       <Flex

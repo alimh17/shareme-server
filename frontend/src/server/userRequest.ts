@@ -14,7 +14,7 @@ export const userRequest = async (): Promise<any> => {
     });
     return res;
   } catch (err: any) {
-    console.log(err.response);
+    console.log(err?.response);
     return err;
   }
 };

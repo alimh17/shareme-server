@@ -15,9 +15,11 @@ import {
 } from '@chakra-ui/react';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import config from 'config/index.json';
-import { FiEdit } from 'react-icons/fi';
+import { IoIosShareAlt } from 'react-icons/io';
 import { FaTrash } from 'react-icons/fa';
 import WarningModal from 'components/Post/Head/Modal';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const { IMAGES_URL } = config;
 
@@ -29,25 +31,33 @@ const Head: React.FC<Props> = ({ post }): JSX.Element => {
   const [isMinThan768] = useMediaQuery('(max-width : 768px)');
   const { onClose, isOpen, onOpen } = useDisclosure();
 
+  const user = useSelector((state: any) => state.User.user);
+
   return (
     <CardHeader>
       <Flex>
         <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
-          <Avatar name={post?.owner?.name} src={IMAGES_URL + post?.owner.profile} loading="lazy" />
+          <Link to={`/${post?.owner.name}`}>
+            <Avatar name={post?.owner?.name} src={IMAGES_URL + post?.owner.profile} loading="lazy" />
+          </Link>
           <Box>
-            <Text fontSize="md" size="md" fontWeight="bold">
-              {post?.owner.name}
-            </Text>
-            <Text fontSize="sm">{post?.location}</Text>
+            <Link to={`/${post?.owner.name}`}>
+              <Text fontSize="md" size="md" fontWeight="bold">
+                {post?.owner.name}
+              </Text>
+              <Text fontSize="sm">{post?.location}</Text>
+            </Link>
           </Box>
         </Flex>
         <Menu>
           <MenuButton as={IconButton} aria-label="Options" icon={<BsThreeDotsVertical />} variant="ghost" />
           <MenuList sx={{ zIndex: '1' }}>
-            <MenuItem color="red.500" icon={<FaTrash fontSize={18} />} onClick={onOpen}>
-              Delete
-            </MenuItem>
-            <MenuItem icon={<FiEdit fontSize={18} />}>Edit</MenuItem>
+            {user.username === post?.owner.name && (
+              <MenuItem color="red.500" icon={<FaTrash fontSize={18} />} onClick={onOpen}>
+                Delete
+              </MenuItem>
+            )}
+            <MenuItem icon={<IoIosShareAlt fontSize={18} />}>Share</MenuItem>
           </MenuList>
         </Menu>
       </Flex>

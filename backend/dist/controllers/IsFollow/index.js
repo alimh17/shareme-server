@@ -17,7 +17,7 @@ const IsFollow = async (req, res) => {
         //! Here checking user exists in list followers
         const user = await User_1.default.findOne({
             username: profile?.username,
-            followers: { $elemMatch: { _id: decoded.user._id } },
+            followers: { $elemMatch: { username: decoded.user.username } },
         });
         if (!user) {
             return res.status(200).json({

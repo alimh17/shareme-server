@@ -32,11 +32,11 @@ const loginController = async (req: Request, res: Response) => {
 
     const secret: string | undefined = process.env.SECRET_KEY;
 
+    const { _id, username } = findUser;
+
     const user = {
-      username: findUser.username,
-      name: findUser.name,
-      bio: findUser.bio,
-      profile: findUser.profile,
+      _id,
+      username,
     };
 
     const access = jwt.sign({ user }, secret as string, {
@@ -53,7 +53,7 @@ const loginController = async (req: Request, res: Response) => {
     };
 
     res.cookie("user-shareme", { email: findUser.email }, options);
-    res.status(200).json({ access, refresh, user });
+    res.status(200).json({ access, refresh });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });

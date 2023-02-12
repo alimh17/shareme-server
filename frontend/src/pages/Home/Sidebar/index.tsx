@@ -16,7 +16,7 @@ const Sidebar: React.FC = (): JSX.Element => {
         maxWidth: '400px',
         w: '30rem',
         display: isMinThan1300 ? 'block' : 'none',
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
         p: '8',
         borderRadius: '8px',
       }}

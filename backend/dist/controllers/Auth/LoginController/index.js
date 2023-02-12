@@ -28,11 +28,10 @@ const loginController = async (req, res) => {
                 .json({ message: "کاربری با این مشخصات ثبت نشده است" });
         }
         const secret = process.env.SECRET_KEY;
+        const { _id, username } = findUser;
         const user = {
-            username: findUser.username,
-            name: findUser.name,
-            bio: findUser.bio,
-            profile: findUser.profile,
+            _id,
+            username,
         };
         const access = jsonwebtoken_1.default.sign({ user }, secret, {
             expiresIn: "14d",
@@ -46,7 +45,7 @@ const loginController = async (req, res) => {
             signed: true, // Indicates if the cookie should be signed
         };
         res.cookie("user-shareme", { email: findUser.email }, options);
-        res.status(200).json({ access, refresh, user });
+        res.status(200).json({ access, refresh });
     }
     catch (err) {
         console.log(err);

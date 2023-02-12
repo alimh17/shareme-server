@@ -12,10 +12,21 @@ const UserController = async (req, res) => {
         if (!jsonwebtoken_1.decode) {
             return res.status(409).json({ message: "Access token is required" });
         }
-        const user = await User_1.default.findOne({ username: decoded?.user?.username });
-        if (!user) {
+        const findUser = await User_1.default.findOne({ username: decoded?.user?.username });
+        if (!findUser) {
             return res.status(404).json({ message: "User is not defined" });
         }
+        const { _id, username, name, profile, bio, followers, followings, posts } = findUser;
+        const user = {
+            _id,
+            username,
+            name,
+            profile,
+            bio,
+            followers: followers.length,
+            followings: followings.length,
+            posts: posts.length,
+        };
         return res.status(200).json({ message: "success", user });
     }
     catch (err) {

@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { decode, sign, TokenExpiredError, verify } from "jsonwebtoken";
+import { decode, sign } from "jsonwebtoken";
 import User from "../../models/User/User";
 
 const Refresh = async (req: Request, res: Response) => {
@@ -10,15 +10,19 @@ const Refresh = async (req: Request, res: Response) => {
     );
 
     if (!token) {
-      res.status(409).json({ message: "Please send access token" });
+      return res.status(409).json({ message: "Please send access token" });
     }
-    const decoded: any = await decode(token);
+    const decoded: any = await decode(token || "");
+
+    if (!decoded) {
+      return res.status(409).json({ message: "Token is not valid" });
+    }
     const findUser: any = await User.findOne({
       username: decoded.user.username,
     });
 
     if (!findUser) {
-      res.status(404).json({ message: "User is not exist" });
+      return res.status(404).json({ message: "User is not exist" });
     }
 
     const user = {

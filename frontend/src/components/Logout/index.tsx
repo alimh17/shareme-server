@@ -16,6 +16,8 @@ import {
 } from '@chakra-ui/react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
+import { initUser } from 'store/UserSlice';
+import { useDispatch } from 'react-redux';
 
 const Logout: React.FC = (): JSX.Element => {
   const Overlay = () => <ModalOverlay bg="none" backdropFilter="auto" backdropInvert="80%" backdropBlur="2px" />;
@@ -24,6 +26,7 @@ const Logout: React.FC = (): JSX.Element => {
   const [overlay, setOverlay] = React.useState(<Overlay />);
   const [isMinThan768] = useMediaQuery('(max-width : 768px)');
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   return (
@@ -62,6 +65,7 @@ const Logout: React.FC = (): JSX.Element => {
                 onClose();
                 navigate('/login');
                 localStorage.removeItem('shareme');
+                dispatch(initUser(void {}));
               }}
               bg="red.400"
             >

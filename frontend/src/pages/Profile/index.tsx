@@ -8,6 +8,8 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import { profileRequest } from 'server/profileRequest';
 import { useDispatch } from 'react-redux';
 import { initProfile } from 'store/ProfileSlice';
+import { userRequest } from 'server/userRequest';
+import { initUser } from 'store/UserSlice';
 
 const Profile: React.FC = (): JSX.Element => {
   const [isMaxThan1200] = useMediaQuery('(min-width : 1200px)');
@@ -17,7 +19,7 @@ const Profile: React.FC = (): JSX.Element => {
 
   const dispatch = useDispatch();
 
-  React.useLayoutEffect(() => {
+  React.useEffect(() => {
     profileRequest(pathname).then((res: any) => {
       if (res?.status === undefined) {
         navigate('/404');

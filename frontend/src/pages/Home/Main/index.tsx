@@ -54,7 +54,7 @@ const Main: React.FC = (): JSX.Element => {
         }
       >
         <Flex flexFlow="column" gap={5}>
-          {posts.map((post: any) => (
+          {posts?.map((post: any) => (
             <Post post={post} key={post._id} />
           ))}
         </Flex>

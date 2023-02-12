@@ -14,8 +14,6 @@ const getPosts = async (req, res) => {
             return res.status(409).json({ message: "token is not valid or expired" });
         }
         const followingPosts = await (0, getFollowingPosts_1.default)(decoded);
-        console.log(followingPosts.length);
-        console.log(req.query);
         const page = req.query.page ? +req.query.page : 1;
         const pageSize = req.query.pageSize ? +req.query.pageSize : 4;
         const startIndex = (page - 1) * pageSize;

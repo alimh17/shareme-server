@@ -22,7 +22,8 @@ const createPost = async (req, res) => {
             return res.status(409).json({ message: "can not decode" });
         }
         //! Here get decoded data
-        const data = decoded;
+        const data = await User_1.default.findOne({ username: decoded?.user?.username });
+        console.log(data);
         //! This function retrun a object of include source and title
         const media = (0, getMediaPost_1.default)(req.files);
         const { Description, Location } = req.body;
@@ -31,12 +32,12 @@ const createPost = async (req, res) => {
             media,
             description: Description,
             location: Location,
-            owner: { name: data.user.username, profile: data.user.profile },
+            owner: { name: data.username, profile: data.profile },
         });
         //! Here add post to user data and update user information
-        const user = await User_1.default.findOneAndUpdate({ username: data.user.username }, { $push: { posts: post } }, { new: true });
+        const user = await User_1.default.findOneAndUpdate({ username: data.username }, { $push: { posts: post } }, { new: true });
         //! Updating the following list of users who have followed this user
-        (0, updateFollowingList_1.default)(data.user.username);
+        (0, updateFollowingList_1.default)(data.username);
         //! save changes
         await post.save();
         await user?.save();

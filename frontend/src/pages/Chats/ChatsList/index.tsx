@@ -26,7 +26,7 @@ const ChatsList: React.FC = (): JSX.Element => {
         flex: '4',
         h: '90vh',
         borderRadius: '8',
-        background: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        background: colorMode === 'dark' ? 'dark800' : 'white',
         overflowY: 'scroll',
         display: isMinThan1200 ? 'none' : 'block',
       }}

@@ -69,7 +69,8 @@ const AddPost: React.FC = (): JSX.Element => {
         sx={{
           maxWidth: 776,
           mt: 3,
-          bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+          bg: colorMode === 'dark' ? 'dark800' : 'white',
+          border: colorMode === 'light' && '1px solid #eaeaea',
           borderRadius: '8px',
           position: 'relative',
         }}

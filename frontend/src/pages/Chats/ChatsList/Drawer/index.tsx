@@ -26,7 +26,7 @@ const DrawerCom: React.FC<DrawerComProps> = ({ isOpen, onClose }): JSX.Element =
       <DrawerOverlay />
       <DrawerContent
         sx={{
-          bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+          bg: colorMode === 'dark' ? 'dark800' : 'white',
         }}
       >
         <DrawerHeader borderBottomWidth="1px">

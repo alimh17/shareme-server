@@ -30,7 +30,7 @@ const FollowBTN: React.FC<Props> = ({ onClick }): JSX.Element => {
 
   return (
     <>
-      {!ProfileCondition(me.username, profile.username) && (
+      {!ProfileCondition(me?.username, profile?.username) && (
         <HStack justifyContent="flex-end" p="3" w="74%">
           <Button
             variant={isFollowed ? 'outline' : 'solid'}

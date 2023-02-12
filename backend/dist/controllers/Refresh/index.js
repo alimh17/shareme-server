@@ -9,14 +9,17 @@ const Refresh = async (req, res) => {
     try {
         const token = req.headers.authorization?.slice(7, req.headers.authorization.length);
         if (!token) {
-            res.status(409).json({ message: "Please send access token" });
+            return res.status(409).json({ message: "Please send access token" });
         }
-        const decoded = await (0, jsonwebtoken_1.decode)(token);
+        const decoded = await (0, jsonwebtoken_1.decode)(token || "");
+        if (!decoded) {
+            return res.status(409).json({ message: "Token is not valid" });
+        }
         const findUser = await User_1.default.findOne({
             username: decoded.user.username,
         });
         if (!findUser) {
-            res.status(404).json({ message: "User is not exist" });
+            return res.status(404).json({ message: "User is not exist" });
         }
         const user = {
             username: findUser.username,

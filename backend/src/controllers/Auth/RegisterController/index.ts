@@ -4,6 +4,7 @@ import { hash } from "bcrypt";
 
 import { registerSchema } from "../../../utils/Vlidation/Auth-Validation";
 import User from "../../../models/User/User";
+import sendMail from "../../../utils/mailer";
 
 const registerController = async (req: Request, res: Response) => {
   try {
@@ -30,6 +31,8 @@ const registerController = async (req: Request, res: Response) => {
     }
 
     const hashPassword = await hash(value.password, 10);
+
+    sendMail(value.email);
 
     const user = new User({
       username: value.username,

@@ -1,6 +1,5 @@
 import { Request, Response } from "express";
 import { decode } from "jsonwebtoken";
-import Post from "../../../models/Post/Post";
 import getFollowingPosts from "./getFollowingPosts";
 
 const getPosts = async (req: Request, res: Response) => {
@@ -16,9 +15,6 @@ const getPosts = async (req: Request, res: Response) => {
       return res.status(409).json({ message: "token is not valid or expired" });
     }
     const followingPosts = await getFollowingPosts(decoded);
-    console.log(followingPosts.length);
-
-    console.log(req.query);
 
     const page: number = req.query.page ? +req.query.page : 1;
     const pageSize: number = req.query.pageSize ? +req.query.pageSize : 4;

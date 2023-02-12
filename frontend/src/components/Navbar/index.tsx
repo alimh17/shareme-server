@@ -25,7 +25,8 @@ const Navbar = () => {
         top: '64px',
         h: '90vh',
         p: '3',
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
+        borderRight: colorMode === 'light' ? '1px solid #eaeaea' : '',
         gap: '5',
         display: !isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
       }}

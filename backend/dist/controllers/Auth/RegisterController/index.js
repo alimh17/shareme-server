@@ -7,6 +7,7 @@ const bcrypt_1 = require("bcrypt");
 // const nodemailer = require("nodemailer");
 const Auth_Validation_1 = require("../../../utils/Vlidation/Auth-Validation");
 const User_1 = __importDefault(require("../../../models/User/User"));
+const mailer_1 = __importDefault(require("../../../utils/mailer"));
 const registerController = async (req, res) => {
     try {
         const data = req.body;
@@ -28,6 +29,7 @@ const registerController = async (req, res) => {
                 .json({ message: "There is a user with this profile" });
         }
         const hashPassword = await (0, bcrypt_1.hash)(value.password, 10);
+        (0, mailer_1.default)(value.email);
         const user = new User_1.default({
             username: value.username,
             email: value.email,

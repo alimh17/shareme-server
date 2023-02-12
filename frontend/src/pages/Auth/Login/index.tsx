@@ -1,19 +1,5 @@
 import React from 'react';
-import {
-  Button,
-  Center,
-  Container,
-  Heading,
-  Input,
-  InputGroup,
-  InputLeftAddon,
-  InputLeftElement,
-  InputRightElement,
-  Text,
-  useColorMode,
-  useToast,
-  VStack,
-} from '@chakra-ui/react';
+import { Button, Center, Container, Heading, Text, useColorMode, useToast, VStack } from '@chakra-ui/react';
 
 import { VscAccount } from 'react-icons/vsc';
 import { FiUnlock } from 'react-icons/fi';
@@ -23,6 +9,9 @@ import { LoginSchema } from 'utils/AuthValidation';
 import Email from './Email';
 import Password from './Password';
 import { loginRequest } from 'server/loginRequest';
+import { userRequest } from 'server/userRequest';
+import { initUser } from 'store/UserSlice';
+import { useDispatch } from 'react-redux';
 
 interface Props {}
 
@@ -40,6 +29,7 @@ const Login: React.FC<Props> = (): JSX.Element => {
   const { colorMode } = useColorMode();
   const navigate = useNavigate();
   const toast = useToast();
+  const dispatch = useDispatch();
 
   const formik = useFormik({
     initialValues,
@@ -48,6 +38,9 @@ const Login: React.FC<Props> = (): JSX.Element => {
       const res: any = await loginRequest(values, toast);
       if (res.data) {
         navigate('/');
+        userRequest().then((res: any) => {
+          dispatch(initUser(res.data.user));
+        });
       }
     },
   });
@@ -57,7 +50,7 @@ const Login: React.FC<Props> = (): JSX.Element => {
       sx={{
         maxWidth: 900,
         mt: 5,
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
         padding: 5,
         borderRadius: 8,
         h: '80vh',

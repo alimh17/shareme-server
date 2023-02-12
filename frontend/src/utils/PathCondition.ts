@@ -4,6 +4,8 @@ export const PathCondition = (path: string) => {
       return false;
     case '/login':
       return false;
+    case '/code':
+      return false;
     case '/404':
       return false;
     default:

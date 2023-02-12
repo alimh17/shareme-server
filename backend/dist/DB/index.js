@@ -8,7 +8,7 @@ const PORT = process.env.PORT || 3001;
 const connectDB = (server) => {
     mongoose_1.default.set("strictQuery", true);
     mongoose_1.default
-        .connect("mongodb://localhost:27017/shareme")
+        .connect(process.env.MONGO_URL)
         .then(() => {
         server.listen(PORT, () => console.log(`server run on port ${PORT}`));
         console.log(`Mongodb connected ${mongoose_1.default.connection.port}`);

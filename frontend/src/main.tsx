@@ -9,6 +9,7 @@ import theme from 'theme';
 import { Provider } from 'react-redux';
 import store from 'store';
 import Refresh from 'HOC/Refresh';
+import InitState from 'HOC/InitState';
 
 const queryClient = new QueryClient();
 

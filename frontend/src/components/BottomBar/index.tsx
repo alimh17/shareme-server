@@ -44,7 +44,8 @@ const BottomBar: React.FC = (): JSX.Element => {
         w: '100%',
         padding: '12px',
         display: isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
+        borderTop: colorMode === 'light' && '1px solid #eaeaea',
         justifyContent: 'space-around',
       }}
     >
@@ -59,7 +60,15 @@ const BottomBar: React.FC = (): JSX.Element => {
       <Link to="/">
         <IconButton fontSize="25" variant="ghost" colorScheme="gray" aria-label="Home" icon={<FiHome />} />
       </Link>
-      <IconButton fontSize="25" variant="ghost" colorScheme="gray" aria-label="Setting" icon={<IoSettingsOutline />} />
+      <Link to="/add-post">
+        <IconButton
+          fontSize="25"
+          variant="ghost"
+          colorScheme="gray"
+          aria-label="Setting"
+          icon={<AiOutlinePlusCircle fontSize="25" />}
+        />
+      </Link>
       <Menu>
         <MenuButton
           as={IconButton}
@@ -70,11 +79,9 @@ const BottomBar: React.FC = (): JSX.Element => {
           colorScheme="dark800"
         />
         <MenuList>
-          <Link to="/add-post">
-            <MenuItem icon={<AiOutlinePlusCircle fontSize="20" />}>Add Post</MenuItem>
-          </Link>
           <MenuItem icon={<HiOutlineVideoCamera fontSize="20" />}>Video Call</MenuItem>
           <MenuItem icon={<ImPhone fontSize="20" />}>Voice Call</MenuItem>
+          <MenuItem icon={<IoSettingsOutline fontSize="20" />}>Setting</MenuItem>
           <Box pl="3">
             <Logout />
           </Box>

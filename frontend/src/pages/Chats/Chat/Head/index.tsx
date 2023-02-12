@@ -29,7 +29,7 @@ const Head: React.FC<HeadProps> = ({ onOpen }): JSX.Element => {
         p: '3',
         mx: '1',
         borderRadius: '8',
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
         flexFlow: '1',
       }}
     >

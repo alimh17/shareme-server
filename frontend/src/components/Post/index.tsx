@@ -40,9 +40,9 @@ const Post: React.FC<PostProps> = ({ height, post }): JSX.Element => {
   return (
     <Card
       sx={{
-        bg: colorMode === 'dark' ? 'dark800' : '#eeeeee',
+        bg: colorMode === 'dark' ? 'dark800' : 'white',
         boxShadow: colorMode === 'dark' ? 'sm' : 'lg',
-        border: colorMode === 'dark' ? 'none' : '1px solid gray.600',
+        border: colorMode === 'dark' ? 'none' : '1px solid #eaeaea',
       }}
       maxW={isMinThan768 ? 'sm' : 'md'}
       height={height ? height : 'auto'}

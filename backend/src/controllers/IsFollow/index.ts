@@ -18,7 +18,7 @@ export const IsFollow = async (req: Request, res: Response) => {
     //! Here checking user exists in list followers
     const user = await User.findOne({
       username: profile?.username,
-      followers: { $elemMatch: { _id: decoded.user._id } },
+      followers: { $elemMatch: { username: decoded.user.username } },
     });
 
     if (!user) {

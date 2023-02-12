@@ -56,7 +56,8 @@ const WarningModal: React.FC<Props> = ({ isOpen, onClose, id }): JSX.Element => 
                   status: 'success',
                 });
               });
-              dispatch(deletePost(id));
+              onClose();
+              dispatch(deletePost());
             }}
           >
             Yes

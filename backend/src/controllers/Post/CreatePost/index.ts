@@ -19,7 +19,7 @@ const createPost = async (req: Request, res: Response) => {
       7,
       req.headers.authorization.length
     );
-    const decoded = await decode(token || "");
+    const decoded: any = await decode(token || "");
 
     //! If  decoded didn't exist , return...
     if (!decoded) {
@@ -27,7 +27,8 @@ const createPost = async (req: Request, res: Response) => {
     }
 
     //! Here get decoded data
-    const data: any = decoded;
+    const data: any = await User.findOne({ username: decoded?.user?.username });
+    console.log(data);
 
     //! This function retrun a object of include source and title
     const media = getMediaPost(req.files);
@@ -39,18 +40,18 @@ const createPost = async (req: Request, res: Response) => {
       media,
       description: Description,
       location: Location,
-      owner: { name: data.user.username, profile: data.user.profile },
+      owner: { name: data.username, profile: data.profile },
     });
 
     //! Here add post to user data and update user information
     const user = await User.findOneAndUpdate(
-      { username: data.user.username },
+      { username: data.username },
       { $push: { posts: post } },
       { new: true }
     );
 
     //! Updating the following list of users who have followed this user
-    updateFollowingList(data.user.username);
+    updateFollowingList(data.username);
 
     //! save changes
     await post.save();
