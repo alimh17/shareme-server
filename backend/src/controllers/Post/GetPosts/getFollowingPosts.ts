@@ -8,11 +8,10 @@ const getFollowingPosts = async (decoded: any) => {
   const posts: any = await Post.find({});
 
   //! Filter posts based on the user's following list
-  const filter = posts.filter(
-    (post: any) => post.owner.name !== user?.username
-  );
 
-  console.log(user);
+  const filter = user?.followings.map((following: any) => {
+    return posts.filter((post: any) => post.owner.name === following?.username);
+  });
 
   const flat = _.flatten(filter);
 

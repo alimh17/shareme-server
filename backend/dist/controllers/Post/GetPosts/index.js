@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = require("jsonwebtoken");
 const getFollowingPosts_1 = __importDefault(require("./getFollowingPosts"));
+//! Here we return all the posts of users who are in the following list
 const getPosts = async (req, res) => {
     try {
         //! Here decoded access token and get user data
@@ -13,7 +14,9 @@ const getPosts = async (req, res) => {
         if (!decoded) {
             return res.status(409).json({ message: "token is not valid or expired" });
         }
+        //! Here get followings post and sorte with published time
         const followingPosts = await (0, getFollowingPosts_1.default)(decoded);
+        //! Here pagination
         const page = req.query.page ? +req.query.page : 1;
         const pageSize = req.query.pageSize ? +req.query.pageSize : 4;
         const startIndex = (page - 1) * pageSize;

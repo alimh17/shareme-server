@@ -14,5 +14,5 @@ const router = (0, express_1.Router)();
 router.post("/", Authorization_1.default, postMulter_1.default.any(), index_1.default);
 router.put("/", Authorization_1.default, DeletePost_1.default);
 router.get("/get-posts", GetPosts_1.default);
-router.get("/user-posts", UserPost_1.default);
+router.post("/user-posts", UserPost_1.default);
 exports.default = router;

@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { decode } from "jsonwebtoken";
 import getFollowingPosts from "./getFollowingPosts";
 
+//! Here we return all the posts of users who are in the following list
 const getPosts = async (req: Request, res: Response) => {
   try {
     //! Here decoded access token and get user data
@@ -14,8 +15,11 @@ const getPosts = async (req: Request, res: Response) => {
     if (!decoded) {
       return res.status(409).json({ message: "token is not valid or expired" });
     }
+
+    //! Here get followings post and sorte with published time
     const followingPosts = await getFollowingPosts(decoded);
 
+    //! Here pagination
     const page: number = req.query.page ? +req.query.page : 1;
     const pageSize: number = req.query.pageSize ? +req.query.pageSize : 4;
 

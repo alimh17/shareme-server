@@ -17,14 +17,14 @@ export const Unfollow = async (req: Request, res: Response) => {
     //! Here update user followers list
     const user = await User.findOneAndUpdate(
       { username: req?.body?.username },
-      { $pull: { followers: { _id: decoded.user._id } } },
+      { $pull: { followers: { username: decoded.user.username } } },
       { new: true }
     );
 
     //! Here update me followings list
     const me = await User.findOneAndUpdate(
       { username: decoded.user.username },
-      { $pull: { followings: { _id: req?.body._id } } },
+      { $pull: { followings: { username: req?.body.username } } },
       { new: true }
     );
 

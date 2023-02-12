@@ -5,18 +5,18 @@ import User from "../../../models/User/User";
 const userPost = async (req: Request, res: Response) => {
   try {
     //! Here decoded access token and get user data
-    const token = req.headers.authorization?.slice(
-      7,
-      req.headers.authorization.length
-    );
-    const decoded: any = await decode(token || "");
+    // const token = req.headers.authorization?.slice(
+    //   7,
+    //   req.headers.authorization.length
+    // );
+    // const decoded: any = await decode(token || "");
 
-    if (!decoded) {
-      return res.status(409).json({ message: "token is not valid or expired" });
-    }
+    // if (!decoded) {
+    //   return res.status(409).json({ message: "token is not valid or expired" });
+    // }
 
     const user = await User.findOne({
-      username: decoded.user.username,
+      username: req.body.username,
     });
 
     if (!user) {

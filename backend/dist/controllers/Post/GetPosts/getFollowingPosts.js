@@ -10,8 +10,9 @@ const getFollowingPosts = async (decoded) => {
     const user = await User_1.default.findOne({ username: decoded.user.username });
     const posts = await Post_1.default.find({});
     //! Filter posts based on the user's following list
-    const filter = posts.filter((post) => post.owner.name !== user?.username);
-    console.log(user);
+    const filter = user?.followings.map((following) => {
+        return posts.filter((post) => post.owner.name === following?.username);
+    });
     const flat = lodash_1.default.flatten(filter);
     //! Sort posts by publication time
     const sorted = flat.sort(function (a, b) {

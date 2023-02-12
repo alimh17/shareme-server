@@ -12,6 +12,6 @@ const router = Router();
 router.post("/", Authorization, upload.any(), createPost);
 router.put("/", Authorization, deletePost);
 router.get("/get-posts", getPosts);
-router.get("/user-posts", userPost);
+router.post("/user-posts", userPost);
 
 export default router;

@@ -19,6 +19,7 @@ import Post from 'components/Post';
 import { useSelector } from 'react-redux';
 import getUserPostsRequest from 'server/getUserPostsRequest';
 import InfiniteScroll from 'react-infinite-scroll-component';
+import { useLocation } from 'react-router-dom';
 
 interface Props {}
 
@@ -26,21 +27,23 @@ const Posts: React.FC<Props> = () => {
   const [isMaxThan1200] = useMediaQuery('(min-width : 1200px)');
   const user = useSelector((state: any) => state.Profile.profile);
 
+  const { pathname } = useLocation();
+
   const [posts, setPosts] = useState<{}[]>([]);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [page, setPage] = useState<number>(1);
 
   useEffect(() => {
-    getUserPostsRequest(page).then((data) => {
-      setPosts(data.posts);
+    getUserPostsRequest(page, user?.username).then((data) => {
+      setPosts(data?.posts);
       setHasMore(data.next);
       data.next ? setPage(page + 1) : setPage(0);
     });
-  }, [user]);
+  }, [user, pathname]);
 
   const fetchData = async (): Promise<any> => {
     try {
-      const data = await getUserPostsRequest(page);
+      const data = await getUserPostsRequest(page, user?.username);
       setPosts([...posts, ...data.posts]);
       setPage(page + 1);
       if (!data.next) {
