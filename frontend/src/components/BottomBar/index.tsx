@@ -30,8 +30,7 @@ import { AiOutlinePlusCircle } from 'react-icons/ai';
 const { IMAGES_URL } = config;
 
 const BottomBar: React.FC = (): JSX.Element => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const [isMinThan768] = useMediaQuery('(max-width : 768px)');
+  const { colorMode } = useColorMode();
 
   const user = useSelector((state: any) => state.User.user);
   const { pathname } = useLocation();
@@ -43,11 +42,11 @@ const BottomBar: React.FC = (): JSX.Element => {
         bottom: '0',
         w: '100%',
         padding: '12px',
-        display: isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
         bg: colorMode === 'dark' ? 'dark800' : 'white',
         borderTop: colorMode === 'light' && '1px solid #eaeaea',
         justifyContent: 'space-around',
       }}
+      display={PathCondition(pathname) ? { base: 'flex', md: 'none' } : 'none'}
     >
       <Link to={`${user?.username}`}>
         <Avatar name={user?.username} src={IMAGES_URL + user?.profile} sx={{ cursor: 'pointer' }}>

@@ -49,7 +49,7 @@ const Files: React.FC<FilesProps> = ({ onFilePaths, onAcitve }) => {
         {...getRootProps()}
       >
         <MdOutlinePermMedia fontSize={35} />
-        <Heading as="h3" fontSize="lg">
+        <Heading as="h3" fontSize="lg" textAlign="center">
           Drag photos and videos here
         </Heading>
         <Button>Select from device</Button>

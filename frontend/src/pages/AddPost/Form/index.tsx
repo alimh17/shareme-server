@@ -51,10 +51,12 @@ const Form: React.FC<FormProps> = ({ onAcitve, onData, data }): JSX.Element => {
       const res = await postRequest(data, toast, navigate);
     }
   };
-
   return (
     <>
-      <Box w="60%" sx={{ position: 'relative', display: 'flex', flexFlow: 'column', alignItems: 'center' }}>
+      <Box
+        sx={{ position: 'relative', display: 'flex', flexFlow: 'column', alignItems: 'center' }}
+        w={{ base: '90%', md: '60%' }}
+      >
         <Description toggle={handleToggleEmojiPicker} value={descriptionValue} onChange={handleChangeDescription} />
         <FormControl my={5}>
           <FormLabel>Location</FormLabel>

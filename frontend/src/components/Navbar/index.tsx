@@ -13,8 +13,6 @@ import { PathCondition } from 'utils/PathCondition';
 
 const Navbar = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [isMinThan600] = useMediaQuery('(max-width : 600px)');
-  const [isMinThan768] = useMediaQuery('(max-width : 768px)');
   const { pathname } = useLocation();
 
   return (
@@ -28,8 +26,8 @@ const Navbar = () => {
         bg: colorMode === 'dark' ? 'dark800' : 'white',
         borderRight: colorMode === 'light' ? '1px solid #eaeaea' : '',
         gap: '5',
-        display: !isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
       }}
+      display={PathCondition(pathname) ? { base: 'none', md: 'flex' } : 'none'}
     >
       <Tooltip label="Home">
         <Link to="/">

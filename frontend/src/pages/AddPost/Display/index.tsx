@@ -24,7 +24,7 @@ const Display: React.FC<DisplayProps> = ({ paths, onAcitve }) => {
               height: '100%',
             }}
           >
-            <Image src={paths[0][`image${i}`]} style={{ width: '80%', height: '25rem' }} />
+            <Image src={paths[0][`image${i}`]} style={{ objectFit: 'contain' }} />
           </SwiperSlide>
         );
       } else {
@@ -38,7 +38,7 @@ const Display: React.FC<DisplayProps> = ({ paths, onAcitve }) => {
               height: '100%',
             }}
           >
-            <video src={paths[0][`video${i}`]} controls style={{ width: '80%', height: '25rem' }} />
+            <video src={paths[0][`video${i}`]} controls style={{ objectFit: 'contain' }} />
           </SwiperSlide>
         );
       }

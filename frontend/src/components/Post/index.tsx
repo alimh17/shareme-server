@@ -44,7 +44,7 @@ const Post: React.FC<PostProps> = ({ height, post }): JSX.Element => {
         boxShadow: colorMode === 'dark' ? 'sm' : 'lg',
         border: colorMode === 'dark' ? 'none' : '1px solid #eaeaea',
       }}
-      maxW={isMinThan768 ? 'sm' : 'md'}
+      maxW={{ base: 'sm', md: 'md' }}
       height={height ? height : 'auto'}
     >
       <Head post={post} />

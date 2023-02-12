@@ -24,7 +24,6 @@ const Logout: React.FC = (): JSX.Element => {
 
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [overlay, setOverlay] = React.useState(<Overlay />);
-  const [isMinThan768] = useMediaQuery('(max-width : 768px)');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -33,7 +32,7 @@ const Logout: React.FC = (): JSX.Element => {
     <>
       <Tooltip label="Logout">
         <IconButton
-          fontSize={isMinThan768 ? '18' : '25'}
+          fontSize={{ base: '18', md: '25' }}
           variant="ghost"
           colorScheme="gray"
           aria-label="Logout"
@@ -42,7 +41,7 @@ const Logout: React.FC = (): JSX.Element => {
           icon={
             <>
               <AiOutlineLogout />
-              {isMinThan768 && <Text>Logout</Text>}
+              {<Text display={{ base: 'block', md: 'none' }}>Logout</Text>}
             </>
           }
           onClick={() => {

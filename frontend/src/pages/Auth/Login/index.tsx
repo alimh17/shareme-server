@@ -12,6 +12,7 @@ import { loginRequest } from 'server/loginRequest';
 import { userRequest } from 'server/userRequest';
 import { initUser } from 'store/UserSlice';
 import { useDispatch } from 'react-redux';
+import AuthGuard from 'HOC/AuthGuard';
 
 interface Props {}
 
@@ -46,6 +47,7 @@ const Login: React.FC<Props> = (): JSX.Element => {
   });
 
   return (
+    // <AuthGuard>
     <Container
       sx={{
         maxWidth: 900,
@@ -85,6 +87,7 @@ const Login: React.FC<Props> = (): JSX.Element => {
         </VStack>
       </Center>
     </Container>
+    // </AuthGuard>
   );
 };
 

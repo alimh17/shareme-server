@@ -21,8 +21,6 @@ const { IMAGES_URL } = config;
 
 const Header: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
-  const [isMinThan600] = useMediaQuery('(max-width : 600px)');
-  const [isMinThan768] = useMediaQuery('(max-width : 768px)');
 
   const { pathname } = useLocation();
   const user = useSelector((state: any) => state.User.user);
@@ -40,17 +38,13 @@ const Header: React.FC = () => {
       borderBottom={colorMode === 'light' ? '1px solid #eaeaea' : ''}
       as="nav"
     >
-      <Flex
-        sx={{
-          display: !isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
-        }}
-      >
+      <Flex display={PathCondition(pathname) ? { base: 'none', md: 'flex' } : 'none'}>
         <Link to={`/${user?.username}`}>
           <Center gap={2}>
             <Avatar name={user?.username} src={IMAGES_URL + user?.profile} sx={{ cursor: 'pointer' }}>
               <AvatarBadge boxSize="1.25em" bg="green.500" />
             </Avatar>
-            <Text fontSize="md" as="b" display={isMinThan600 ? 'none' : 'block'}>
+            <Text fontSize="md" as="b">
               {user?.username}
             </Text>
           </Center>
@@ -60,13 +54,9 @@ const Header: React.FC = () => {
         Shareme
       </Heading>
       <Center gap={5}>
-        <Link
-          to="/add-post"
-          style={{
-            display: !isMinThan768 && PathCondition(pathname) ? 'flex' : 'none',
-          }}
-        >
+        <Link to="/add-post" style={{ display: PathCondition(pathname) ? 'flex' : 'none' }}>
           <IconButton
+            display={{ base: 'none', md: 'flex' }}
             aria-label="Add Post"
             icon={<AiOutlinePlusCircle fontSize={24} />}
             bg="inherit"
