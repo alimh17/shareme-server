@@ -101,7 +101,7 @@ const Posts: React.FC<Props> = () => {
           </VStack>
         </TabPanel>
         <TabPanel>
-          <Grid templateColumns={{ base: 'repeat(3, 1fr)', md: 'repeat(2, 1fr)' }} gap={6}>
+          <Grid templateColumns={{ base: 'repeat(2, 1fr)', md: 'repeat(3, 1fr)' }} gap={6}>
             {posts?.map((post: any) => (
               <GridItem key={post._id}>
                 {post.media[0].source.slice(-3) === 'mp4' ? (

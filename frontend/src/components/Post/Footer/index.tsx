@@ -1,15 +1,18 @@
 import { CardFooter, HStack, IconButton } from '@chakra-ui/react';
 import React from 'react';
 import { HiHeart } from 'react-icons/hi';
-import { TfiComment } from 'react-icons/tfi';
+import Comment from './Comment';
 
-const Footer: React.FC = (): JSX.Element => {
+interface Props {
+  comments: [];
+}
+
+const Footer: React.FC<Props> = ({ comments }): JSX.Element => {
   return (
     <CardFooter>
-      <HStack>
-        {/* <HiOutlineHeart/> */}
+      <HStack alignItems="flex-start">
         <IconButton variant="ghost" colorScheme="red" size="lg" aria-label="Like" icon={<HiHeart />} />
-        <IconButton variant="ghost" colorScheme="gray" size="lg" aria-label="Comments" icon={<TfiComment />} />
+        <Comment allComments={comments} />
       </HStack>
     </CardFooter>
   );
