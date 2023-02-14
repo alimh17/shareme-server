@@ -49,7 +49,7 @@ const Head: React.FC<Props> = () => {
         border: colorMode === 'light' && '1px solid #eaeaea',
         py: '5',
       }}
-      flexFlow={isMinThan768 ? 'column' : 'row'}
+      flexFlow={{ base: 'column', md: 'row' }}
     >
       <Center flex={4}>
         <Avatar
@@ -60,10 +60,12 @@ const Head: React.FC<Props> = () => {
         />
       </Center>
       <VStack flex={8}>
-        <Heading as="h3" fontSize="lg">
+        <Heading as="h3" fontSize="2xl" my={5} fontWeight="bold">
           {profile.name ? profile.name : profile.username}
         </Heading>
-        <Text px="3">{profile.bio}</Text>
+        <Text px="3" fontWeight="extrabold" fontSize="sm">
+          {profile.bio}
+        </Text>
         <Divider />
         <HStack gap="4" p="3">
           <Followers followers={followers} />

@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = require("jsonwebtoken");
 const User_1 = __importDefault(require("../../models/User/User"));
+const Post_1 = __importDefault(require("../../models/Post/Post"));
 const deleteFile_1 = require("../../utils/deleteFile");
 const Setting = async (req, res) => {
     try {
@@ -22,9 +23,18 @@ const Setting = async (req, res) => {
             return res.status(404).json({ message: "User is not exist" });
         }
         const { name, lastname, bio } = req.body;
-        console.log(req.file?.path);
         if (req.file) {
             (0, deleteFile_1.deleteProfileFile)(decoded.user.username);
+            //! update profile in post data
+            await User_1.default.updateMany({
+                username: decoded.user.username,
+            }, { $set: { "posts.$[].owner.profile": `profile/${req.file.filename}` } });
+            //! update profile in Post Schema
+            await Post_1.default.updateMany({
+                "owner.name": decoded.user.username,
+            }, {
+                $set: { "owner.profile": `profile/${req.file.filename}` },
+            });
         }
         await User_1.default.updateOne({
             username: decoded.user.username,

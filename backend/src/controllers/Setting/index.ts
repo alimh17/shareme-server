@@ -1,6 +1,8 @@
 import { Request, Response } from "express";
-import { decode, sign } from "jsonwebtoken";
+import { decode } from "jsonwebtoken";
 import User from "../../models/User/User";
+import Post from "../../models/Post/Post";
+
 import { deleteProfileFile } from "../../utils/deleteFile";
 
 const Setting = async (req: Request, res: Response) => {
@@ -26,10 +28,26 @@ const Setting = async (req: Request, res: Response) => {
     }
     const { name, lastname, bio } = req.body;
 
-    console.log(req.file?.path);
-
     if (req.file) {
       deleteProfileFile(decoded.user.username);
+
+      //! update profile in post data
+      await User.updateMany(
+        {
+          username: decoded.user.username,
+        },
+        { $set: { "posts.$[].owner.profile": `profile/${req.file.filename}` } }
+      );
+
+      //! update profile in Post Schema
+      await Post.updateMany(
+        {
+          "owner.name": decoded.user.username,
+        },
+        {
+          $set: { "owner.profile": `profile/${req.file.filename}` },
+        }
+      );
     }
 
     await User.updateOne(

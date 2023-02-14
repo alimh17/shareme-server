@@ -5,6 +5,7 @@ import {
   Flex,
   Grid,
   GridItem,
+  Image,
   Tab,
   TabList,
   TabPanel,
@@ -20,6 +21,10 @@ import { useSelector } from 'react-redux';
 import getUserPostsRequest from 'server/getUserPostsRequest';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useLocation } from 'react-router-dom';
+
+import config from 'config/index.json';
+
+const { IMAGES_URL } = config;
 
 interface Props {}
 
@@ -96,23 +101,17 @@ const Posts: React.FC<Props> = () => {
           </VStack>
         </TabPanel>
         <TabPanel>
-          {/* <Grid templateColumns={isMaxThan1200 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)'} gap={6}>
-            <GridItem h="md">
-              <Post height="35rem" />
-            </GridItem>
-            <GridItem>
-              <Post height="35rem" />
-            </GridItem>
-            <GridItem>
-              <Post height="35rem" />
-            </GridItem>
-            <GridItem>
-              <Post height="35rem" />
-            </GridItem>
-            <GridItem>
-              <Post height="35rem" />
-            </GridItem>
-          </Grid> */}
+          <Grid templateColumns={{ base: 'repeat(3, 1fr)', md: 'repeat(2, 1fr)' }} gap={6}>
+            {posts?.map((post: any) => (
+              <GridItem key={post._id}>
+                {post.media[0].source.slice(-3) === 'mp4' ? (
+                  <video src={IMAGES_URL + post.media[0].source} />
+                ) : (
+                  <Image src={IMAGES_URL + post.media[0].source} alt={post._id} />
+                )}
+              </GridItem>
+            ))}
+          </Grid>
         </TabPanel>
       </TabPanels>
     </Tabs>
