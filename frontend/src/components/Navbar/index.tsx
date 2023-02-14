@@ -52,13 +52,15 @@ const Navbar = () => {
         </Link>
       </Tooltip>
       <Tooltip label="Setting">
-        <IconButton
-          fontSize="25"
-          variant="ghost"
-          colorScheme="gray"
-          aria-label="Setting"
-          icon={<IoSettingsOutline />}
-        />
+        <Link to="/setting">
+          <IconButton
+            fontSize="25"
+            variant="ghost"
+            colorScheme="gray"
+            aria-label="Setting"
+            icon={<IoSettingsOutline />}
+          />
+        </Link>
       </Tooltip>
       <Spacer />
       <Logout />

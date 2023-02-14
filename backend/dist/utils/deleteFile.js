@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deletePostFiles = void 0;
+exports.deleteProfileFile = exports.deletePostFiles = void 0;
 const path_1 = __importDefault(require("path"));
 const node_fs_1 = require("node:fs");
 const User_1 = __importDefault(require("../models/User/User"));
@@ -26,4 +26,12 @@ const deletePostFiles = async (username, id) => {
     }
 };
 exports.deletePostFiles = deletePostFiles;
-exports.default = exports.deletePostFiles;
+const deleteProfileFile = async (username) => {
+    const user = await User_1.default.findOne({ username });
+    (0, node_fs_1.unlink)(path_1.default.join(__dirname, `../../public/${user?.profile}`), (err) => {
+        if (err) {
+            console.log(err);
+        }
+    });
+};
+exports.deleteProfileFile = deleteProfileFile;

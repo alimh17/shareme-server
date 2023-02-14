@@ -10,6 +10,7 @@ import Register from 'pages/Auth/Register';
 import AddPost from 'pages/AddPost';
 import Notfound from 'pages/Notfound';
 import Code from 'pages/Auth/Code';
+import Setting from 'pages/Setting';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path="/code" element={<Code />} />
       <Route path="/chats" element={<Chats />} />
       <Route path="/add-post" element={<AddPost />} />
+      <Route path="/setting" element={<Setting />} />
       <Route path="/404" element={<Notfound />} />
       <Route path="*" element={<Notfound />} />
     </Route>,

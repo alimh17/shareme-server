@@ -80,7 +80,9 @@ const BottomBar: React.FC = (): JSX.Element => {
         <MenuList>
           <MenuItem icon={<HiOutlineVideoCamera fontSize="20" />}>Video Call</MenuItem>
           <MenuItem icon={<ImPhone fontSize="20" />}>Voice Call</MenuItem>
-          <MenuItem icon={<IoSettingsOutline fontSize="20" />}>Setting</MenuItem>
+          <Link to="/setting">
+            <MenuItem icon={<IoSettingsOutline fontSize="20" />}>Setting</MenuItem>
+          </Link>
           <Box pl="3">
             <Logout />
           </Box>

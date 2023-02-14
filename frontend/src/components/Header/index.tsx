@@ -25,6 +25,8 @@ const Header: React.FC = () => {
   const { pathname } = useLocation();
   const user = useSelector((state: any) => state.User.user);
 
+  console.log(IMAGES_URL + user?.profile);
+
   return (
     <HStack
       w="100"

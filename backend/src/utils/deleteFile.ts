@@ -27,4 +27,12 @@ export const deletePostFiles = async (username: string, id: string) => {
   }
 };
 
-export default deletePostFiles;
+export const deleteProfileFile = async (username: string) => {
+  const user = await User.findOne({ username });
+
+  unlink(path.join(__dirname, `../../public/${user?.profile}`), (err: any) => {
+    if (err) {
+      console.log(err);
+    }
+  });
+};
