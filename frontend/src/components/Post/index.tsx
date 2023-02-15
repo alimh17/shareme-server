@@ -27,7 +27,7 @@ const Post: React.FC<PostProps> = ({ height, post }): JSX.Element => {
     >
       <Head post={post} />
       <Body post={post} />
-      <Footer comments={post.comment} />
+      <Footer post={post} />
     </Card>
   );
 };

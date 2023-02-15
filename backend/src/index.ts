@@ -14,6 +14,7 @@ import Follow from "./routes/Follow";
 import Unfollow from "./routes/Unfollow";
 import IsFollow from "./routes/IsFollow";
 import Setting from "./routes/Setting";
+import Comment from "./routes/Comment";
 import maybeYouKnow from "./routes/MYK";
 import Refresh from "./routes/Refresh";
 
@@ -42,6 +43,7 @@ app.use("/v1/follow", Follow);
 app.use("/v1/unfollow", Unfollow);
 app.use("/v1/isfollow", IsFollow);
 app.use("/v1/setting", Setting);
+app.use("/v1/comment", Comment);
 app.use("/v1/myk", maybeYouKnow);
 app.use("/v1/refresh", Refresh);
 

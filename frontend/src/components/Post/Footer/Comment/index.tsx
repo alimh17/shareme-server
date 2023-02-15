@@ -1,42 +1,82 @@
 import React, { useEffect, useState } from 'react';
-import {
-  Box,
-  Flex,
-  HStack,
-  IconButton,
-  Input,
-  InputGroup,
-  InputRightElement,
-  Text,
-  useColorMode,
-  VStack,
-} from '@chakra-ui/react';
-import EmojiPicker from 'emoji-picker-react';
-import { BsEmojiSmile } from 'react-icons/bs';
+import { Box, Flex, IconButton } from '@chakra-ui/react';
 import { TfiComment } from 'react-icons/tfi';
+import { useSelector } from 'react-redux';
+import moment from 'moment';
+
+import CommentList from './CommentList';
+import Emoji from './Emoji';
+import CommentInput from './CommentInput';
+import addCommentRequest from 'server/AddCommentRequest';
 
 interface Props {
-  allComments: [];
+  post: any;
 }
 
-const Comment: React.FC<Props> = ({ allComments }) => {
+const Comment: React.FC<Props> = ({ post }) => {
   const [comment, setComment] = useState<string>('');
-  const [comments, setComments] = useState<[]>([]);
+  const [comments, setComments] = useState<{}[]>([]);
   const [displayComments, setDisplayComments] = useState<boolean>(false);
   const [showEmoji, setShowEmoji] = useState<boolean>(false);
-  const { colorMode } = useColorMode();
 
-  const handleAddComment = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const user = useSelector((state: any) => state.User.user);
+
+  const handleAddComment = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      const cpComments = [...comments];
-      cpComments.push(e.target?.value);
-      setComments(cpComments);
-      setComment('');
+      const target = e.target as HTMLInputElement;
+      if (target.value !== '') {
+        //! Here set comment text
+        setComment(target.value);
+
+        const newComment = {
+          id: Math.random() * 10000,
+          type: 'comment',
+          profile: user.profile,
+          name: user.name ? user.name : user.username,
+          time: moment().format('MMM Do YY'),
+          text: comment,
+          from: post._id,
+          to: user._id,
+          createAt: new Date(),
+        };
+
+        //! Here set comment object
+        setComments([...comments, newComment]);
+
+        //! Here send Request for adding comment
+        addCommentRequest(newComment).then((res) => {
+          // console.log(res);
+        });
+        //! Reset comment text
+        setComment('');
+      }
     }
   };
 
+  const handleAddEmoji = (emoji: string) => {
+    setComment(comment + emoji);
+  };
+
+  const handleSetComment = (text: string) => {
+    setComment(text);
+  };
+
+  const handleToggleEmoji = () => {
+    setShowEmoji(!showEmoji);
+  };
+
+  const handleDeleteComment = (id: string) => {
+    const cpComments = [...comments];
+    const deleted = cpComments.filter((f: any) => f.id !== id);
+    setComments(deleted);
+  };
+
   useEffect(() => {
-    setComments(allComments);
+    //! Sort posts by publication time
+    // const sorted = post.comment.sort(function (a: any, b: any) {
+    //   return new Date(b.createdAt).valueOf() - new Date(a.createdAt).valueOf();
+    // });
+    setComments(post.comment);
   }, []);
 
   return (
@@ -61,56 +101,14 @@ const Comment: React.FC<Props> = ({ allComments }) => {
             flexFlow: 'column',
           }}
         >
-          <VStack
-            sx={{
-              maxH: '60',
-              overflow: 'scroll',
-              justifyContent: 'center',
-            }}
-          >
-            {comments.map((item) => (
-              <Text key={item}>{item}</Text>
-            ))}
-          </VStack>
-          <Box
-            sx={{
-              position: 'absolute',
-              bottom: '3rem',
-            }}
-            left={{ base: '5', md: '10' }}
-          >
-            {showEmoji && (
-              <EmojiPicker
-                theme={colorMode === 'dark' ? 'dark' : 'light'}
-                lazyLoadEmojis={true}
-                onEmojiClick={() => {}}
-              />
-            )}
-          </Box>
-          <InputGroup>
-            <Flex
-              sx={{
-                display: 'block',
-                flexFlow: 'column',
-              }}
-              w={{ base: '80', md: '96' }}
-            >
-              <Input
-                placeholder="Write comment"
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                onKeyDown={handleAddComment}
-              />
-              <InputRightElement width="4.5rem">
-                <IconButton
-                  aria-label="Emoji"
-                  icon={<BsEmojiSmile />}
-                  onClick={() => setShowEmoji(!showEmoji)}
-                  bg="inherit"
-                />
-              </InputRightElement>
-            </Flex>
-          </InputGroup>
+          <CommentList comments={comments} post={post} onDelete={handleDeleteComment} />
+          <Emoji show={showEmoji} comment={comment} onEmoji={handleAddEmoji} />
+          <CommentInput
+            comment={comment}
+            onText={handleSetComment}
+            onPress={handleAddComment}
+            toggle={handleToggleEmoji}
+          />
         </Box>
       )}
     </Flex>

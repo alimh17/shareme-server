@@ -1,18 +1,18 @@
-import { CardFooter, HStack, IconButton } from '@chakra-ui/react';
 import React from 'react';
-import { HiHeart } from 'react-icons/hi';
+import { CardFooter, HStack } from '@chakra-ui/react';
 import Comment from './Comment';
+import Like from './Like';
 
 interface Props {
-  comments: [];
+  post: any;
 }
 
-const Footer: React.FC<Props> = ({ comments }): JSX.Element => {
+const Footer: React.FC<Props> = ({ post }): JSX.Element => {
   return (
     <CardFooter>
       <HStack alignItems="flex-start">
-        <IconButton variant="ghost" colorScheme="red" size="lg" aria-label="Like" icon={<HiHeart />} />
-        <Comment allComments={comments} />
+        <Like />
+        <Comment post={post} />
       </HStack>
     </CardFooter>
   );
