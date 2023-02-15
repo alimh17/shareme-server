@@ -1,5 +1,5 @@
 import React from 'react';
-import { Card, useColorMode } from '@chakra-ui/react';
+import { Card, Text, useColorMode } from '@chakra-ui/react';
 import { useTheme } from '@emotion/react';
 import Head from './Head';
 import Body from './Body';

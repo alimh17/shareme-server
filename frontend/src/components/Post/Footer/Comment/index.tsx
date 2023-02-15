@@ -96,8 +96,9 @@ const Comment: React.FC<Props> = ({ post }) => {
         <Box
           sx={{
             position: 'relative',
-            left: '-12',
-            w: '100%',
+            left: '-10',
+            top: '2.5rem',
+            w: '25rem',
             display: 'flex',
             flexFlow: 'column',
           }}
