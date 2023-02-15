@@ -11,7 +11,7 @@ const Footer: React.FC<Props> = ({ post }): JSX.Element => {
   return (
     <CardFooter>
       <HStack alignItems="flex-start">
-        <Like />
+        <Like post={post} />
         <Comment post={post} />
       </HStack>
     </CardFooter>

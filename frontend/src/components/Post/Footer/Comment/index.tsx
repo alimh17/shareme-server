@@ -87,6 +87,7 @@ const Comment: React.FC<Props> = ({ post }) => {
         size="lg"
         aria-label="Comments"
         icon={<TfiComment />}
+        fontSize="20"
         onClick={() => setDisplayComments(!displayComments)}
         w={5}
       />
