@@ -1,9 +1,10 @@
 import { Button, HStack, Text } from '@chakra-ui/react';
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import followRequest from 'server/followRequest';
 import isFollow from 'server/isFollow';
 import { unfollowRequest } from 'server/unfollowRequest';
+import { DecreaseFollowing, IncreaseFollowings } from 'store/UserSlice';
 import { ProfileCondition } from 'utils/ProfileCondition';
 
 interface Props {
@@ -12,6 +13,8 @@ interface Props {
 
 const FollowBTN: React.FC<Props> = ({ onClick }): JSX.Element => {
   const [isFollowed, setIsFollowed] = React.useState<boolean>(false);
+
+  const dispatch = useDispatch();
 
   const me = useSelector((state: any) => state.User.user);
   const profile = useSelector((state: any) => state.Profile.profile);
@@ -40,10 +43,12 @@ const FollowBTN: React.FC<Props> = ({ onClick }): JSX.Element => {
               if (isFollowed) {
                 setIsFollowed(false);
                 unfollowRequest(profile);
+                dispatch(DecreaseFollowing());
                 onClick('min');
               } else {
                 setIsFollowed(true);
                 followRequest(profile);
+                dispatch(IncreaseFollowings());
                 onClick('plus');
               }
             }}

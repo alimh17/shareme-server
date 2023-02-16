@@ -16,6 +16,7 @@ import IsFollow from "./routes/IsFollow";
 import Setting from "./routes/Setting";
 import Comment from "./routes/Comment";
 import Like from "./routes/Like";
+import FollowingPage from "./routes/FollowingPage";
 import maybeYouKnow from "./routes/MYK";
 import Refresh from "./routes/Refresh";
 
@@ -46,6 +47,7 @@ app.use("/v1/isfollow", IsFollow);
 app.use("/v1/setting", Setting);
 app.use("/v1/comment", Comment);
 app.use("/v1/like", Like);
+app.use("/v1/following-page", FollowingPage);
 app.use("/v1/myk", maybeYouKnow);
 app.use("/v1/refresh", Refresh);
 

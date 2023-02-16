@@ -8,7 +8,6 @@ interface Props {
 
 const Followrs: React.FC<Props> = ({ followers }): JSX.Element => {
   const { colorMode } = useColorMode();
-  const profile = useSelector((state: any) => state.Profile.profile);
 
   return (
     <Text

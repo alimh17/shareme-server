@@ -11,6 +11,12 @@ import store from 'store';
 import Refresh from 'HOC/Refresh';
 import InitState from 'HOC/InitState';
 
+// Import Swiper styles
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
+import 'swiper/css/scrollbar';
+
 const queryClient = new QueryClient();
 
 interface IMode {

@@ -13,20 +13,8 @@ export const Follow = async (req: Request, res: Response) => {
     if (!decoded) {
       return res.status(409).json({ message: "Token is not valid" });
     }
-
-    //! update user followers list
-    const user = await User.findOneAndUpdate(
-      { username: req.body.username },
-      { $push: { followers: decoded.user } },
-      { new: true }
-    );
-
-    //! update my followings list
-    const me = await User.findOneAndUpdate(
-      { username: decoded.user.username },
-      { $push: { followings: req?.body } },
-      { new: true }
-    );
+    const user = await User.findOne({ username: req.body.username });
+    const me = await User.findOne({ username: decoded.user.username });
 
     if (!user) {
       return res.status(404).json({ message: "User is not defined" });
@@ -35,6 +23,31 @@ export const Follow = async (req: Request, res: Response) => {
     if (!me) {
       return res.status(404).json({ message: "User is not defined" });
     }
+
+    const { _id, username, profile, name } = me;
+
+    //! update user followers list
+    await User.findOneAndUpdate(
+      { username: req.body.username },
+      { $push: { followers: { _id, username, profile, name } } },
+      { new: true }
+    );
+
+    //! update my followings list
+    await User.findOneAndUpdate(
+      { username: decoded.user.username },
+      {
+        $push: {
+          followings: {
+            _id: user._id,
+            username: user.username,
+            profile: user.profile,
+            name: user.name,
+          },
+        },
+      },
+      { new: true }
+    );
 
     await user?.save();
     await me?.save();

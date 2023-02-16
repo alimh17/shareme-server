@@ -13,16 +13,28 @@ const Follow = async (req, res) => {
         if (!decoded) {
             return res.status(409).json({ message: "Token is not valid" });
         }
-        //! update user followers list
-        const user = await User_1.default.findOneAndUpdate({ username: req.body.username }, { $push: { followers: decoded.user } }, { new: true });
-        //! update my followings list
-        const me = await User_1.default.findOneAndUpdate({ username: decoded.user.username }, { $push: { followings: req?.body } }, { new: true });
+        const user = await User_1.default.findOne({ username: req.body.username });
+        const me = await User_1.default.findOne({ username: decoded.user.username });
         if (!user) {
             return res.status(404).json({ message: "User is not defined" });
         }
         if (!me) {
             return res.status(404).json({ message: "User is not defined" });
         }
+        const { _id, username, profile, name } = me;
+        //! update user followers list
+        await User_1.default.findOneAndUpdate({ username: req.body.username }, { $push: { followers: { _id, username, profile, name } } }, { new: true });
+        //! update my followings list
+        await User_1.default.findOneAndUpdate({ username: decoded.user.username }, {
+            $push: {
+                followings: {
+                    _id: user._id,
+                    username: user.username,
+                    profile: user.profile,
+                    name: user.name,
+                },
+            },
+        }, { new: true });
         await user?.save();
         await me?.save();
         return res.status(200).json({ message: "success" });
