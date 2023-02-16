@@ -12,9 +12,12 @@ const removeLike = async (req, res) => {
             return res.status(404).json({ message: "User is not exist" });
         }
         const { username, profile, _id } = user;
+        //! remove like for post schema
         await Post_1.default.updateOne({ _id: req.body.postId }, {
             $pull: { like: { username, profile, _id } },
         });
+        //! remove new comment for posts user schema
+        await User_1.default.updateMany({ username: req.body.owner }, { $pull: { "posts.$[].like": { username, profile, _id } } });
         return res.status(200).json({ message: "success" });
     }
     catch (err) {

@@ -38,10 +38,10 @@ const Like: React.FC<Porps> = ({ post }): JSX.Element => {
         onClick={() => {
           if (like) {
             setLike(false);
-            removeLikeRequest(user.username, post._id).then((res) => {});
+            removeLikeRequest(user.username, post._id, post.owner.name).then((res) => {});
           } else {
             setLike(true);
-            addLikeRequest(user.username, post._id).then((res) => {});
+            addLikeRequest(user.username, post._id, post.owner.name).then((res) => {});
           }
         }}
       />

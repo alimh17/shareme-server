@@ -35,6 +35,22 @@ const Setting = async (req, res) => {
             }, {
                 $set: { "owner.profile": `profile/${req.file.filename}` },
             });
+            //! update profile in like and comment post schema
+            await Post_1.default.updateMany({
+                "like.username": decoded.user.username,
+            }, {
+                $set: {
+                    "like.$.profile": `profile/${req.file.filename}`,
+                    "comment.$.profile": `profile/${req.file.filename}`,
+                },
+            });
+            //! update profile in like and comment user schema
+            await User_1.default.updateMany({ "posts.like.username": decoded.user.username }, {
+                $set: {
+                    "posts.$[].like.$[].profile": `profile/${req.file.filename}`,
+                    "posts.$[].comment.$[].profile": `profile/${req.file.filename}`,
+                },
+            });
         }
         await User_1.default.updateOne({
             username: decoded.user.username,
