@@ -49,3 +49,4 @@ app.use("/v1/myk", MYK_1.default);
 app.use("/v1/refresh", Refresh_1.default);
 //? --------------------- Connect To DataBase ---------------------------
 (0, DB_1.default)(server);
+// generateUser();

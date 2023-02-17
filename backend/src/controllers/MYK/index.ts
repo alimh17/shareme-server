@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import { decode } from "jsonwebtoken";
 import User from "../../models/User/User";
+import findFollowings from "./FindFollowings";
 
 const maybeYouKnow = async (req: Request, res: Response) => {
   try {
@@ -19,9 +20,8 @@ const maybeYouKnow = async (req: Request, res: Response) => {
     if (!user) {
       return res.status(404).json({ message: "User is not defined" });
     }
-
-    console.log(decoded.user?.followings[0].followers);
-    res.status(200).json({ message: "success", user: user.followings });
+    const MYK = await findFollowings(user);
+    res.status(200).json({ message: "success", MYK });
   } catch (err: any) {
     console.log(err);
     res.status(500).json({ message: "Failed , please try again" });

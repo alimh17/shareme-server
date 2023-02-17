@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const jsonwebtoken_1 = require("jsonwebtoken");
 const User_1 = __importDefault(require("../../models/User/User"));
+const FindFollowings_1 = __importDefault(require("./FindFollowings"));
 const maybeYouKnow = async (req, res) => {
     try {
         const token = req.headers.authorization?.slice(7, req.headers.authorization.length);
@@ -16,8 +17,8 @@ const maybeYouKnow = async (req, res) => {
         if (!user) {
             return res.status(404).json({ message: "User is not defined" });
         }
-        console.log(decoded.user?.followings[0].followers);
-        res.status(200).json({ message: "success", user: user.followings });
+        const MYK = await (0, FindFollowings_1.default)(user);
+        res.status(200).json({ message: "success", MYK });
     }
     catch (err) {
         console.log(err);

@@ -22,6 +22,8 @@ import Refresh from "./routes/Refresh";
 
 import path from "path";
 import connectDB from "./DB";
+import { CreateRandomUser, generateUser } from "./utils/faker";
+import { faker } from "@faker-js/faker";
 
 dotenv.config();
 const app = express();
@@ -53,3 +55,4 @@ app.use("/v1/refresh", Refresh);
 
 //? --------------------- Connect To DataBase ---------------------------
 connectDB(server);
+// generateUser();

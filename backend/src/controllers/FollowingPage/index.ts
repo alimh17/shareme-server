@@ -38,6 +38,8 @@ const followingPage = async (req: Request, res: Response) => {
       (user: any) => user.username !== decoded.user.username
     );
 
+    console.log(data);
+
     return res.status(200).json({ message: "success", data });
   } catch (err) {
     console.log(err);

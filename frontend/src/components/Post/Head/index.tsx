@@ -38,7 +38,11 @@ const Head: React.FC<Props> = ({ post }): JSX.Element => {
       <Flex>
         <Flex flex="1" gap="4" alignItems="center" flexWrap="wrap">
           <Link to={`/${post?.owner.name}`}>
-            <Avatar name={post?.owner?.name} src={IMAGES_URL + post?.owner.profile} loading="lazy" />
+            <Avatar
+              name={post?.owner?.name}
+              src={post?.owner.profile.slice(0, 4) === 'http' ? post?.owner.profile : IMAGES_URL + post?.owner.profile}
+              loading="lazy"
+            />
           </Link>
           <Box>
             <Link to={`/${post?.owner.name}`}>

@@ -30,11 +30,14 @@ const Body: React.FC<Props> = ({ post }): JSX.Element => {
         {post?.media.map((media: any) => {
           return media.source.slice(-3) === 'mp4' ? (
             <SwiperSlide key={media._id}>
-              <video src={IMAGES_URL + media.source} controls />
+              <video src={media.source.slice(0, 4) === 'http' ? media.source : IMAGES_URL + media.source} controls />
             </SwiperSlide>
           ) : (
             <SwiperSlide key={media._id}>
-              <Image src={IMAGES_URL + media.source} sx={{ zIndex: '2' }} />
+              <Image
+                src={media.source.slice(0, 4) === 'http' ? media.source : IMAGES_URL + media.source}
+                sx={{ zIndex: '2' }}
+              />
             </SwiperSlide>
           );
         })}

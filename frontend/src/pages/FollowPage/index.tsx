@@ -15,7 +15,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { A11y, Navigation, Pagination, Scrollbar } from 'swiper';
-import { getAllUserRequest, userRequest } from 'server/userRequest';
+import { userRequest } from 'server/userRequest';
 import FollowCard from './FollowCard';
 import followRequest from 'server/followRequest';
 import { unfollowRequest } from 'server/unfollowRequest';
@@ -46,7 +46,7 @@ const FollowPage: React.FC = (): JSX.Element => {
       });
     }
     setFollowed(user.followings);
-  }, [user]);
+  }, []);
 
   const handleClickButton = (data: any) => {
     const cpUsers = [...users];

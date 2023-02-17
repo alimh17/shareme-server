@@ -27,6 +27,7 @@ const followingPage = async (req, res) => {
         const filteredUsers = editUser.filter((u) => !user.followings.some((f) => f.username === u.username));
         //! Filter self user
         const data = filteredUsers.filter((user) => user.username !== decoded.user.username);
+        console.log(data);
         return res.status(200).json({ message: "success", data });
     }
     catch (err) {

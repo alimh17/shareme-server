@@ -22,7 +22,7 @@ const FollowCard: React.FC<Props> = ({ user, onClick }): JSX.Element => {
     >
       <CardBody>
         <Center flexFlow="column" gap={5}>
-          <Avatar src={IMAGES_URL + user.profile} size="2xl" />
+          <Avatar src={user.profile.slice(0, 4) === 'http' ? user.profile : IMAGES_URL + user.profile} size="2xl" />
           <Text fontSize="xl" fontWeight="bold">
             {user.username}
           </Text>

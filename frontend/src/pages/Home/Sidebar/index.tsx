@@ -1,9 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Box, Button, Flex, HStack, Image, Text, useColorMode, useMediaQuery } from '@chakra-ui/react';
+import {
+  Avatar,
+  Box,
+  Button,
+  Divider,
+  Flex,
+  Heading,
+  HStack,
+  Image,
+  Text,
+  useColorMode,
+  useMediaQuery,
+} from '@chakra-ui/react';
 import { getAllUserRequest } from 'server/userRequest';
 import config from 'config/index.json';
 import isFollow from 'server/isFollow';
 import { Link } from 'react-router-dom';
+import maybeYouKnow from 'server/maybeYouKnow';
 
 const { IMAGES_URL } = config;
 
@@ -12,8 +25,11 @@ const Sidebar: React.FC = (): JSX.Element => {
   const [users, setUsers] = useState<[]>([]);
 
   useEffect(() => {
-    getAllUserRequest().then((data) => {
-      setUsers(data?.users);
+    maybeYouKnow().then((data: any) => {
+      data.MYK.map((item: any) => {
+        console.log(item);
+      });
+      setUsers(data?.MYK);
     });
   }, []);
 
@@ -41,11 +57,18 @@ const Sidebar: React.FC = (): JSX.Element => {
         }}
         w="100%"
       >
+        <Heading as="h2" fontSize="22" textAlign="center">
+          Maybe You Know
+        </Heading>
+        <Divider />
         {users?.map((user: any) => (
           <Flex key={user._id} p={2} alignItems="center" justifyContent="space-between">
             <Link to={`/${user.username}`}>
               <HStack>
-                <Avatar src={IMAGES_URL + user.profile} size={{ base: 'sm', md: 'lg' }} />
+                <Avatar
+                  src={user.profile.slice(0, 4) === 'http' ? user.profile : IMAGES_URL + user.profile}
+                  size={{ base: 'sm', md: 'lg' }}
+                />
                 <Text fontWeight="bold">{user.username}</Text>
               </HStack>
             </Link>

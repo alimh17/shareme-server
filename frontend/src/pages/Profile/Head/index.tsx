@@ -54,7 +54,13 @@ const Head: React.FC<Props> = () => {
       <Center flex={4}>
         <Avatar
           src={
-            ProfileCondition(me?.username, profile?.username) ? IMAGES_URL + me?.profile : IMAGES_URL + profile?.profile
+            ProfileCondition(me?.username, profile?.username)
+              ? me?.profile.slice(0, 4) === 'http'
+                ? me?.profile
+                : IMAGES_URL + me?.profile
+              : profile?.profile.slice(0, 4) === 'http'
+              ? profile?.profile
+              : IMAGES_URL + profile?.profile
           }
           size="2xl"
         />

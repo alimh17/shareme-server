@@ -105,9 +105,22 @@ const Posts: React.FC<Props> = () => {
             {posts?.map((post: any) => (
               <GridItem key={post._id}>
                 {post.media[0].source.slice(-3) === 'mp4' ? (
-                  <video src={IMAGES_URL + post.media[0].source} />
+                  <video
+                    src={
+                      post.media[0].source.slice(0, 4) === 'http'
+                        ? post.media[0].source
+                        : IMAGES_URL + post.media[0].source
+                    }
+                  />
                 ) : (
-                  <Image src={IMAGES_URL + post.media[0].source} alt={post._id} />
+                  <Image
+                    src={
+                      post.media[0].source.slice(0, 4) === 'http'
+                        ? post.media[0].source
+                        : IMAGES_URL + post.media[0].source
+                    }
+                    alt={post._id}
+                  />
                 )}
               </GridItem>
             ))}
