@@ -44,6 +44,19 @@ const userSchema = new mongoose_1.Schema({
         type: [{}],
         default: [],
     },
+    chatList: {
+        type: [
+            {
+                name: String,
+                username: {
+                    type: String,
+                    unique: true,
+                },
+                avatar: String,
+            },
+        ],
+        default: [],
+    },
     createdAt: {
         type: Date,
         default: Date.now,

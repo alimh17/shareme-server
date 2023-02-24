@@ -1,18 +1,31 @@
-import React from 'react';
-import { Box, useColorMode, useMediaQuery } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { Box, Divider, useColorMode } from '@chakra-ui/react';
+import { io } from 'socket.io-client';
 
 import Head from './Head';
 import Message from './Message';
 import Messages from './Messages';
+import { useSelector } from 'react-redux';
 
 interface ChatProps {
   onOpen: any;
 }
 
 const Chat: React.FC<ChatProps> = ({ onOpen }): JSX.Element => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
+  const [messages, setMessages] = useState<{}[]>([]);
 
-  const [isMinThan768] = useMediaQuery('(max-width : 768px)');
+  const currentChat = useSelector((state: any) => state.Chat.currentChat);
+
+  const handleSetMessages = (message: string) => {
+    const cpMessages = [...messages];
+    const newMessage = {
+      id: Math.random() * 1000,
+      message,
+    };
+    cpMessages.push(message);
+    setMessages(cpMessages);
+  };
 
   return (
     <Box
@@ -20,14 +33,15 @@ const Chat: React.FC<ChatProps> = ({ onOpen }): JSX.Element => {
         flex: '8',
         margin: 'auto',
         position: 'relative',
-        h: isMinThan768 ? '82vh' : '90vh',
         background: colorMode === 'dark' ? 'dark800' : '#eeeeee',
       }}
+      h={{ base: '84vh', lg: '90vh' }}
     >
-      <Head onOpen={onOpen} />
-      <Messages />
+      <Head onOpen={onOpen} chat={currentChat} />
+      <Divider />
+      <Messages messages={messages} />
       {/* //? Input Message */}
-      <Message />
+      <Message onMessage={handleSetMessages} />
     </Box>
   );
 };

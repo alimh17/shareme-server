@@ -1,27 +1,19 @@
-import React from 'react';
-import {
-  Avatar,
-  AvatarBadge,
-  Button,
-  Flex,
-  HStack,
-  IconButton,
-  Spacer,
-  Text,
-  useColorMode,
-  useMediaQuery,
-} from '@chakra-ui/react';
+import React, { useEffect } from 'react';
+import { Avatar, AvatarBadge, Flex, HStack, IconButton, Spacer, Text, useColorMode } from '@chakra-ui/react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
-import { faker } from '@faker-js/faker';
 import { RxHamburgerMenu } from 'react-icons/rx';
+import { useSelector } from 'react-redux';
+import config from 'config/index.json';
 
 interface HeadProps {
   onOpen: () => void;
+  chat: any;
 }
 
-const Head: React.FC<HeadProps> = ({ onOpen }): JSX.Element => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const [isMinThan1200] = useMediaQuery('(max-width : 1200px)');
+const { IMAGES_URL } = config;
+
+const Head: React.FC<HeadProps> = ({ onOpen, chat }): JSX.Element => {
+  const { colorMode } = useColorMode();
 
   return (
     <Flex
@@ -34,11 +26,17 @@ const Head: React.FC<HeadProps> = ({ onOpen }): JSX.Element => {
       }}
     >
       <HStack>
-        {isMinThan1200 && <IconButton aria-label="Drawer" bg="inherit" onClick={onOpen} icon={<RxHamburgerMenu />} />}
-        <Avatar src={faker.image.avatar()}>
+        <IconButton
+          aria-label="Drawer"
+          bg="inherit"
+          onClick={onOpen}
+          icon={<RxHamburgerMenu />}
+          display={{ base: 'block ', lg: 'none' }}
+        />
+        <Avatar src={chat?.avatar?.slice(0, 4) === 'http' ? chat.avatar : IMAGES_URL + chat.avatar}>
           <AvatarBadge boxSize="1.25em" bg="green.500" />
         </Avatar>
-        <Text>{faker.name.fullName()}</Text>
+        <Text>{chat?.name ? chat.name : chat.username}</Text>
       </HStack>
       <Spacer />
       <IconButton fontSize={20} aria-label="Options" bg="inherit" icon={<BiDotsVerticalRounded />} />

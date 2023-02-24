@@ -20,6 +20,7 @@ const Setting_1 = __importDefault(require("./routes/Setting"));
 const Comment_1 = __importDefault(require("./routes/Comment"));
 const Like_1 = __importDefault(require("./routes/Like"));
 const FollowingPage_1 = __importDefault(require("./routes/FollowingPage"));
+const ChatList_1 = __importDefault(require("./routes/ChatList"));
 const MYK_1 = __importDefault(require("./routes/MYK"));
 const Refresh_1 = __importDefault(require("./routes/Refresh"));
 const path_1 = __importDefault(require("path"));
@@ -45,6 +46,7 @@ app.use("/v1/setting", Setting_1.default);
 app.use("/v1/comment", Comment_1.default);
 app.use("/v1/like", Like_1.default);
 app.use("/v1/following-page", FollowingPage_1.default);
+app.use("/v1/chat-list", ChatList_1.default);
 app.use("/v1/myk", MYK_1.default);
 app.use("/v1/refresh", Refresh_1.default);
 //? --------------------- Connect To DataBase ---------------------------

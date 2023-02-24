@@ -11,6 +11,7 @@ export interface IUser {
   posts: Array<object>;
   followers: Array<object>;
   followings: Array<object>;
+  chatList: Array<object>;
   createdAt: Date;
   breathday: Date;
 }
@@ -56,6 +57,19 @@ const userSchema = new Schema<IUser>({
   },
   followings: {
     type: [{}],
+    default: [],
+  },
+  chatList: {
+    type: [
+      {
+        name: String,
+        username: {
+          type: String,
+          unique: true,
+        },
+        avatar: String,
+      },
+    ],
     default: [],
   },
   createdAt: {

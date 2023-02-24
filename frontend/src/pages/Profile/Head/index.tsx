@@ -1,22 +1,15 @@
 import React, { useEffect } from 'react';
-import {
-  Avatar,
-  Center,
-  Divider,
-  Flex,
-  Heading,
-  HStack,
-  Text,
-  useColorMode,
-  useMediaQuery,
-  VStack,
-} from '@chakra-ui/react';
+import { Avatar, Button, Center, Divider, Flex, Heading, HStack, Text, useColorMode, VStack } from '@chakra-ui/react';
 import { faker } from '@faker-js/faker';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { ProfileCondition } from 'utils/ProfileCondition';
 import config from 'config/index.json';
 import FollowBTN from './FollowBTN';
 import Followers from './Followers';
+import { BiMessageAdd } from 'react-icons/bi';
+import { addUserToChetList, setCurrentChat } from 'store/ChatSlice';
+import { useNavigate } from 'react-router-dom';
+import addUserToChatList from 'server/ChatListRequest/addUserToChatList';
 
 interface Props {}
 
@@ -25,10 +18,11 @@ const { IMAGES_URL } = config;
 const Head: React.FC<Props> = () => {
   const [followers, setFollowers] = React.useState<number>(0);
   const { colorMode } = useColorMode();
-  const [isMinThan768] = useMediaQuery('(max-width : 768px)');
 
   const me = useSelector((state: any) => state.User.user);
   const profile = useSelector((state: any) => state.Profile.profile);
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleUpdateFollowers = (params: string) => {
     if (params === 'plus') setFollowers(followers + 1);
@@ -58,7 +52,7 @@ const Head: React.FC<Props> = () => {
               ? me?.profile.slice(0, 4) === 'http'
                 ? me?.profile
                 : IMAGES_URL + me?.profile
-              : profile?.profile.slice(0, 4) === 'http'
+              : profile?.profile?.slice(0, 4) === 'http'
               ? profile?.profile
               : IMAGES_URL + profile?.profile
           }
@@ -96,7 +90,23 @@ const Head: React.FC<Props> = () => {
             Posts {profile.posts}
           </Text>
         </HStack>
-        <FollowBTN onClick={handleUpdateFollowers} />
+        <Center w="100%">
+          <Button
+            colorScheme="blue"
+            onClick={() => {
+              const { _id, username, name, profile: avatar } = profile;
+              dispatch(addUserToChetList({ _id, username, name, avatar }));
+              dispatch(setCurrentChat({ _id, username, name, avatar }));
+              addUserToChatList({ _id, username, name, avatar }).then((res) => {
+                console.log(res);
+              });
+              navigate('/chats');
+            }}
+          >
+            Message <BiMessageAdd fontSize={24} />
+          </Button>
+          <FollowBTN onClick={handleUpdateFollowers} />
+        </Center>
       </VStack>
     </Flex>
   );

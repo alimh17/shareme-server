@@ -14,7 +14,11 @@ import {
   useColorMode,
 } from '@chakra-ui/react';
 
-const Message: React.FC = (): JSX.Element => {
+interface Props {
+  onMessage: (message: string) => void;
+}
+
+const Message: React.FC<Props> = ({ onMessage }): JSX.Element => {
   const [messageValue, SetMessageValue] = useState<string>('');
   const [selectedEmoji, setSelectedEmoji] = useState<any>(null);
   const [showEmojiPicker, setShowEmojiPicker] = React.useState<boolean>(false);
@@ -73,7 +77,7 @@ const Message: React.FC = (): JSX.Element => {
           }}
           width="1rem"
         >
-          <IconButton aria-label="Send" icon={<FiSend />} />
+          <IconButton aria-label="Send" icon={<FiSend />} onClick={() => onMessage(messageValue)} />
         </InputRightElement>
       </InputGroup>
     </Box>

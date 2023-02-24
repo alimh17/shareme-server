@@ -12,6 +12,7 @@ import {
 } from '@chakra-ui/react';
 import User from '../Body/User';
 import { FaTimes } from 'react-icons/fa';
+import { useSelector } from 'react-redux';
 
 interface DrawerComProps {
   isOpen: any;
@@ -19,7 +20,8 @@ interface DrawerComProps {
 }
 
 const DrawerCom: React.FC<DrawerComProps> = ({ isOpen, onClose }): JSX.Element => {
-  const { colorMode, toggleColorMode } = useColorMode();
+  const { colorMode } = useColorMode();
+  const chatList = useSelector((state: any) => state.Chat.chatList);
 
   return (
     <Drawer placement="left" isOpen={isOpen} onClose={onClose} size="md">
@@ -36,9 +38,9 @@ const DrawerCom: React.FC<DrawerComProps> = ({ isOpen, onClose }): JSX.Element =
           </Flex>
         </DrawerHeader>
         <DrawerBody>
-          <User />
-          <User />
-          <User />
+          {chatList.map((user: any) => (
+            <User user={user} key={user._id} />
+          ))}
         </DrawerBody>
       </DrawerContent>
     </Drawer>

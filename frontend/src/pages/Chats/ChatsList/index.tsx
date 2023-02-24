@@ -1,11 +1,10 @@
 import React from 'react';
-import { Box, Divider, useColorMode, useMediaQuery } from '@chakra-ui/react';
+import { Box, Divider, useColorMode } from '@chakra-ui/react';
 import Head from './Head';
 import Body from './Body';
 
 const ChatsList: React.FC = (): JSX.Element => {
-  const { colorMode, toggleColorMode } = useColorMode();
-  const [isMinThan1200] = useMediaQuery('(max-width : 1200px)');
+  const { colorMode } = useColorMode();
 
   return (
     <Box
@@ -28,8 +27,8 @@ const ChatsList: React.FC = (): JSX.Element => {
         borderRadius: '8',
         background: colorMode === 'dark' ? 'dark800' : 'white',
         overflowY: 'scroll',
-        display: isMinThan1200 ? 'none' : 'block',
       }}
+      display={{ base: 'none', lg: 'block' }}
     >
       <Head />
       <Divider />
