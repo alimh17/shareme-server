@@ -16,7 +16,7 @@ import { FaTrash } from 'react-icons/fa';
 import { useSelector } from 'react-redux';
 
 import config from 'config/index.json';
-import deleteCommentRequest from 'server/DeleteCommentRequest';
+import deleteCommentRequest from 'server/CommentRequest/DeleteCommentRequest';
 
 interface Props {
   comments: {}[];

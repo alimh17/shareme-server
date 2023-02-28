@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   Avatar,
   AvatarBadge,
@@ -9,13 +10,12 @@ import {
   Switch,
   Text,
   useColorMode,
-  useMediaQuery,
 } from '@chakra-ui/react';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { Link, useLocation } from 'react-router-dom';
-import config from 'config/index.json';
 import { PathCondition } from 'utils/PathCondition';
+import config from 'config/index.json';
 
 const { IMAGES_URL } = config;
 
@@ -24,8 +24,6 @@ const Header: React.FC = () => {
 
   const { pathname } = useLocation();
   const user = useSelector((state: any) => state.User.user);
-
-  console.log(IMAGES_URL + user?.profile);
 
   return (
     <HStack
@@ -71,7 +69,7 @@ const Header: React.FC = () => {
           size="md"
           variant="mode"
           onChange={() => toggleColorMode()}
-          defaultChecked={colorMode === 'dark' && false}
+          isChecked={colorMode === 'light' ? true : false}
         />
       </Center>
     </HStack>

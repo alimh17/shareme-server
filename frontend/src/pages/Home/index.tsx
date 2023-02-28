@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Flex } from '@chakra-ui/react';
+import { Box, Flex, useDisclosure } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 import Gourd from 'HOC/Guard';
@@ -13,6 +13,8 @@ const Home: React.FC = (): JSX.Element => {
   const user = useSelector((state: any) => state.User.user);
   const navigate = useNavigate();
 
+  const { onOpen } = useDisclosure();
+
   React.useEffect(() => {
     if (user && user.followings < 5) {
       navigate('/follow-page');
@@ -21,12 +23,18 @@ const Home: React.FC = (): JSX.Element => {
 
   return (
     <Gourd>
-      <Flex>
+      <Flex
+        sx={{
+          '::-webkit-scrollbar': {
+            display: 'none',
+          },
+        }}
+      >
         <Box flex={{ lg: '3' }} />
         <Main />
         <Sidebar />
       </Flex>
-      <Navbar />
+      <Navbar onOpen={onOpen} />
     </Gourd>
   );
 };

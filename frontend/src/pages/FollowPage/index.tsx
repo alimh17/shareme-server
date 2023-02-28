@@ -15,11 +15,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { A11y, Navigation, Pagination, Scrollbar } from 'swiper';
-import { userRequest } from 'server/userRequest';
+import { userRequest } from 'server/UserRequest/userRequest';
 import FollowCard from './FollowCard';
-import followRequest from 'server/followRequest';
-import { unfollowRequest } from 'server/unfollowRequest';
-import followingPageRequest from 'server/FollowingPageRequest';
+import followRequest from 'server/FollowRequest/followRequest';
+import { unfollowRequest } from 'server/FollowRequest/unfollowRequest';
+import followingPageRequest from 'server/FollowRequest/FollowingPageRequest';
 import { DecreaseFollowing, IncreaseFollowings, initUser } from 'store/UserSlice';
 
 const FollowPage: React.FC = (): JSX.Element => {

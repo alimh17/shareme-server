@@ -1,9 +1,9 @@
 import { Button, HStack, Text } from '@chakra-ui/react';
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import followRequest from 'server/followRequest';
-import isFollow from 'server/isFollow';
-import { unfollowRequest } from 'server/unfollowRequest';
+import followRequest from 'server/FollowRequest/followRequest';
+import isFollow from 'server/FollowRequest/isFollow';
+import { unfollowRequest } from 'server/FollowRequest/unfollowRequest';
 import { DecreaseFollowing, IncreaseFollowings } from 'store/UserSlice';
 import { ProfileCondition } from 'utils/ProfileCondition';
 

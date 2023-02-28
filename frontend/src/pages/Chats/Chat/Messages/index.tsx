@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Messages: React.FC<Props> = ({ messages }): JSX.Element => {
-  // const scrollEnd = useScrollToEnd();
   const ScrollRef = React.useRef<null | HTMLDivElement>(null);
   const userData = useSelector((state: any) => state.Chat.userData);
 

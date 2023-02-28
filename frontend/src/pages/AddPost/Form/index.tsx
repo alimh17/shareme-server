@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormControl, FormLabel, Input, Box, IconButton, Button, useToast } from '@chakra-ui/react';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
-import { postRequest } from 'server/postRequest';
+import { postRequest } from 'server/PostRequest/postRequest';
 import { validationPost } from 'utils/PostValidation';
 import { useNavigate } from 'react-router-dom';
 

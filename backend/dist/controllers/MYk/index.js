@@ -13,7 +13,7 @@ const maybeYouKnow = async (req, res) => {
         if (!jsonwebtoken_1.decode) {
             return res.status(409).json({ message: "Access token is required" });
         }
-        const user = await User_1.default.findOne({ _id: decoded.user._id });
+        const user = await User_1.default.findOne({ username: decoded.user.username });
         if (!user) {
             return res.status(404).json({ message: "User is not defined" });
         }

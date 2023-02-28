@@ -18,7 +18,7 @@ import { BsFillGridFill } from 'react-icons/bs';
 import { AiOutlineUnorderedList } from 'react-icons/ai';
 import Post from 'components/Post';
 import { useSelector } from 'react-redux';
-import getUserPostsRequest from 'server/getUserPostsRequest';
+import getUserPostsRequest from 'server/PostRequest/getUserPostsRequest';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import { useLocation } from 'react-router-dom';
 

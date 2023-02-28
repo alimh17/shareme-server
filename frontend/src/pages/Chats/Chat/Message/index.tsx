@@ -1,8 +1,9 @@
 import React from 'react';
-import { Avatar, Box, HStack, Text, VStack } from '@chakra-ui/react';
+import { Avatar, Box, HStack, IconButton, Text, VStack } from '@chakra-ui/react';
 import { useSelector } from 'react-redux';
 
 import config from 'config/index.json';
+import { BiArrowBack } from 'react-icons/bi';
 
 const { IMAGES_URL } = config;
 interface Props {
@@ -26,9 +27,24 @@ const Message: React.FC<Props> = React.memo(({ user, message }): JSX.Element => 
         borderRadius={message?.sender === me?._id ? '15px 15px 0 15px' : '15px 15px  15px 0'}
         display="flex"
         p={2}
+        sx={{
+          wordWrap: 'break-word',
+        }}
       >
-        <HStack p={2} flexDirection={message?.sender === me?._id ? 'row-reverse' : 'row'} gap={5}>
-          <VStack>
+        <HStack
+          sx={{
+            p: 2,
+            gap: 5,
+            flexDirection: message?.sender === me?._id ? 'row-reverse' : 'row',
+            position: 'relative',
+          }}
+        >
+          <VStack
+            sx={{
+              postion: 'absolute',
+              top: 0,
+            }}
+          >
             <Avatar
               src={
                 message?.sender === me?._id
@@ -40,9 +56,11 @@ const Message: React.FC<Props> = React.memo(({ user, message }): JSX.Element => 
                   : IMAGES_URL + user?.profile
               }
             />
-            <Text fontSize="xs">{message.time}</Text>
+            <Text fontSize={{ base: 'x-small', sm: 'xs' }} textAlign="center">
+              {message.time}
+            </Text>
           </VStack>
-          <Text>{message.text}</Text>
+          <Text maxW={{ base: '8rem', lg: '20rem' }}>{message.text}</Text>
         </HStack>
       </Box>
     </Box>

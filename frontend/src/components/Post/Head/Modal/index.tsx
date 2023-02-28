@@ -16,7 +16,7 @@ import {
 import { CiWarning } from 'react-icons/ci';
 import { useDispatch } from 'react-redux';
 import { deletePost } from 'store/ProfileSlice';
-import deletePostRequest from 'server/deletePostRequest';
+import deletePostRequest from 'server/PostRequest/deletePostRequest';
 
 interface Props {
   isOpen: boolean;

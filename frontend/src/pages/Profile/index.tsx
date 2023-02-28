@@ -5,10 +5,10 @@ import Gourd from 'HOC/Guard';
 import Head from './Head';
 import Posts from './Posts';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { profileRequest } from 'server/profileRequest';
+import { profileRequest } from 'server/UserRequest/profileRequest';
 import { useDispatch } from 'react-redux';
 import { initProfile } from 'store/ProfileSlice';
-import { userRequest } from 'server/userRequest';
+import { userRequest } from 'server/UserRequest/userRequest';
 import { initUser } from 'store/UserSlice';
 
 const Profile: React.FC = (): JSX.Element => {

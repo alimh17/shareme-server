@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Box, Container, Text } from '@chakra-ui/react';
+import { Box, Divider } from '@chakra-ui/react';
 import { io } from 'socket.io-client';
 
 import Conversation from './Conversation';
@@ -10,6 +10,19 @@ const socket = io('ws://localhost:3001');
 
 const Chats: React.FC = (): JSX.Element => {
   const user = useSelector((state: any) => state.User.user);
+
+  const [status, setStatus] = React.useState<string>('chat');
+  const [online, setOnline] = React.useState<boolean>(false);
+
+  const currentChat = useSelector((state: any) => state.Chat.currentChat);
+
+  const handleStatus = (input: string): void => {
+    setStatus(input);
+  };
+
+  const handleSetOnline = (value: boolean): void => {
+    setOnline(value);
+  };
 
   useEffect(() => {
     socket.emit('addUser', user._id);
@@ -26,8 +39,9 @@ const Chats: React.FC = (): JSX.Element => {
       w={{ base: '100%', md: '90%' }}
       marginLeft={{ base: 0, md: '5rem' }}
     >
-      <Conversation />
-      <Chat socket={socket} />
+      <Conversation status={status} onStatus={handleStatus} />
+      <Divider orientation="vertical" colorScheme="telegram" />
+      <Chat socket={socket} status={status} onStatus={handleStatus} onOnline={handleSetOnline} online={online} />
     </Box>
   );
 };

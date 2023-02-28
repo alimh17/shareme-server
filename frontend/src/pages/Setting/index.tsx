@@ -26,7 +26,7 @@ import { BsEmojiSmile } from 'react-icons/bs';
 import EmojiPicker from 'emoji-picker-react';
 import { useFormik } from 'formik';
 import SettingSchema from 'utils/SettingValidation';
-import settingRequest from 'server/settingRequest';
+import settingRequest from 'server/UserRequest/settingRequest';
 import { initUser } from 'store/UserSlice';
 
 const { IMAGES_URL } = config;
@@ -69,9 +69,9 @@ const Setting: React.FC = (): JSX.Element => {
           title: 'Success',
           description: 'Updated profile information',
           status: 'success',
+          position: 'top-center',
           duration: 3000,
           isClosable: true,
-          position: 'top-center',
         });
       });
     },
@@ -178,7 +178,6 @@ const Setting: React.FC = (): JSX.Element => {
                 value={formik.values.bio}
                 onChange={formik.handleChange}
                 ref={bioRef}
-                defaultValue={user.bio}
               />
               <InputRightElement width="4.5rem">
                 <IconButton

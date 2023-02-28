@@ -1,5 +1,5 @@
 import React from 'react';
-import refreshTokenRequest from 'server/refreshTokenRequest';
+import refreshTokenRequest from 'server/AuthRequest/refreshTokenRequest';
 
 interface Props {
   children: React.ReactElement;

@@ -7,7 +7,7 @@ import moment from 'moment';
 import CommentList from './CommentList';
 import Emoji from './Emoji';
 import CommentInput from './CommentInput';
-import addCommentRequest from 'server/AddCommentRequest';
+import addCommentRequest from 'server/CommentRequest/AddCommentRequest';
 
 interface Props {
   post: any;
@@ -54,7 +54,7 @@ const Comment: React.FC<Props> = ({ post }) => {
   };
 
   const handleAddEmoji = (emoji: string) => {
-    setComment(comment + emoji);
+    setComment((current) => current + emoji);
   };
 
   const handleSetComment = (text: string) => {
@@ -80,7 +80,7 @@ const Comment: React.FC<Props> = ({ post }) => {
   }, []);
 
   return (
-    <Flex flexFlow="column">
+    <Flex flexFlow="column" w="2rem">
       <IconButton
         variant="ghost"
         colorScheme="gray"

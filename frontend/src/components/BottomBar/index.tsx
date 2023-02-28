@@ -10,22 +10,19 @@ import {
   MenuItem,
   MenuList,
   useColorMode,
-  useMediaQuery,
 } from '@chakra-ui/react';
 import { Link, useLocation } from 'react-router-dom';
-import { faker } from '@faker-js/faker';
-import { BiDotsVerticalRounded, BiMessageRounded } from 'react-icons/bi';
+import { BiDotsVerticalRounded, BiMessageRounded, BiSearch } from 'react-icons/bi';
 import { FiHome } from 'react-icons/fi';
-import { HiOutlineVideoCamera } from 'react-icons/hi';
-import { ImPhone } from 'react-icons/im';
 import { IoSettingsOutline } from 'react-icons/io5';
 import { useSelector } from 'react-redux';
 
 import Logout from 'components/Logout';
 
-import config from 'config/index.json';
 import { PathCondition } from 'utils/PathCondition';
 import { AiOutlinePlusCircle } from 'react-icons/ai';
+
+import config from 'config/index.json';
 
 const { IMAGES_URL } = config;
 
@@ -78,8 +75,7 @@ const BottomBar: React.FC = (): JSX.Element => {
           colorScheme="dark800"
         />
         <MenuList>
-          <MenuItem icon={<HiOutlineVideoCamera fontSize="20" />}>Video Call</MenuItem>
-          <MenuItem icon={<ImPhone fontSize="20" />}>Voice Call</MenuItem>
+          <MenuItem icon={<BiSearch fontSize="20" />}>Search</MenuItem>
           <Link to="/setting">
             <MenuItem icon={<IoSettingsOutline fontSize="20" />}>Setting</MenuItem>
           </Link>

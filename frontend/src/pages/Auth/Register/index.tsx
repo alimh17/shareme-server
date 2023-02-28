@@ -17,7 +17,7 @@ import { useFormik } from 'formik';
 
 import { VscAccount } from 'react-icons/vsc';
 import { RegisterSchema } from 'utils/AuthValidation';
-import { registerRequest } from 'server/registerRequest';
+import { registerRequest } from 'server/AuthRequest/registerRequest';
 
 import Profile from './Profile';
 import Username from './Username';

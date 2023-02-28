@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { userRequest } from 'server/userRequest';
+import { userRequest } from 'server/UserRequest/userRequest';
 import { initUser } from 'store/UserSlice';
 import { PathCondition } from 'utils/PathCondition';
 

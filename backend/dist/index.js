@@ -25,6 +25,7 @@ const MYK_1 = __importDefault(require("./routes/MYK"));
 const Refresh_1 = __importDefault(require("./routes/Refresh"));
 const Conversation_1 = __importDefault(require("./routes/Conversation"));
 const Message_1 = __importDefault(require("./routes/Message"));
+const Search_1 = __importDefault(require("./routes/Search"));
 const path_1 = __importDefault(require("path"));
 const DB_1 = __importDefault(require("./DB"));
 const socket_1 = __importDefault(require("./utils/socket"));
@@ -33,7 +34,7 @@ const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
 const io = new socket_io_1.Server(server, {
     cors: {
-        origin: "http://127.0.0.1:3000",
+        origin: ["http://127.0.0.1:3000", "http://localhost:3000"],
         // methods: ["GET", "POST"],
         // allowedHeaders: ["my-custom-header"],
         // credentials: true,
@@ -61,6 +62,7 @@ app.use("/v1/myk", MYK_1.default);
 app.use("/v1/refresh", Refresh_1.default);
 app.use("/v1/conversation", Conversation_1.default);
 app.use("/v1/messages", Message_1.default);
+app.use("/v1/search", Search_1.default);
 //? --------------------- Socket.io --------------------------------------
 (0, socket_1.default)(io);
 //? --------------------- Connect To DataBase ---------------------------

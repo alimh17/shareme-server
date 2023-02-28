@@ -12,12 +12,12 @@ import {
   Text,
   Tooltip,
   useDisclosure,
-  useMediaQuery,
 } from '@chakra-ui/react';
 import { AiOutlineLogout } from 'react-icons/ai';
 import { useNavigate } from 'react-router-dom';
 import { initUser } from 'store/UserSlice';
 import { useDispatch } from 'react-redux';
+import { setCurrentChat } from 'store/ChatSlice';
 
 const Logout: React.FC = (): JSX.Element => {
   const Overlay = () => <ModalOverlay bg="none" backdropFilter="auto" backdropInvert="80%" backdropBlur="2px" />;
@@ -65,6 +65,7 @@ const Logout: React.FC = (): JSX.Element => {
                 navigate('/login');
                 localStorage.removeItem('shareme');
                 dispatch(initUser(void {}));
+                dispatch(setCurrentChat({}));
               }}
               bg="red.400"
             >

@@ -12,11 +12,11 @@ import {
   useColorMode,
   useMediaQuery,
 } from '@chakra-ui/react';
-import { getAllUserRequest } from 'server/userRequest';
+import { getAllUserRequest } from 'server/UserRequest/userRequest';
 import config from 'config/index.json';
-import isFollow from 'server/isFollow';
+import isFollow from 'server/FollowRequest/isFollow';
 import { Link } from 'react-router-dom';
-import maybeYouKnow from 'server/maybeYouKnow';
+import maybeYouKnow from 'server/UserRequest/maybeYouKnow';
 
 const { IMAGES_URL } = config;
 
@@ -26,9 +26,6 @@ const Sidebar: React.FC = (): JSX.Element => {
 
   useEffect(() => {
     maybeYouKnow().then((data: any) => {
-      data.MYK.map((item: any) => {
-        console.log(item);
-      });
       setUsers(data?.MYK);
     });
   }, []);

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Box, Button, Center, Container, Flex } from '@chakra-ui/react';
 import InfiniteScroll from 'react-infinite-scroll-component';
 import Post from 'components/Post';
-import getPostsRequest from 'server/getPostsRequest';
+import getPostsRequest from 'server/PostRequest/getPostsRequest';
 
 const Main: React.FC = (): JSX.Element => {
   const [posts, setPosts] = useState<{}[]>([]);

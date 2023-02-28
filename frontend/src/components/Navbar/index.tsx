@@ -1,18 +1,20 @@
 import React from 'react';
-import { IconButton, Spacer, useColorMode, useMediaQuery, VStack, Tooltip } from '@chakra-ui/react';
+import { IconButton, Spacer, useColorMode, VStack, Tooltip } from '@chakra-ui/react';
 
 import { FiHome } from 'react-icons/fi';
-import { ImPhone } from 'react-icons/im';
-import { BiMessageRounded } from 'react-icons/bi';
-import { HiOutlineVideoCamera } from 'react-icons/hi';
+import { BiMessageRounded, BiSearch } from 'react-icons/bi';
 import { IoSettingsOutline } from 'react-icons/io5';
 
 import { Link, useLocation } from 'react-router-dom';
-import Logout from '../Logout';
 import { PathCondition } from 'utils/PathCondition';
+import Logout from '../Logout';
 
-const Navbar = () => {
-  const { colorMode, toggleColorMode } = useColorMode();
+interface Props {
+  onOpen: () => void;
+}
+
+const Navbar: React.FC<Props> = ({ onOpen }): JSX.Element => {
+  const { colorMode } = useColorMode();
   const { pathname } = useLocation();
 
   return (
@@ -34,16 +36,14 @@ const Navbar = () => {
           <IconButton fontSize="25" variant="ghost" colorScheme="gray" aria-label="Home" icon={<FiHome />} />
         </Link>
       </Tooltip>
-      <Tooltip label="Voice Call">
-        <IconButton fontSize="25" variant="ghost" colorScheme="gray" aria-label="Phone" icon={<ImPhone />} />
-      </Tooltip>
-      <Tooltip label="Video Call">
+      <Tooltip label="Search">
         <IconButton
           fontSize="25"
           variant="ghost"
           colorScheme="gray"
-          aria-label="Video"
-          icon={<HiOutlineVideoCamera />}
+          aria-label="Search"
+          icon={<BiSearch />}
+          onClick={onOpen}
         />
       </Tooltip>
       <Tooltip label="Chats">

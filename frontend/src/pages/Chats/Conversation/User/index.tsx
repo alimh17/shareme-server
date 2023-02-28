@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HStack, Avatar, Text, Spacer, IconButton } from '@chakra-ui/react';
+import { HStack, Avatar, Text, Spacer, IconButton, AvatarBadge } from '@chakra-ui/react';
 import { BiDotsVerticalRounded } from 'react-icons/bi';
 import getUserConversationsRequest from 'server/ConversationRequest/getUserConversation';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,9 +11,10 @@ const { IMAGES_URL } = config;
 interface Props {
   conversation: any;
   myId: string;
+  onStatus: (input: string) => void;
 }
 
-const User: React.FC<Props> = ({ conversation, myId }): JSX.Element => {
+const User: React.FC<Props> = ({ conversation, myId, onStatus }): JSX.Element => {
   const [user, setUser] = useState<any>(null);
   const userData = useSelector((state: any) => state.Chat.userData);
 
@@ -28,6 +29,7 @@ const User: React.FC<Props> = ({ conversation, myId }): JSX.Element => {
 
   return (
     <HStack
+      key={conversation._id}
       w="100%"
       mt="2"
       p="2"
@@ -36,6 +38,7 @@ const User: React.FC<Props> = ({ conversation, myId }): JSX.Element => {
       onClick={() => {
         dispatch(setCurrentChat(conversation));
         dispatch(setUserData(user));
+        onStatus('chat');
       }}
       _hover={{ cursor: 'pointer' }}
     >

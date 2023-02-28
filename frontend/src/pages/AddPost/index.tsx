@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { Container, Heading, useColorMode } from '@chakra-ui/react';
-import { useFormik } from 'formik';
 
 import Files from './Files';
 import Display from './Display';

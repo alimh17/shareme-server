@@ -4,7 +4,12 @@ import getConversationsRequest from 'server/ConversationRequest/getConversation'
 import { useSelector } from 'react-redux';
 import User from './User';
 
-const Conversation: React.FC = (): JSX.Element => {
+interface Props {
+  onStatus: (input: string) => void;
+  status: string;
+}
+
+const Conversation: React.FC<Props> = ({ status, onStatus }): JSX.Element => {
   const [conversations, setConversations] = useState<[]>([]);
   const user = useSelector((state: any) => state.User.user);
 
@@ -17,18 +22,19 @@ const Conversation: React.FC = (): JSX.Element => {
   return (
     <Box
       sx={{
-        borderRight: '.5px solid #aaaaaa',
+        justifyContent: 'center',
       }}
       w={{ base: '100%', md: 'md' }}
+      display={{ base: status === 'chat' ? 'none' : 'flex', md: 'flex' }}
     >
-      <Flex flexFlow="column" alignItems="center">
+      <Flex flexFlow="column" alignItems="center" w="100%">
         <Heading as="h2" p="5" fontSize="2xl">
           Conversation
         </Heading>
         <Divider />
         <VStack w="100%" px="2">
           {conversations?.map((c: any) => (
-            <User conversation={c} myId={user?._id} key={c._id} />
+            <User conversation={c} myId={user?._id} key={c._id} onStatus={onStatus} />
           ))}
         </VStack>
       </Flex>

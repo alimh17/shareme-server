@@ -90,21 +90,23 @@ const Head: React.FC<Props> = () => {
             Posts {profile.posts}
           </Text>
         </HStack>
-        <Center w="100%">
-          <Button
-            colorScheme="blue"
-            onClick={() => {
-              const { _id, username, name, profile: avatar } = profile;
-              newConversationsRequest({ senderId: me._id, receiverId: profile._id }).then((res: any) => {
-                console.log(res);
-              });
-              navigate('/chats');
-            }}
-          >
-            Message <BiMessageAdd fontSize={24} />
-          </Button>
-          <FollowBTN onClick={handleUpdateFollowers} />
-        </Center>
+        {!ProfileCondition(me?.username, profile?.username) && (
+          <Center w="100%">
+            <Button
+              colorScheme="blue"
+              onClick={() => {
+                const { _id, username, name, profile: avatar } = profile;
+                newConversationsRequest({ senderId: me._id, receiverId: profile._id }).then((res: any) => {
+                  console.log(res);
+                });
+                navigate('/chats');
+              }}
+            >
+              Message <BiMessageAdd fontSize={24} />
+            </Button>
+            <FollowBTN onClick={handleUpdateFollowers} />
+          </Center>
+        )}
       </VStack>
     </Flex>
   );

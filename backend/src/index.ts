@@ -22,6 +22,7 @@ import maybeYouKnow from "./routes/MYK";
 import Refresh from "./routes/Refresh";
 import Conversations from "./routes/Conversation";
 import Message from "./routes/Message";
+import Search from "./routes/Search";
 
 import path from "path";
 import connectDB from "./DB";
@@ -35,7 +36,7 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: "http://127.0.0.1:3000",
+    origin: ["http://127.0.0.1:3000", "http://localhost:3000"],
     // methods: ["GET", "POST"],
     // allowedHeaders: ["my-custom-header"],
     // credentials: true,
@@ -67,6 +68,7 @@ app.use("/v1/myk", maybeYouKnow);
 app.use("/v1/refresh", Refresh);
 app.use("/v1/conversation", Conversations);
 app.use("/v1/messages", Message);
+app.use("/v1/search", Search);
 
 //? --------------------- Socket.io --------------------------------------
 socket(io);
