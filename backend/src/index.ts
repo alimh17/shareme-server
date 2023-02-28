@@ -5,6 +5,7 @@ import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
 import cookieParser from "cookie-parser";
+import { Server } from "socket.io";
 
 import Auth from "./routes/Auth";
 import User from "./routes/User";
@@ -17,18 +18,29 @@ import Setting from "./routes/Setting";
 import Comment from "./routes/Comment";
 import Like from "./routes/Like";
 import FollowingPage from "./routes/FollowingPage";
-import ChatList from "./routes/ChatList";
 import maybeYouKnow from "./routes/MYK";
 import Refresh from "./routes/Refresh";
+import Conversations from "./routes/Conversation";
+import Message from "./routes/Message";
 
 import path from "path";
 import connectDB from "./DB";
 import { CreateRandomUser, generateUser } from "./utils/faker";
 import { faker } from "@faker-js/faker";
+import socket from "./utils/socket";
 
 dotenv.config();
 const app = express();
 const server = http.createServer(app);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://127.0.0.1:3000",
+    // methods: ["GET", "POST"],
+    // allowedHeaders: ["my-custom-header"],
+    // credentials: true,
+  },
+});
 
 app.use(cors());
 
@@ -51,10 +63,15 @@ app.use("/v1/setting", Setting);
 app.use("/v1/comment", Comment);
 app.use("/v1/like", Like);
 app.use("/v1/following-page", FollowingPage);
-app.use("/v1/chat-list", ChatList);
 app.use("/v1/myk", maybeYouKnow);
 app.use("/v1/refresh", Refresh);
+app.use("/v1/conversation", Conversations);
+app.use("/v1/messages", Message);
+
+//? --------------------- Socket.io --------------------------------------
+socket(io);
 
 //? --------------------- Connect To DataBase ---------------------------
 connectDB(server);
 // generateUser();
+socket(io);

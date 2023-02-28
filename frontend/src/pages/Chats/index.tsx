@@ -1,39 +1,34 @@
-import React from 'react';
-import { Box, Flex, useDisclosure } from '@chakra-ui/react';
-import ChatsList from './ChatsList';
+import React, { useEffect } from 'react';
+import { Box, Container, Text } from '@chakra-ui/react';
+import { io } from 'socket.io-client';
+
+import Conversation from './Conversation';
 import Chat from './Chat';
-import DrawerCom from './ChatsList/Drawer';
-import Gourd from 'HOC/Guard';
-import { useDispatch, useSelector } from 'react-redux';
-import { setCurrentChat } from 'store/ChatSlice';
+import { useSelector } from 'react-redux';
+
+const socket = io('ws://localhost:3001');
 
 const Chats: React.FC = (): JSX.Element => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
+  const user = useSelector((state: any) => state.User.user);
 
-  const chatList = useSelector((state: any) => state.Chat.chatList);
-  const dispatch = useDispatch();
-
-  React.useEffect(() => {
-    dispatch(setCurrentChat(chatList[0]));
-  }, []);
+  useEffect(() => {
+    socket.emit('addUser', user._id);
+  }, [user]);
 
   return (
-    <Gourd>
-      <Box
-        sx={{
-          right: '0',
-          marginTop: '1',
-        }}
-        position={{ base: 'relative', md: 'absolute' }}
-        left={{ base: '0', md: '20' }}
-      >
-        <Flex gap={3}>
-          <ChatsList />
-          <Chat onOpen={onOpen} />
-        </Flex>
-        <DrawerCom isOpen={isOpen} onClose={onClose} />
-      </Box>
-    </Gourd>
+    <Box
+      sx={{
+        h: '90vh',
+        display: 'flex',
+        gap: 5,
+        overflowY: 'none',
+      }}
+      w={{ base: '100%', md: '90%' }}
+      marginLeft={{ base: 0, md: '5rem' }}
+    >
+      <Conversation />
+      <Chat socket={socket} />
+    </Box>
   );
 };
 

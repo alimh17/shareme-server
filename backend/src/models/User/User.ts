@@ -47,6 +47,7 @@ const userSchema = new Schema<IUser>({
     type: String,
     default: "",
   },
+
   posts: {
     type: [{}],
     default: [],

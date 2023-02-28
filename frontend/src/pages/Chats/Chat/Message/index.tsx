@@ -1,87 +1,52 @@
-import React, { useState } from 'react';
-import EmojiPicker from 'emoji-picker-react';
+import React from 'react';
+import { Avatar, Box, HStack, Text, VStack } from '@chakra-ui/react';
+import { useSelector } from 'react-redux';
 
-import { FiSend } from 'react-icons/fi';
-import { BsEmojiSmile } from 'react-icons/bs';
+import config from 'config/index.json';
 
-import {
-  Box,
-  IconButton,
-  Input,
-  InputGroup,
-  InputLeftElement,
-  InputRightElement,
-  useColorMode,
-} from '@chakra-ui/react';
-
+const { IMAGES_URL } = config;
 interface Props {
-  onMessage: (message: string) => void;
+  user: any;
+  message: any;
 }
-
-const Message: React.FC<Props> = ({ onMessage }): JSX.Element => {
-  const [messageValue, SetMessageValue] = useState<string>('');
-  const [selectedEmoji, setSelectedEmoji] = useState<any>(null);
-  const [showEmojiPicker, setShowEmojiPicker] = React.useState<boolean>(false);
-  const { colorMode, toggleColorMode } = useColorMode();
+const Message: React.FC<Props> = React.memo(({ user, message }): JSX.Element => {
+  const me = useSelector((state: any) => state.User.user);
 
   return (
     <Box
-      css={{
-        '@media screen and (max-height : 700px)': {
-          bottom: '2rem',
-        },
-        '@media screen and (min-height : 700px)': {
-          bottom: '2rem',
-        },
-        '@media screen and (min-height : 800px)': {
-          bottom: '1rem',
-        },
-        '@media screen and (min-height : 900px)': {
-          bottom: '-4px',
-        },
-      }}
-      sx={{
-        position: 'absolute',
-        bottom: '2',
-        w: '100%',
-        px: '4',
-      }}
+      my={2}
+      display="flex"
+      justifyContent={message?.sender === me?._id ? 'flex-end' : 'flex-start'}
+      key={message?._id}
     >
       <Box
-        sx={{
-          positon: 'relative',
-          zIndex: '10',
-        }}
+        w="fit-content"
+        maxWidth="70%"
+        bg={message?.sender === me?._id ? 'blue.500' : 'gray.500'}
+        borderRadius={message?.sender === me?._id ? '15px 15px 0 15px' : '15px 15px  15px 0'}
+        display="flex"
+        p={2}
       >
-        {showEmojiPicker && (
-          <EmojiPicker
-            theme={colorMode === 'dark' ? 'dark' : 'light'}
-            onEmojiClick={({ emoji }) => SetMessageValue((current) => current + emoji)}
-          />
-        )}
+        <HStack p={2} flexDirection={message?.sender === me?._id ? 'row-reverse' : 'row'} gap={5}>
+          <VStack>
+            <Avatar
+              src={
+                message?.sender === me?._id
+                  ? me?.profile.slice(0, 4) === 'http'
+                    ? me.profile
+                    : IMAGES_URL + me?.profile
+                  : user?.profile.slice(0, 4) === 'http'
+                  ? user?.profile
+                  : IMAGES_URL + user?.profile
+              }
+            />
+            <Text fontSize="xs">{message.time}</Text>
+          </VStack>
+          <Text>{message.text}</Text>
+        </HStack>
       </Box>
-      <InputGroup w="100%">
-        <InputLeftElement>
-          <IconButton aria-label="Emoji" icon={<BsEmojiSmile />} onClick={() => setShowEmojiPicker(!showEmojiPicker)} />
-        </InputLeftElement>
-        <Input
-          placeholder="message"
-          pl="14"
-          onChange={(e: React.ChangeEvent<HTMLInputElement>) => SetMessageValue(e.target.value)}
-          value={messageValue}
-        />
-        <InputRightElement
-          sx={{
-            position: 'relative',
-            right: '30px',
-          }}
-          width="1rem"
-        >
-          <IconButton aria-label="Send" icon={<FiSend />} onClick={() => onMessage(messageValue)} />
-        </InputRightElement>
-      </InputGroup>
     </Box>
   );
-};
+});
 
 export default Message;

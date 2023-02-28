@@ -7,9 +7,9 @@ import config from 'config/index.json';
 import FollowBTN from './FollowBTN';
 import Followers from './Followers';
 import { BiMessageAdd } from 'react-icons/bi';
-import { addUserToChetList, setCurrentChat } from 'store/ChatSlice';
+import { setCurrentChat } from 'store/ChatSlice';
 import { useNavigate } from 'react-router-dom';
-import addUserToChatList from 'server/ChatListRequest/addUserToChatList';
+import newConversationsRequest from 'server/ConversationRequest/newConversation';
 
 interface Props {}
 
@@ -49,7 +49,7 @@ const Head: React.FC<Props> = () => {
         <Avatar
           src={
             ProfileCondition(me?.username, profile?.username)
-              ? me?.profile.slice(0, 4) === 'http'
+              ? me?.profile?.slice(0, 4) === 'http'
                 ? me?.profile
                 : IMAGES_URL + me?.profile
               : profile?.profile?.slice(0, 4) === 'http'
@@ -95,9 +95,7 @@ const Head: React.FC<Props> = () => {
             colorScheme="blue"
             onClick={() => {
               const { _id, username, name, profile: avatar } = profile;
-              dispatch(addUserToChetList({ _id, username, name, avatar }));
-              dispatch(setCurrentChat({ _id, username, name, avatar }));
-              addUserToChatList({ _id, username, name, avatar }).then((res) => {
+              newConversationsRequest({ senderId: me._id, receiverId: profile._id }).then((res: any) => {
                 console.log(res);
               });
               navigate('/chats');

@@ -9,6 +9,7 @@ const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
+const socket_io_1 = require("socket.io");
 const Auth_1 = __importDefault(require("./routes/Auth"));
 const User_1 = __importDefault(require("./routes/User"));
 const Post_1 = __importDefault(require("./routes/Post"));
@@ -20,14 +21,24 @@ const Setting_1 = __importDefault(require("./routes/Setting"));
 const Comment_1 = __importDefault(require("./routes/Comment"));
 const Like_1 = __importDefault(require("./routes/Like"));
 const FollowingPage_1 = __importDefault(require("./routes/FollowingPage"));
-const ChatList_1 = __importDefault(require("./routes/ChatList"));
 const MYK_1 = __importDefault(require("./routes/MYK"));
 const Refresh_1 = __importDefault(require("./routes/Refresh"));
+const Conversation_1 = __importDefault(require("./routes/Conversation"));
+const Message_1 = __importDefault(require("./routes/Message"));
 const path_1 = __importDefault(require("path"));
 const DB_1 = __importDefault(require("./DB"));
+const socket_1 = __importDefault(require("./utils/socket"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 const server = http_1.default.createServer(app);
+const io = new socket_io_1.Server(server, {
+    cors: {
+        origin: "http://127.0.0.1:3000",
+        // methods: ["GET", "POST"],
+        // allowedHeaders: ["my-custom-header"],
+        // credentials: true,
+    },
+});
 app.use((0, cors_1.default)());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
@@ -46,9 +57,13 @@ app.use("/v1/setting", Setting_1.default);
 app.use("/v1/comment", Comment_1.default);
 app.use("/v1/like", Like_1.default);
 app.use("/v1/following-page", FollowingPage_1.default);
-app.use("/v1/chat-list", ChatList_1.default);
 app.use("/v1/myk", MYK_1.default);
 app.use("/v1/refresh", Refresh_1.default);
+app.use("/v1/conversation", Conversation_1.default);
+app.use("/v1/messages", Message_1.default);
+//? --------------------- Socket.io --------------------------------------
+(0, socket_1.default)(io);
 //? --------------------- Connect To DataBase ---------------------------
 (0, DB_1.default)(server);
 // generateUser();
+(0, socket_1.default)(io);
