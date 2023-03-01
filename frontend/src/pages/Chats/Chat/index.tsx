@@ -14,6 +14,7 @@ import {
   MenuList,
   MenuItem,
   useToast,
+  useDisclosure,
 } from '@chakra-ui/react';
 import { BiArrowBack, BiDotsVerticalRounded, BiPhoneCall, BiTrash, BiVideo } from 'react-icons/bi';
 import moment from 'moment';
@@ -26,6 +27,7 @@ import { EmojiClickData } from 'emoji-picker-react';
 import MessageInput from './MessageInput/MessageInput';
 import removeConversation from 'server/ConversationRequest/removeConversation';
 import { setCurrentChat, setUserData } from 'store/ChatSlice';
+import Stream from 'components/Stream';
 
 const { IMAGES_URL } = config;
 
@@ -41,10 +43,13 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
   const [messages, setMessages] = useState<{}[]>([{}]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [arriveMessage, setArriveMessage] = useState<any>(null);
+  const [call, setCall] = useState<string>('video');
 
   const user = useSelector((state: any) => state.User.user);
   const currentChat = useSelector((state: any) => state.Chat.currentChat);
   const userData = useSelector((state: any) => state.Chat.userData);
+
+  const { isOpen, onOpen, onClose } = useDisclosure();
 
   const toast = useToast();
 
@@ -134,6 +139,24 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
 
   const handleVideoCall = () => {
     if (online) {
+      setCall('video');
+      onOpen();
+    } else {
+      toast({
+        title: 'Error',
+        description: `${userData.username} is offline`,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
+    }
+  };
+
+  const handleAudioCall = () => {
+    if (online) {
+      setCall('audio');
+      onOpen();
     } else {
       toast({
         title: 'Error',
@@ -155,6 +178,7 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
       display={{ base: status === 'chat' ? 'flex' : 'none', md: 'flex' }}
       mb={{ base: '3rem', md: '0' }}
     >
+      <Stream onClose={onClose} isOpen={isOpen} call={call} />
       {currentChat?._id ? (
         <>
           <HStack p="2">
@@ -180,7 +204,9 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
                 <MenuItem icon={<BiVideo fontSize={22} />} onClick={handleVideoCall}>
                   Video Call
                 </MenuItem>
-                <MenuItem icon={<BiPhoneCall fontSize={22} />}>Voice Call</MenuItem>
+                <MenuItem icon={<BiPhoneCall fontSize={22} />} onClick={handleAudioCall}>
+                  Voice Call
+                </MenuItem>
                 <MenuItem
                   icon={<BiTrash fontSize={22} />}
                   color="red.500"
