@@ -22,7 +22,6 @@ const Body: React.FC<Props> = ({ post }): JSX.Element => {
           alignItems: 'center',
           padding: '8px',
         }}
-        navigation={true}
         pagination={true}
         spaceBetween={50}
         slidesPerView={1}

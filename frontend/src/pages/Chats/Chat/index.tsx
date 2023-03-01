@@ -1,6 +1,21 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Box, Heading, HStack, Spacer, IconButton, Text, Divider, AvatarBadge } from '@chakra-ui/react';
-import { BiArrowBack, BiDotsVerticalRounded } from 'react-icons/bi';
+import {
+  Avatar,
+  Box,
+  Heading,
+  HStack,
+  Spacer,
+  IconButton,
+  Text,
+  Divider,
+  AvatarBadge,
+  Menu,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  useToast,
+} from '@chakra-ui/react';
+import { BiArrowBack, BiDotsVerticalRounded, BiPhoneCall, BiTrash, BiVideo } from 'react-icons/bi';
 import moment from 'moment';
 import { useDispatch, useSelector } from 'react-redux';
 import getMessagesRequest from 'server/Messages/getMessages';
@@ -9,6 +24,8 @@ import config from 'config/index.json';
 import Messages from './Messages';
 import { EmojiClickData } from 'emoji-picker-react';
 import MessageInput from './MessageInput/MessageInput';
+import removeConversation from 'server/ConversationRequest/removeConversation';
+import { setCurrentChat, setUserData } from 'store/ChatSlice';
 
 const { IMAGES_URL } = config;
 
@@ -29,6 +46,8 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
   const currentChat = useSelector((state: any) => state.Chat.currentChat);
   const userData = useSelector((state: any) => state.Chat.userData);
 
+  const toast = useToast();
+
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -39,12 +58,12 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
 
   useEffect(() => {
     arriveMessage &&
-      currentChat?.members.includes(arriveMessage.sender) &&
+      currentChat?.members?.includes(arriveMessage.sender) &&
       setMessages((prev) => [...prev, arriveMessage]);
   }, [arriveMessage, currentChat]);
 
   useEffect(() => {
-    if (currentChat._id) {
+    if (currentChat?._id) {
       getMessagesRequest(currentChat?._id).then((data: any) => {
         setMessages(data?.messages);
       });
@@ -113,6 +132,20 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
     }
   };
 
+  const handleVideoCall = () => {
+    if (online) {
+    } else {
+      toast({
+        title: 'Error',
+        description: `${userData.username} is offline`,
+        status: 'error',
+        duration: 3000,
+        isClosable: true,
+        position: 'top',
+      });
+    }
+  };
+
   return (
     <Box
       sx={{
@@ -134,12 +167,34 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
                 onStatus('conversation');
               }}
             />
-            <Avatar src={userData?.profile.slice(0, 4) === 'http' ? userData?.profile : IMAGES_URL + userData?.profile}>
+            <Avatar
+              src={userData?.profile?.slice(0, 4) === 'http' ? userData?.profile : IMAGES_URL + userData?.profile}
+            >
               <AvatarBadge boxSize={5} bg={online ? 'green.500' : 'gray.500'} />
             </Avatar>
             <Text>{userData?.username}</Text>
             <Spacer />
-            <IconButton aria-label="options" variant="ghost" icon={<BiDotsVerticalRounded />} />
+            <Menu>
+              <MenuButton as={IconButton} aria-label="Options" icon={<BiDotsVerticalRounded />} variant="ghost" />
+              <MenuList>
+                <MenuItem icon={<BiVideo fontSize={22} />} onClick={handleVideoCall}>
+                  Video Call
+                </MenuItem>
+                <MenuItem icon={<BiPhoneCall fontSize={22} />}>Voice Call</MenuItem>
+                <MenuItem
+                  icon={<BiTrash fontSize={22} />}
+                  color="red.500"
+                  onClick={() => {
+                    removeConversation(currentChat?._id);
+                    dispatch(setCurrentChat({}));
+                    dispatch(setUserData({}));
+                    onStatus('conversation');
+                  }}
+                >
+                  Delete
+                </MenuItem>
+              </MenuList>
+            </Menu>
           </HStack>
           <Divider />
           <Messages messages={messages} />

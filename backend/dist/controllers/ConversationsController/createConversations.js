@@ -19,7 +19,9 @@ const conversationController = async (req, res) => {
             members: [req.body.senderId, req.body.receiverId],
         });
         await newConversation.save();
-        return res.status(200).json({ message: "success" });
+        return res
+            .status(200)
+            .json({ message: "success", conversation: newConversation });
     }
     catch (err) {
         return res.status(500).json({ message: "Failed , please try again" });

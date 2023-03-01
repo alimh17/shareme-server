@@ -1,17 +1,17 @@
 import React, { useEffect } from 'react';
 import { Box, Divider } from '@chakra-ui/react';
 import { io } from 'socket.io-client';
+import { useSelector } from 'react-redux';
 
 import Conversation from './Conversation';
 import Chat from './Chat';
-import { useSelector } from 'react-redux';
 
 const socket = io('ws://localhost:3001');
 
 const Chats: React.FC = (): JSX.Element => {
   const user = useSelector((state: any) => state.User.user);
 
-  const [status, setStatus] = React.useState<string>('chat');
+  const [status, setStatus] = React.useState<string>('conversation');
   const [online, setOnline] = React.useState<boolean>(false);
 
   const currentChat = useSelector((state: any) => state.Chat.currentChat);

@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Box, Divider, Flex, Heading, Text, VStack } from '@chakra-ui/react';
+import { Box, Divider, Flex, Heading, Text, useMediaQuery, VStack } from '@chakra-ui/react';
 import getConversationsRequest from 'server/ConversationRequest/getConversation';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import User from './User';
+import { setCurrentChat, setUserData } from 'store/ChatSlice';
 
 interface Props {
   onStatus: (input: string) => void;
@@ -13,11 +14,18 @@ const Conversation: React.FC<Props> = ({ status, onStatus }): JSX.Element => {
   const [conversations, setConversations] = useState<[]>([]);
   const user = useSelector((state: any) => state.User.user);
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     getConversationsRequest(user?._id).then((data: any) => {
       setConversations(data);
     });
-  }, [user]);
+  }, [user, status]);
+
+  useEffect(() => {
+    dispatch(setCurrentChat({}));
+    dispatch(setUserData({}));
+  }, []);
 
   return (
     <Box

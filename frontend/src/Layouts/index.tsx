@@ -25,7 +25,7 @@ const Layouts: React.FC = (): JSX.Element => {
         <Header />
         <Navbar onOpen={onOpen} />
         <Outlet />
-        <BottomBar />
+        <BottomBar onOpen={onOpen} />
         <Search isOpen={isOpen} onClose={onClose} />
       </InitState>
     </Box>

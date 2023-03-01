@@ -15,11 +15,11 @@ const Home: React.FC = (): JSX.Element => {
 
   const { onOpen } = useDisclosure();
 
-  React.useEffect(() => {
-    if (user && user.followings < 5) {
-      navigate('/follow-page');
-    }
-  }, [user]);
+  // React.useEffect(() => {
+  //   if (user && user.followings < 5) {
+  //     navigate('/follow-page');
+  //   }
+  // }, [user]);
 
   return (
     <Gourd>

@@ -48,10 +48,10 @@ const Message: React.FC<Props> = React.memo(({ user, message }): JSX.Element => 
             <Avatar
               src={
                 message?.sender === me?._id
-                  ? me?.profile.slice(0, 4) === 'http'
+                  ? me?.profile?.slice(0, 4) === 'http'
                     ? me.profile
                     : IMAGES_URL + me?.profile
-                  : user?.profile.slice(0, 4) === 'http'
+                  : user?.profile?.slice(0, 4) === 'http'
                   ? user?.profile
                   : IMAGES_URL + user?.profile
               }

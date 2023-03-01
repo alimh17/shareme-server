@@ -1,6 +1,6 @@
 import React from 'react';
 import ScrollToBottom, { useScrollToEnd } from 'react-scroll-to-bottom';
-import { Box } from '@chakra-ui/react';
+import { Box, useColorMode } from '@chakra-ui/react';
 
 import Message from '../Message';
 import { useSelector } from 'react-redux';
@@ -13,6 +13,8 @@ const Messages: React.FC<Props> = ({ messages }): JSX.Element => {
   const ScrollRef = React.useRef<null | HTMLDivElement>(null);
   const userData = useSelector((state: any) => state.Chat.userData);
 
+  const { colorMode } = useColorMode();
+
   React.useEffect(() => {
     ScrollRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, userData]);
@@ -23,6 +25,14 @@ const Messages: React.FC<Props> = ({ messages }): JSX.Element => {
         display: 'flex',
         flexFlow: 'column',
         overflowY: 'scroll',
+        '::-webkit-scrollbar': {
+          width: '8px',
+          background: colorMode === 'dark' ? 'dark500' : '#eaeaea',
+        },
+        '::-webkit-scrollbar-thumb': {
+          borderRadius: '8px',
+          background: colorMode === 'dark' ? 'dark800' : '#cccccc',
+        },
       }}
     >
       {messages?.map((m: any) => (

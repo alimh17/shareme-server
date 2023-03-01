@@ -55,7 +55,6 @@ const Login: React.FC<Props> = (): JSX.Element => {
         bg: colorMode === 'dark' ? 'dark800' : 'white',
         padding: 5,
         borderRadius: 8,
-        h: '80vh',
         boxShadow: colorMode === 'light' && 'lg',
       }}
     >

@@ -95,9 +95,8 @@ const Head: React.FC<Props> = () => {
             <Button
               colorScheme="blue"
               onClick={() => {
-                const { _id, username, name, profile: avatar } = profile;
                 newConversationsRequest({ senderId: me._id, receiverId: profile._id }).then((res: any) => {
-                  console.log(res);
+                  // dispatch(setCurrentChat(res?.conversation));
                 });
                 navigate('/chats');
               }}

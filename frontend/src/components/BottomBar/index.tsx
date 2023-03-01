@@ -26,7 +26,11 @@ import config from 'config/index.json';
 
 const { IMAGES_URL } = config;
 
-const BottomBar: React.FC = (): JSX.Element => {
+interface Props {
+  onOpen: () => void;
+}
+
+const BottomBar: React.FC<Props> = ({ onOpen }): JSX.Element => {
   const { colorMode } = useColorMode();
 
   const user = useSelector((state: any) => state.User.user);
@@ -75,7 +79,9 @@ const BottomBar: React.FC = (): JSX.Element => {
           colorScheme="dark800"
         />
         <MenuList>
-          <MenuItem icon={<BiSearch fontSize="20" />}>Search</MenuItem>
+          <MenuItem icon={<BiSearch fontSize="20" />} onClick={onOpen}>
+            Search
+          </MenuItem>
           <Link to="/setting">
             <MenuItem icon={<IoSettingsOutline fontSize="20" />}>Setting</MenuItem>
           </Link>
