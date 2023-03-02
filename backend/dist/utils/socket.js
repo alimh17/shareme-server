@@ -20,6 +20,13 @@ const socket = (io) => {
             const user = users.find((user) => user.userId === data);
             io.emit("status", user);
         });
+        socket.on("is-typing", (data) => {
+            const user = getUser(data?.receiverId);
+            io.to(user?.socketId).emit("send-typing", {
+                senderId: data?.user,
+                typing: true,
+            });
+        });
         socket.on("sendMessage", (data) => {
             const user = getUser(data?.receiverId);
             io.to(user?.socketId).emit("getMessage", {

@@ -24,6 +24,15 @@ const socket = (io: any) => {
       io.emit("status", user);
     });
 
+    socket.on("is-typing", (data: any) => {
+      const user = getUser(data?.receiverId);
+
+      io.to(user?.socketId).emit("send-typing", {
+        senderId: data?.user,
+        typing: true,
+      });
+    });
+
     socket.on("sendMessage", (data: any) => {
       const user = getUser(data?.receiverId);
       io.to(user?.socketId).emit("getMessage", {

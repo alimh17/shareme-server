@@ -6,6 +6,7 @@ import {
   HStack,
   Spacer,
   IconButton,
+  Center,
   Text,
   Divider,
   AvatarBadge,
@@ -15,6 +16,7 @@ import {
   MenuItem,
   useToast,
   useDisclosure,
+  VStack,
 } from '@chakra-ui/react';
 import { BiArrowBack, BiDotsVerticalRounded, BiPhoneCall, BiTrash, BiVideo } from 'react-icons/bi';
 import moment from 'moment';
@@ -43,6 +45,8 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
   const [messages, setMessages] = useState<{}[]>([{}]);
   const [newMessage, setNewMessage] = useState<string>('');
   const [arriveMessage, setArriveMessage] = useState<any>(null);
+  const [typing, setTyping] = useState<boolean>(false);
+
   const [call, setCall] = useState<string>('video');
 
   const user = useSelector((state: any) => state.User.user);
@@ -65,6 +69,7 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
     arriveMessage &&
       currentChat?.members?.includes(arriveMessage.sender) &&
       setMessages((prev) => [...prev, arriveMessage]);
+    setTyping(false);
   }, [arriveMessage, currentChat]);
 
   useEffect(() => {
@@ -83,6 +88,12 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
     }
   }, [currentChat]);
 
+  useEffect(() => {
+    socket.on('send-typing', (data: any) => {
+      setTyping(data?.typing);
+    });
+  }, []);
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setNewMessage(e.target.value);
   };
@@ -92,6 +103,12 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
   };
 
   const handleSubmit = async (e: React.KeyboardEvent) => {
+    socket.emit('is-typing', {
+      typin: true,
+      senderId: user._id,
+      receiverId: userData._id,
+    });
+
     if (e.key === 'Enter' && newMessage !== '') {
       const message = {
         sender: user._id,
@@ -196,7 +213,12 @@ const Chat: React.FC<Props> = ({ socket, status, onStatus, onOnline, online }): 
             >
               <AvatarBadge boxSize={5} bg={online ? 'green.500' : 'gray.500'} />
             </Avatar>
-            <Text>{userData?.username}</Text>
+            <VStack>
+              <Center flexFlow="column">
+                <Text>{userData?.username}</Text>
+                {typing && <Text fontSize="xs">Typing...</Text>}
+              </Center>
+            </VStack>
             <Spacer />
             <Menu>
               <MenuButton as={IconButton} aria-label="Options" icon={<BiDotsVerticalRounded />} variant="ghost" />

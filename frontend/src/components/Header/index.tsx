@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Avatar,
   AvatarBadge,
@@ -21,9 +21,18 @@ const { IMAGES_URL } = config;
 
 const Header: React.FC = () => {
   const { colorMode, toggleColorMode } = useColorMode();
+  const [online, setOnline] = useState<boolean>(false);
 
   const { pathname } = useLocation();
   const user = useSelector((state: any) => state.User.user);
+
+  useEffect(() => {
+    if (navigator.onLine) {
+      setOnline(true);
+    } else {
+      setOnline(false);
+    }
+  }, [navigator.onLine]);
 
   return (
     <HStack
@@ -42,7 +51,7 @@ const Header: React.FC = () => {
         <Link to={`/${user?.username}`}>
           <Center gap={2}>
             <Avatar name={user?.username} src={IMAGES_URL + user?.profile} sx={{ cursor: 'pointer' }}>
-              <AvatarBadge boxSize="1.25em" bg="green.500" />
+              <AvatarBadge boxSize="1.25em" bg={online ? 'green.500' : 'gray.500'} />
             </Avatar>
             <Text fontSize="md" as="b">
               {user?.username}
