@@ -27,7 +27,6 @@ const findFollowings = async (user) => {
     const filteredUsers = uniqueData.filter((user) => !myFollowers.includes(user.username));
     //! Here we check whether the following followers are in the user's followers list or not
     const filterByFollowing = filteredUsers.filter((user) => !names.includes(user.username));
-    console.log(filterByFollowing);
     return filterByFollowing;
 };
 exports.default = findFollowings;

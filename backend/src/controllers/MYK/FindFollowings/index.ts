@@ -39,8 +39,6 @@ const findFollowings = async (user: any) => {
     (user) => !names.includes(user.username)
   );
 
-  console.log(filterByFollowing);
-
   return filterByFollowing;
 };
 
