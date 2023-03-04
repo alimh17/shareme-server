@@ -32,13 +32,13 @@ const CommentList: React.FC<Props> = ({ comments, post, onDelete }): JSX.Element
     <VStack
       sx={{
         maxH: '80',
-        overflow: 'scroll',
         justifyContent: 'center',
         gap: '2',
+        p: 2,
       }}
     >
       {comments.map((item: any) => (
-        <HStack w="100%" key={item.id} alignItems="center">
+        <HStack w="100%" key={item.id} alignItems="center" wordBreak="break-word">
           <Avatar size="sm" src={IMAGES_URL + item.profile} />
           <Text fontSize="sm">{item.text}</Text>
           <Spacer />

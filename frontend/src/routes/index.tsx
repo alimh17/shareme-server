@@ -12,6 +12,7 @@ import Notfound from 'pages/Notfound';
 import Code from 'pages/Auth/Code';
 import Setting from 'pages/Setting';
 import FollowPage from 'pages/FollowPage';
+import { useDisclosure } from '@chakra-ui/react';
 
 const router = createBrowserRouter(
   createRoutesFromElements(

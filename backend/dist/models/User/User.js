@@ -61,6 +61,10 @@ const userSchema = new mongoose_1.Schema({
         type: Date,
         default: Date.now,
     },
+    code: {
+        type: String,
+        default: "",
+    },
     breathday: Date,
 });
 const User = (0, mongoose_1.model)("User", userSchema);

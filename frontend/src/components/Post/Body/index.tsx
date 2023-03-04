@@ -1,5 +1,5 @@
-import React from 'react';
-import { CardBody, Heading, Image, Text, VStack } from '@chakra-ui/react';
+import React, { useState } from 'react';
+import { CardBody, Center, Heading, Image, Text, VStack } from '@chakra-ui/react';
 import { faker } from '@faker-js/faker';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Navigation, Pagination, Scrollbar, A11y } from 'swiper';
@@ -12,6 +12,8 @@ interface Props {
 }
 
 const Body: React.FC<Props> = ({ post }): JSX.Element => {
+  const [line, setLine] = useState<number>(2);
+
   return (
     <CardBody sx={{ zIndex: '0' }}>
       <Swiper
@@ -43,8 +45,12 @@ const Body: React.FC<Props> = ({ post }): JSX.Element => {
       </Swiper>
       {/* <Image src={faker.image.image()} alt={faker.name.fullName()} borderRadius="sm" loading="lazy" /> */}
       <VStack>
-        <Text noOfLines={2} fontSize="md" w="90%">
+        <Text fontFamily="inherit" noOfLines={line} fontSize="md" w="100%" px="2" py="4" lineHeight={1.5}>
           {post?.description}
+          {/* <pre style={{ fontFamily: 'inherit' }}></pre> */}
+        </Text>
+        <Text textAlign="left" w="100%" onClick={() => (line === 2 ? setLine(300) : setLine(2))}>
+          {line === 2 ? 'See more...' : 'See Less...'}
         </Text>
       </VStack>
     </CardBody>

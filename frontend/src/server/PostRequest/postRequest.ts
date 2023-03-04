@@ -35,6 +35,7 @@ export const postRequest = async (values: any, toast: Function, navigate: Functi
     });
     navigate('/');
   } catch (err: any) {
+    console.log(err);
     if (err.response.status === 401) {
       //Unautorization
       navigate('/login');

@@ -1,19 +1,10 @@
 import React, { useCallback, useState } from 'react';
-import {
-  Button,
-  Center,
-  Container,
-  Flex,
-  FormControl,
-  Heading,
-  Text,
-  useColorMode,
-  useToast,
-  VStack,
-} from '@chakra-ui/react';
+import { Button, Center, Container, Flex, Heading, Text, useColorMode, useToast, VStack } from '@chakra-ui/react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useDropzone } from 'react-dropzone';
 import { useFormik } from 'formik';
+import { useDispatch } from 'react-redux';
+import { initUser } from 'store/UserSlice';
 
 import { VscAccount } from 'react-icons/vsc';
 import { RegisterSchema } from 'utils/AuthValidation';
@@ -44,6 +35,7 @@ const Register: React.FC<RegisterProps> = (): JSX.Element => {
 
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onDrop = useCallback((acceptedFiles: any) => {
     const path = URL.createObjectURL(acceptedFiles[0]);
@@ -65,7 +57,11 @@ const Register: React.FC<RegisterProps> = (): JSX.Element => {
     validationSchema: RegisterSchema,
     onSubmit: async (values: any) => {
       const data = await registerRequest(values, acceptedFiles[0], toast);
-      if (data) navigate('/login');
+      if (data) {
+        console.log(data);
+        dispatch(initUser(data.email));
+        navigate('/code');
+      }
     },
   });
 

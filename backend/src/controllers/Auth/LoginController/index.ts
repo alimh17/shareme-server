@@ -53,7 +53,7 @@ const loginController = async (req: Request, res: Response) => {
     };
 
     res.cookie("user-shareme", { email: findUser.email }, options);
-    res.status(200).json({ access, refresh });
+    return res.status(200).json({ access, refresh });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });

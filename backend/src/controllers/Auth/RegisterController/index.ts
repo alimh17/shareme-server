@@ -10,7 +10,6 @@ const registerController = async (req: Request, res: Response) => {
   try {
     const data: object = req.body;
     const { error, value } = registerSchema.validate(data);
-    console.log(error);
     if (error) {
       return res.status(409).json({ error: error.details });
     }
@@ -31,19 +30,26 @@ const registerController = async (req: Request, res: Response) => {
     }
 
     const hashPassword = await hash(value.password, 10);
+    let code = "";
 
-    sendMail(value.email);
+    for (let i = 0; code.length < 5; i++) {
+      const random = Math.floor(Math.random() * 10);
+      code += random;
+    }
+
+    sendMail(value.email, code);
 
     const user = new User({
       username: value.username,
       email: value.email,
       password: hashPassword,
       profile: req.file ? `profile/${req.file.filename}` : "",
+      code,
     });
 
     await user.save();
 
-    res.status(200).json({ success: "success" });
+    return res.status(200).json({ success: "success", email: value.email });
   } catch (err) {
     console.log(err);
     res.status(500).json({ message: err });

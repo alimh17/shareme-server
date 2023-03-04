@@ -96,12 +96,17 @@ const Comment: React.FC<Props> = ({ post }) => {
         <Box
           sx={{
             position: 'relative',
-            left: '-10',
-            top: '2.5rem',
-            w: '25rem',
+            left: '-6',
+            right: 'auto',
+            top: '1rem',
             display: 'flex',
             flexFlow: 'column',
+            justifyContent: 'center',
+            alingItems: 'center',
+            m: 'auto',
           }}
+          w="50rem"
+          maxW={{ base: '18rem', lg: '25rem' }}
         >
           <CommentList comments={comments} post={post} onDelete={handleDeleteComment} />
           <Emoji show={showEmoji} comment={comment} onEmoji={handleAddEmoji} />

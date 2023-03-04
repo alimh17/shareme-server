@@ -10,6 +10,7 @@ import Search from 'components/Search';
 
 const Layouts: React.FC = (): JSX.Element => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Box
       w="100%"

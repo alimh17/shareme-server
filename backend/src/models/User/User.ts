@@ -14,6 +14,7 @@ export interface IUser {
   chatList: Array<object>;
   createdAt: Date;
   breathday: Date;
+  code: string;
 }
 
 const userSchema = new Schema<IUser>({
@@ -76,6 +77,10 @@ const userSchema = new Schema<IUser>({
   createdAt: {
     type: Date,
     default: Date.now,
+  },
+  code: {
+    type: String,
+    default: "",
   },
   breathday: Date,
 });

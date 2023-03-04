@@ -4,6 +4,7 @@ import express from "express";
 import dotenv from "dotenv";
 import bodyParser from "body-parser";
 import cors from "cors";
+import session from "express-session";
 import cookieParser from "cookie-parser";
 import { Server } from "socket.io";
 
@@ -48,6 +49,14 @@ app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(cookieParser("secret"));
+app.use(
+  session({
+    secret: "my-secret-key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+  })
+);
 
 //? -------------------- Statick Paths ----------------------------------
 app.use(express.static(path.join(__dirname, "../public")));

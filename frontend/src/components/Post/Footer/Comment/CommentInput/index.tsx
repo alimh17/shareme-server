@@ -16,6 +16,7 @@ const CommentInput: React.FC<Props> = ({ comment, onText, onPress, toggle }): JS
         sx={{
           display: 'block',
           flexFlow: 'column',
+          m: 'auto',
         }}
         w={{ base: '80', md: '96' }}
       >
@@ -27,8 +28,9 @@ const CommentInput: React.FC<Props> = ({ comment, onText, onPress, toggle }): JS
             onText(target.value);
           }}
           onKeyDown={onPress}
+          pr="12"
         />
-        <InputRightElement width="4.5rem">
+        <InputRightElement width="2.5rem">
           <IconButton aria-label="Emoji" icon={<BsEmojiSmile />} onClick={toggle} bg="inherit" />
         </InputRightElement>
       </Flex>

@@ -12,7 +12,6 @@ const registerController = async (req, res) => {
     try {
         const data = req.body;
         const { error, value } = Auth_Validation_1.registerSchema.validate(data);
-        console.log(error);
         if (error) {
             return res.status(409).json({ error: error.details });
         }
@@ -29,15 +28,21 @@ const registerController = async (req, res) => {
                 .json({ message: "There is a user with this profile" });
         }
         const hashPassword = await (0, bcrypt_1.hash)(value.password, 10);
-        (0, mailer_1.default)(value.email);
+        let code = "";
+        for (let i = 0; code.length < 5; i++) {
+            const random = Math.floor(Math.random() * 10);
+            code += random;
+        }
+        (0, mailer_1.default)(value.email, code);
         const user = new User_1.default({
             username: value.username,
             email: value.email,
             password: hashPassword,
             profile: req.file ? `profile/${req.file.filename}` : "",
+            code,
         });
         await user.save();
-        res.status(200).json({ success: "success" });
+        return res.status(200).json({ success: "success", email: value.email });
     }
     catch (err) {
         console.log(err);

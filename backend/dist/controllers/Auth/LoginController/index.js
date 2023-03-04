@@ -45,7 +45,7 @@ const loginController = async (req, res) => {
             signed: true, // Indicates if the cookie should be signed
         };
         res.cookie("user-shareme", { email: findUser.email }, options);
-        res.status(200).json({ access, refresh });
+        return res.status(200).json({ access, refresh });
     }
     catch (err) {
         console.log(err);

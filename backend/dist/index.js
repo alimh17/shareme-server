@@ -8,6 +8,7 @@ const express_1 = __importDefault(require("express"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const body_parser_1 = __importDefault(require("body-parser"));
 const cors_1 = __importDefault(require("cors"));
+const express_session_1 = __importDefault(require("express-session"));
 const cookie_parser_1 = __importDefault(require("cookie-parser"));
 const socket_io_1 = require("socket.io");
 const Auth_1 = __importDefault(require("./routes/Auth"));
@@ -44,6 +45,12 @@ app.use((0, cors_1.default)());
 app.use(body_parser_1.default.urlencoded({ extended: false }));
 app.use(body_parser_1.default.json());
 app.use((0, cookie_parser_1.default)("secret"));
+app.use((0, express_session_1.default)({
+    secret: "my-secret-key",
+    resave: false,
+    saveUninitialized: true,
+    cookie: { secure: false },
+}));
 //? -------------------- Statick Paths ----------------------------------
 app.use(express_1.default.static(path_1.default.join(__dirname, "../public")));
 //? ---------------------- Routes -----------------------------------------
