@@ -8,6 +8,8 @@ export const PathCondition = (path: string) => {
       return false;
     case '/follow-page':
       return false;
+    case '/forget-password':
+      return false;
     case '/404':
       return false;
     default:

@@ -13,6 +13,7 @@ import Code from 'pages/Auth/Code';
 import Setting from 'pages/Setting';
 import FollowPage from 'pages/FollowPage';
 import { useDisclosure } from '@chakra-ui/react';
+import ForgetPassword from 'pages/Auth/ForegetPassword';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -21,6 +22,7 @@ const router = createBrowserRouter(
       <Route path="/:username" element={<Profile />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/forget-password" element={<ForgetPassword />} />
       <Route path="/code" element={<Code />} />
       <Route path="/chats" element={<Chats />} />
       <Route path="/add-post" element={<AddPost />} />

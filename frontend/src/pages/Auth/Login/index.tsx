@@ -72,7 +72,7 @@ const Login: React.FC<Props> = (): JSX.Element => {
               </Button>
             </Center>
           </form>
-          <Link to="/register">
+          <Link to="/forget-password">
             <Text _hover={{ color: 'blue.500' }}>
               Forget Password? <FiUnlock style={{ margin: '0 5px', display: 'inline' }} />
             </Text>

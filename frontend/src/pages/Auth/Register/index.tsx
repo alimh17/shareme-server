@@ -58,7 +58,6 @@ const Register: React.FC<RegisterProps> = (): JSX.Element => {
     onSubmit: async (values: any) => {
       const data = await registerRequest(values, acceptedFiles[0], toast);
       if (data) {
-        console.log(data);
         dispatch(initUser(data.email));
         navigate('/code');
       }

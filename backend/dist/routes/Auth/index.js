@@ -8,8 +8,12 @@ const RegisterController_1 = __importDefault(require("../../controllers/Auth/Reg
 const LoginController_1 = __importDefault(require("../../controllers/Auth/LoginController"));
 const profileMulter_1 = __importDefault(require("../../middlewares/profileMulter"));
 const CodeController_1 = __importDefault(require("../../controllers/Auth/CodeController"));
+const ForgetPassword_1 = __importDefault(require("../../controllers/Auth/ForgetPassword"));
+const ChangePassword_1 = __importDefault(require("../../controllers/Auth/ChangePassword"));
 const router = (0, express_1.Router)();
 router.post("/register", profileMulter_1.default.single("file"), RegisterController_1.default);
 router.post("/login", LoginController_1.default);
 router.post("/code", CodeController_1.default);
+router.post("/forget-password", ForgetPassword_1.default);
+router.post("/change-password", ChangePassword_1.default);
 exports.default = router;
