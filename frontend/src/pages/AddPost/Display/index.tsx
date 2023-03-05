@@ -6,7 +6,7 @@ import 'swiper/css';
 import { HiOutlineArrowLeft } from 'react-icons/hi';
 
 interface DisplayProps {
-  paths: {}[];
+  paths: any[];
   onAcitve: (active: string) => void;
 }
 

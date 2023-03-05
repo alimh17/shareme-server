@@ -1,5 +1,5 @@
 import React from 'react';
-import EmojiPicker from 'emoji-picker-react';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { Box, useColorMode } from '@chakra-ui/react';
 
 interface Props {
@@ -20,7 +20,11 @@ const Emoji: React.FC<Props> = ({ show, onClick }): JSX.Element => {
       }}
     >
       {show && (
-        <EmojiPicker theme={colorMode === 'dark' ? 'dark' : 'light'} lazyLoadEmojis={true} onEmojiClick={onClick} />
+        <EmojiPicker
+          theme={colorMode === 'dark' ? Theme.DARK : Theme.LIGHT}
+          lazyLoadEmojis={true}
+          onEmojiClick={onClick}
+        />
       )}
     </Box>
   );

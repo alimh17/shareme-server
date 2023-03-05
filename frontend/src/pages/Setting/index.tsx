@@ -23,7 +23,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import config from 'config/index.json';
 import { useDropzone } from 'react-dropzone';
 import { BsEmojiSmile } from 'react-icons/bs';
-import EmojiPicker from 'emoji-picker-react';
+import EmojiPicker, { Theme } from 'emoji-picker-react';
 import { useFormik } from 'formik';
 import SettingSchema from 'utils/SettingValidation';
 import settingRequest from 'server/UserRequest/settingRequest';
@@ -69,7 +69,7 @@ const Setting: React.FC = (): JSX.Element => {
           title: 'Success',
           description: 'Updated profile information',
           status: 'success',
-          position: 'top-center',
+          position: 'top',
           duration: 3000,
           isClosable: true,
         });
@@ -160,7 +160,7 @@ const Setting: React.FC = (): JSX.Element => {
             >
               {showEmojiPicker && (
                 <EmojiPicker
-                  theme={colorMode === 'dark' ? 'dark' : 'light'}
+                  theme={colorMode === 'dark' ? Theme.DARK : Theme.LIGHT}
                   lazyLoadEmojis={true}
                   onEmojiClick={({ emoji }) => {
                     formik.values.bio += emoji;

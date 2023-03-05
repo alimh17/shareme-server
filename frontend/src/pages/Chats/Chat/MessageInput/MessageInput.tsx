@@ -1,5 +1,5 @@
 import { Box, IconButton, Input, InputGroup, InputRightElement, useColorMode } from '@chakra-ui/react';
-import EmojiPicker, { EmojiClickData } from 'emoji-picker-react';
+import EmojiPicker, { EmojiClickData, Theme } from 'emoji-picker-react';
 import React, { useCallback, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { BsEmojiSmile } from 'react-icons/bs';
@@ -75,7 +75,11 @@ const MessageInput: React.FC<Props> = ({ newMessage, onSubmit, onSend, onChange,
         }}
       >
         {showEmoji && (
-          <EmojiPicker theme={colorMode === 'dark' ? 'dark' : 'light'} lazyLoadEmojis={true} onEmojiClick={onEmoji} />
+          <EmojiPicker
+            theme={colorMode === 'dark' ? Theme.DARK : Theme.LIGHT}
+            lazyLoadEmojis={true}
+            onEmojiClick={onEmoji}
+          />
         )}
       </Box>
     </>
