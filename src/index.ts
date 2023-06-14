@@ -37,10 +37,8 @@ const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-    origin: ["http://127.0.0.1:3000", "http://localhost:3000"],
-    // methods: ["GET", "POST"],
-    // allowedHeaders: ["my-custom-header"],
-    // credentials: true,
+    origin: ["http://127.0.0.1:3000", "http://localhost:3000" , "https://shareme-frontend-qbid.vercel.app/"],
+    methods: ["GET", "POST"],
   },
 });
 
